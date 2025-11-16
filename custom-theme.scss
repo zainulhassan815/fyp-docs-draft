@@ -1,0 +1,66 @@
+/*-- scss:defaults --*/
+
+// Colors
+$primary-color: #2C5F87;
+$secondary-color: #4A90E2;
+$accent-color: #50C878;
+
+// Typography
+$presentation-heading-color: $primary-color;
+$link-color: $secondary-color;
+
+/*-- scss:rules --*/
+
+// Headings
+.reveal h1 {
+  font-size: 1.8em;
+  margin-bottom: 0.4em;
+}
+
+.reveal h2 {
+  font-size: 1.4em;
+  border-bottom: 3px solid $secondary-color;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.4em;
+}
+
+.reveal h3 {
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  color: $presentation-heading-color;
+  font-weight: 600;
+}
+
+// Section headers with colored backgrounds
+.reveal section[data-background-color="#2C5F87"] h1,
+.reveal section[data-background-color="#2C5F87"] h2,
+.reveal section[data-background-color="#1E4D6B"] h1,
+.reveal section[data-background-color="#1E4D6B"] h2 {
+  color: white;
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+// Tables
+.reveal table th {
+  background-color: $primary-color;
+  color: white;
+  padding: 0.6em;
+}
+
+.reveal table tr:nth-child(even) {
+  background-color: #f5f7fa;
+}
+
+// Strong emphasis
+.reveal strong {
+  color: $primary-color;
+  font-weight: 600;
+}
+
+// Smaller text utility
+.reveal .smaller {
+  font-size: 0.85em;
+}
