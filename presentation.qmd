@@ -17,7 +17,6 @@ format:
     background-transition: fade
     preview-links: auto
     logo: ""
-    footer: "FYP Proposal - Document AI System"
     navigation-mode: linear
     controls: true
     progress: true
