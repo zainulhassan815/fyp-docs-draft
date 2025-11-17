@@ -5,10 +5,9 @@ author:
   - "Amna Ikram (UET-SHCET-LHR-CS-02)"
   - "Zain Ul Hassan (UET-SHCET-LHR-CS-12)"
   - "Ezza Ansar (UET-SHCET-LHR-CS-13)"
-institute: |
-  Department of Computer Science
+institute:
   Sharif College of Engineering & Technology
-  University of Engineering & Technology, Lahore
+  Department of Computer Science
 format:
   revealjs:
     theme: [default, custom-theme.scss]
@@ -25,408 +24,307 @@ format:
     code-fold: false
     highlight-style: monokai
 ---
-
-## Supervisors {.smaller}
-
-::: {.columns}
-::: {.column width="50%"}
-### Supervisor
-**Mam Hirra Mustafa**
-:::
-
-::: {.column width="50%"}
-### Co-Supervisor
-**Dr. Mazhar Iqbal**
-:::
-:::
-
 # Introduction {background-color="#2C5F87"}
 
 ## Project Overview
 
 ::: {.incremental}
-- **Modern Challenge**: Organizations process countless documents daily
-- **Current Problem**: Manual review and information extraction is inefficient
-- **Privacy Concerns**: Cloud-based tools compromise data security
-- **Our Solution**: Secure, on-premises Document AI system with intelligent search and question answering
+- **Challenge**: Organizations process large volumes of documents daily
+- **Problem**: Manual review is slow, error-prone, and costly
+- **Privacy Risk**: Cloud-based tools require external data storage
+- **HR Bottleneck**: Resume screening is time-consuming and inconsistent
+- **Our Solution**: Secure, on-premises Document AI system with intelligent search, question answering, and automated HR resume screening
 :::
 
-## Background & Motivation {.smaller}
+## Motivation
 
 ::: {.columns}
 ::: {.column width="50%"}
-### The Challenge
-- Organizations handle vast volumes of documents (reports, contracts, resumes, letters)
-- Manual processing is time-consuming and error-prone
-- Cloud solutions raise privacy and compliance concerns
+### Why This Matters
+- Growing document volumes in organizations
+- Manual processing affects decision quality
+- Traditional tools lack contextual understanding
+- Cloud solutions compromise data privacy
 :::
 
 ::: {.column width="50%"}
-### Our Motivation
-- Provide AI-powered document understanding while maintaining data privacy
-- Enable intelligent search and retrieval
-- Reduce time required to find relevant information
-- Full organizational control over sensitive data
+### Key Opportunity
+- AI can automate document understanding
+- On-premise deployment ensures data control
+- HR workflows need intelligent automation
+- Significant efficiency gains possible
 :::
 :::
 
 ## Research Question
 
 ::: {.callout-important}
-## Core Research Problem
-**How can we develop a secure, on-premises Document AI system that enables intelligent search, question answering, and information extraction without exposing sensitive organizational data?**
+## Core Problem
+**How can we develop a secure, on-premises Document AI system that enables intelligent search, question answering, and automated HR resume screening without exposing sensitive organizational data?**
 :::
 
 # Problem Statement {background-color="#2C5F87"}
 
-## The Problem {.smaller}
+## The Problem
 
-Organizations face significant challenges in document management:
+Organizations face critical challenges:
 
 ::: {.incremental}
-1. **Volume**: Countless documents processed daily (contracts, reports, resumes, forms)
-2. **Inefficiency**: Manual review and information extraction is time-consuming
-3. **Privacy Risk**: Cloud-based tools require external data storage
-4. **Accessibility**: Difficult to quickly find or extract specific information
-5. **Security**: Need for compliance with internal security policies
+1. **Volume**: Large collections of digital and scanned documents
+2. **Inefficiency**: Manual review is slow and error-prone
+3. **HR Burden**: Resume screening is time-consuming and inconsistent
+4. **Privacy Risk**: Cloud tools require external data upload
+5. **Limited Search**: Traditional keyword-based tools lack semantic understanding
 :::
 
-::: {.fragment}
-::: {.callout-note}
-## Impact
-These challenges limit productivity, increase operational costs, and create potential data exposure risks.
-:::
-:::
-
-## Significance & Relevance
+## Significance
 
 ::: {.columns}
 ::: {.column width="50%"}
-### Business Impact
-- Reduced operational costs
-- Faster decision-making
-- Improved productivity
-- Better resource utilization
+### Impact Areas
+- HR departments (resume screening)
+- Legal firms (contract analysis)
+- Healthcare (medical records)
+- Finance (compliance monitoring)
+- Government (secure document management)
 :::
 
 ::: {.column width="50%"}
-### Technical Relevance
-- Advances in AI and NLP
-- Growing need for privacy-preserving solutions
-- Trend toward on-premise deployments
-- Integration of RAG architectures
+### Business Value
+- Faster decision-making
+- Reduced operational costs
+- Improved accuracy
+- Complete data sovereignty
+- Regulatory compliance
 :::
 :::
 
 # Objectives {background-color="#2C5F87"}
 
-## Project Objectives {.smaller}
+## Project Objectives
 
 ::: {.panel-tabset}
 ### Primary Goal
-Develop an intelligent, secure, on-premises Document AI system using advanced AI techniques for processing, understanding, and retrieving information
+Develop a secure, on-premise AI system for document processing, intelligent retrieval, and automated HR resume screening
 
 ### Specific Objectives
-
-**1. Automate Document Processing**
-Implement pipelines for classification, metadata extraction, and OCR-based text conversion
-
-**2. Enable Intelligent Question Answering**
-Build RAG framework for natural language queries with context-aware answers
-
-**3. Ensure Data Privacy and Security**
-Design fully on-premise operation with no external data sharing
-
-**4. Support Seamless Integrations**
-Develop API layer for integration with email and document management systems
-
-**5. Provide Efficient Retrieval**
-Implement vector-based semantic search for fast information access
+1. **Automated Pipeline**: OCR, text extraction, metadata generation
+2. **Semantic Search**: Vector-based retrieval with natural language queries
+3. **RAG Integration**: Context-aware question answering
+4. **HR Module**: Gmail integration for automated resume screening and candidate shortlisting
+5. **User Interface**: Unified web interface for all operations
+6. **Privacy**: All processing within organizational environment
+7. **Scalability**: Modular architecture for future extensions
 :::
 
-## SMART Objectives {.smaller}
+## SMART Criteria
 
 | Criterion | Description |
 |-----------|-------------|
-| **Specific** | Build on-premise Document AI with OCR, classification, and RAG-based QA |
-| **Measurable** | Process multiple document types, achieve >85% retrieval accuracy, <3s response time |
-| **Achievable** | Leverage proven technologies (Python, FastAPI, vector DBs, open-source LLMs) |
-| **Relevant** | Addresses real need for secure, intelligent document management |
-| **Time-bound** | 20 weeks (Nov 2025 - March 2026) with clear milestones |
+| **Specific** | On-premise Document AI with OCR, RAG-based QA, and HR automation |
+| **Measurable** | >85% retrieval accuracy, <3s response time, automated resume shortlisting |
+| **Achievable** | Using proven technologies (Python, FastAPI, vector DBs, open-source LLMs) |
+| **Relevant** | Addresses document management and HR screening inefficiencies |
+| **Time-bound** | 20 weeks (November 2025 - March 2026) |
 
 # Literature Review {background-color="#2C5F87"}
 
-## Existing Solutions {.smaller}
+## Existing Solutions
 
 ::: {.panel-tabset}
-### Cloud Providers
+### Cloud AI Platforms
+**Google Document AI / Azure / Amazon Textract**
 
-**Google Document AI / Microsoft Azure / Amazon Textract**
+- Powerful OCR and extraction
+- High scalability
+- **Limitation**: Requires external data upload
+- **Gap**: Privacy and compliance concerns
 
-- Advanced document parsing and analysis
-- Excellent scalability and automation
-- Requires external data upload
-- Privacy and compliance concerns
+### HR Systems
+**BambooHR / Workday / Lever / Greenhouse**
 
-### Enterprise Solutions
+- Resume management and tracking
+- Workflow streamlining
+- **Limitation**: Basic keyword parsing
+- **Gap**: No semantic understanding or AI-powered shortlisting
 
-**ABBYY Vantage**
+### Vector Search
+**Pinecone / Weaviate / FAISS**
 
-- Powerful OCR and classification
-- Some on-premise options available
-- Lacks interactive question answering
-- No semantic retrieval features
-
-**Altilia Platform**
-
-- Intelligent document processing
-- Optional on-premise deployment
-- Focuses on workflow automation
-- Limited flexible QA capabilities
+- Strong semantic retrieval
+- Efficient indexing
+- **Limitation**: No complete document workflow
+- **Gap**: Requires manual pipeline construction
 :::
 
-## Related Research
-
-::: {.incremental}
-- **Hybrid Document Retrieval** (Lewis et al., 2020): Combining retrieval with language models enhances contextual accuracy
-- **Neural Document Understanding** (Izacard & Grave, 2021): Transformer-based architectures for document comprehension
-- **Open-source Frameworks**: Haystack, LlamaIndex demonstrate RAG potential for document-centric tasks
-- **Vector Databases**: FAISS and similar technologies enable semantic search at scale
-:::
-
-## Gaps in Current Solutions
+## Research Gap
 
 ::: {.callout-warning}
-## Research Gap
-Despite advancements, there's a **lack of general-purpose, self-hosted solutions** designed for organizational environments that prioritize:
+## Key Gap
+No existing solution provides:
 
-- Complete data privacy and security
-- Flexible, interactive question answering
-- Adaptability across different document types
-- Easy integration with existing workflows
+- **On-premise** deployment with complete data control
+- **Integrated** document processing + semantic search + RAG
+- **Automated HR screening** with AI-powered candidate evaluation
+- **Privacy-preserving** architecture for sensitive data
 :::
 
-## Our Competitive Edge {.smaller}
+## Our Competitive Edge
 
 ::: {.columns}
 ::: {.column width="50%"}
 ### What We Offer
-- **On-premise, privacy-first** deployment
-- **RAG-based** intelligent QA
-- **API integrations** for automation
-- **Semantic search** capabilities
-- **Multi-format support**
-- **Complete data control**
+- On-premise, privacy-first deployment
+- RAG-based intelligent QA
+- Automated HR resume screening
+- Gmail integration for resume collection
+- Semantic search capabilities
+- Complete data sovereignty
 :::
 
 ::: {.column width="50%"}
-### Why It Matters
-- Sensitive data never leaves organization
-- Context-aware, accurate responses
-- Seamless workflow integration
-- Meaning-based search, not just keywords
-- PDFs, Word, images, scanned docs
-- Compliance with internal policies
+### Unique Value
+- No external data exposure
+- AI-powered candidate shortlisting
+- Context-aware responses
+- End-to-end automation
+- Modular and extensible
+- Domain-specific customization
 :::
 :::
 
 # Methodology {background-color="#2C5F87"}
 
-## System Architecture {.smaller}
+## System Architecture
 
 ```{mermaid}
-%%| fig-width: 10
+%%| fig-height: 5
 graph TB
-    A[User Interface] --> B[API Gateway]
-    B --> C[Document Processing Pipeline]
-    B --> D[Question Answering Engine]
-    C --> E[OCR & Text Extraction]
-    C --> F[Document Classification]
-    C --> G[Metadata Generation]
-    E --> H[Vector Embeddings]
+    A[Documents<br/>PDF, Word, Scans] --> B[Processing Pipeline]
+    C[HR Resumes via Gmail] --> D[Candidate Shortlist]
+    B --> E[OCR & Metadata Extraction]
+    E --> F[Vector Database /<br/>Knowledge Base]
+    G[User Queries] --> H[RAG Engine]
     F --> H
-    G --> I[Metadata DB]
-    H --> J[Vector Database]
+    H --> I[Answers / Summaries]
+    I --> J[Web Interface / Dashboard]
     D --> J
-    D --> K[RAG Pipeline]
-    K --> L[LLM]
-    J --> K
 
     style A fill:#4A90E2
-    style K fill:#50C878
-    style L fill:#FFB84D
+    style C fill:#FFB84D
+    style H fill:#50C878
+    style D fill:#FF6B6B
 ```
 
-## Hardware Components
-
-::: {.columns}
-::: {.column width="50%"}
-### Core Infrastructure
-- Local Server or Cloud Instance
-- CPU: Multi-core processor
-- RAM: 16GB+ for processing
-- Storage: 500GB+ SSD
-:::
-
-::: {.column width="50%"}
-### Optional Components
-- **GPU/TPU**: Accelerates model inference
-- **Network**: Secure internal network
-- **Backup**: Redundant storage systems
-:::
-:::
-
-## Software Components {.smaller}
+## Implementation Approach
 
 ::: {.panel-tabset}
-### Frontend
-- Modern web framework (React/Next.js)
-- Responsive, intuitive interface
-- Document upload and search
-- Real-time query interactions
+### Document Processing
+- OCR and text extraction
+- Document classification
+- Metadata generation
+- Vector embedding creation
 
-### Backend
-- Python-based services
-- FastAPI/Flask framework
-- Request routing and orchestration
-- Model execution and inference
+### Knowledge Base
+- Semantic vector storage
+- Efficient indexing
+- Fast retrieval operations
 
-### Data Layer
-- Relational DB for metadata
-- Vector database for embeddings
-- Efficient indexing and retrieval
+### RAG Pipeline
+- Context retrieval from documents
+- Natural language response generation
+- Source attribution
 
-### AI/NLP
-- OCR for text extraction
-- Classification models
-- Embedding generation
-- RAG pipeline with LLM
+### HR Module
+- Gmail API integration
+- Resume information extraction
+- Criteria-based evaluation
+- Automated shortlisting
 :::
 
-## Implementation Approach {.smaller}
-
-### Development Methodology
-
-::: {.incremental}
-1. **Modular Development**: Independent component development and testing
-2. **Incremental Integration**: Gradual system assembly with continuous testing
-3. **Agile Workflow**: Iterative sprints with regular supervisor reviews
-4. **Documentation-Driven**: Parallel documentation for maintainability
-:::
-
-## Implementation Approach (Continued) {.smaller}
-
-### Key Technologies
+## Tools & Technologies
 
 | Component | Technology |
 |-----------|-----------|
 | Language | Python |
 | Backend | FastAPI / Flask |
 | Frontend | React / Next.js |
-| Database | PostgreSQL + Vector DB (FAISS/Pinecone) |
+| Database | PostgreSQL + Vector DB (FAISS/ChromaDB) |
 | OCR | Tesseract / PyMuPDF |
 | AI/NLP | Transformers, LangChain |
+| Integration | Gmail API, n8n |
 | Deployment | Docker containers |
 
 # Expected Outcomes {background-color="#2C5F87"}
 
-## Deliverables {.smaller}
+## Key Deliverables
 
 ::: {.panel-tabset}
-### System Features
-
-**1. Document Processing**
-- Multi-format support (PDF, Word, images)
-- Automatic classification
-- OCR and text extraction
-- Metadata generation
-
-**2. Intelligent Search**
-- Vector-based semantic search
-- Natural language queries
-- Context-aware responses
-- Fast retrieval (<3s)
+### Core Features
+1. **Document Processing**: Multi-format support, OCR, classification
+2. **Semantic Search**: Vector-based retrieval, natural language queries
+3. **Question Answering**: RAG-powered context-aware responses
+4. **HR Automation**: Resume screening with automated shortlisting
 
 ### Technical Outputs
+5. **API Layer**: RESTful endpoints for integration
+6. **Gmail Integration**: Automated resume collection
+7. **Web Interface**: Intuitive user dashboard
+8. **Privacy**: Complete on-premise operation
 
-**3. RAG Pipeline**
-- Retrieval-augmented generation
-- Accurate question answering
-- Source attribution
-- Multi-document reasoning
-
-**4. Integration Layer**
-- RESTful API endpoints
-- Email automation support
-- External system connectivity
-- Webhook capabilities
-
-### User Experience
-
-**5. Web Interface**
-- Intuitive document upload
-- Interactive search interface
-- Question input and response display
-- Document preview and download
+### Quality Metrics
+- Response time: <3 seconds
+- Retrieval accuracy: >85%
+- System uptime: >99%
+- Zero critical bugs at launch
 :::
 
-## Expected Impact {.smaller}
+## Expected Impact
 
 ::: {.columns}
 ::: {.column width="50%"}
-### Organizational Benefits
-- **Efficiency**: 60-80% reduction in document search time
-- **Accuracy**: >85% retrieval accuracy
-- **Cost Savings**: Reduced manual processing
-- **Scalability**: Handle growing document volumes
+### Efficiency Gains
+- 60-80% reduction in document search time
+- Automated resume screening
+- Faster hiring decisions
+- Reduced manual workload
 :::
 
 ::: {.column width="50%"}
-### Technical Achievements
-- **Privacy**: Complete data sovereignty
-- **Performance**: Sub-3-second response times
-- **Flexibility**: Modular, extensible architecture
-- **Innovation**: RAG implementation for document QA
+### Strategic Benefits
+- Complete data privacy
+- Regulatory compliance
+- Scalable architecture
+- Foundation for AI-powered document intelligence
 :::
 :::
 
-## Potential Applications
+# Timeline {background-color="#2C5F87"}
 
-::: {.incremental}
-- **Universities**: Student records, research papers, administrative documents
-- **Legal Firms**: Contract analysis, case document retrieval
-- **Healthcare**: Patient records, medical reports (HIPAA-compliant)
-- **Government**: Secure document management and retrieval
-- **Enterprises**: HR systems, procurement, compliance documentation
-:::
-
-# Timeline & Resources {background-color="#2C5F87"}
-
-## Project Timeline {.smaller}
-
-**Duration**: 20 weeks (November 2025 - March 2026)
+## Project Timeline (20 Weeks)
 
 ```{mermaid}
 %%| fig-width: 11
 gantt
-    title Project Timeline
+    title November 2025 - March 2026
     dateFormat YYYY-MM-DD
     axisFormat %b %d
     tickInterval 1week
-    section Phase 1
+    section Planning
     Requirement Analysis & Literature Review    :2025-11-01, 2w
     System Design & Architecture               :2025-11-15, 2w
-    section Phase 2
-    Dataset Preparation & OCR Setup            :2025-11-29, 2w
+    section Data & Processing
+    Dataset Preparation & OCR/NLP Setup        :2025-11-29, 2w
     Document Processing Pipeline               :2025-12-13, 3w
-    section Phase 3
+    section AI & Backend
     RAG Pipeline Development                   :2026-01-03, 3w
-    Backend API & Integration                  :2026-01-24, 2w
-    section Phase 4
-    Frontend Development                       :2026-02-07, 3w
-    Testing & Optimization                     :2026-02-28, 2w
-    section Phase 5
-    Documentation & Presentation               :2026-03-14, 1w
+    Backend API & Integration Layer            :2026-01-24, 2w
+    HR Resume Screening Module                 :2026-02-07, 2w
+    section Frontend & Testing
+    Frontend Interface Development             :2026-02-21, 2w
+    Testing & Optimization                     :2026-03-07, 2w
+    section Closure
+    Final Documentation & Presentation         :2026-03-21, 1w
 ```
 
 ## Key Milestones
@@ -434,183 +332,46 @@ gantt
 | Week | Milestone | Deliverable |
 |------|-----------|-------------|
 | 2 | Requirements Complete | Analysis document |
-| 4 | Architecture Finalized | Design diagrams |
+| 4 | Architecture Finalized | System design |
 | 8 | Processing Pipeline Ready | Working OCR module |
 | 11 | RAG Pipeline Complete | QA system |
-| 15 | Integration Complete | Full backend |
-| 18 | Frontend Complete | Web interface |
+| 13 | Backend Complete | API layer |
+| 15 | HR Module Complete | Resume screening |
+| 17 | Frontend Complete | Web interface |
 | 19 | Testing Complete | Test reports |
 | 20 | Final Delivery | Complete system |
 
-## Team Responsibilities {.smaller}
+# Resources {background-color="#2C5F87"}
 
-::: {.panel-tabset}
-### Zain Ul Hassan
-**Project Lead & Backend Architect**
-
-- System architecture design
-- RAG pipeline development
-- Model integration and optimization
-- Backend coordination
-- Deployment and DevOps
-
-### Ezza Ansar
-**Document Processing Specialist**
-
-- OCR implementation
-- Document classification
-- Metadata extraction
-- Vector embedding generation
-- Pre-processing workflows
-
-### Amna Ikram
-**Frontend & Integration Lead**
-
-- User interface design and development
-- API integration
-- External service connections
-- Testing and quality assurance
-- User experience optimization
-:::
-
-## Required Resources {.smaller}
+## Required Resources
 
 ::: {.panel-tabset}
 ### Hardware
 - **Server**: 8-core CPU, 32GB RAM, 1TB SSD
-- **GPU** (optional): NVIDIA RTX 3060/4060 for faster inference
-- **Development Machines**: 3 laptops with adequate specifications
-- **Network**: Secure local network infrastructure
+- **GPU** (optional): NVIDIA RTX 3060/4060
+- **Development Machines**: 3 laptops
+- **Network**: Secure local infrastructure
 
 ### Software
-- **Operating System**: Ubuntu 24.04 LTS
-- **Programming**: Python 3.11+, Node.js
+- **OS**: Ubuntu 24.04 LTS
+- **Languages**: Python 3.11+, Node.js
 - **Databases**: PostgreSQL, FAISS/ChromaDB
 - **Frameworks**: FastAPI, React, LangChain
-- **Tools**: Docker, Git, Postman
+- **Tools**: Docker, Git, Gmail API
 
-### Data & Models
-- **Test Documents**: Sample PDFs, images, Word files
-- **Pre-trained Models**: OCR, embeddings, LLMs
-- **Vector DB**: Local deployment license (if needed)
-
-### Services
-- **Version Control**: GitHub
-- **Project Management**: Trello/Notion
-- **Documentation**: Google Workspace
-- **Communication**: Slack/Discord
-:::
-
-# Project Management {background-color="#2C5F87"}
-
-## Development Approach {.smaller}
-
-::: {.columns}
-::: {.column width="50%"}
-### Methodology
-- **Agile Development**: 2-week sprints
-- **Version Control**: Git with feature branching
-- **Code Review**: Peer review for all changes
-- **Testing**: Unit, integration, and system testing
-- **CI/CD**: Automated testing pipeline
-:::
-
-::: {.column width="50%"}
-### Communication
-- **Weekly Meetings**: Progress updates and planning
-- **Supervisor Reviews**: Bi-weekly milestone presentations
-- **Documentation**: Continuous documentation
-- **Issue Tracking**: GitHub Issues/Trello
-- **Knowledge Sharing**: Internal wiki
-:::
+### Team Roles
+- **Zain Ul Hassan**: System architecture, RAG pipeline, backend coordination
+- **Ezza Ansar**: OCR, document classification, metadata extraction
+- **Amna Ikram**: Frontend development, API integration, testing
 :::
 
 ## Risk Management
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| Model accuracy issues | Medium | High | Extensive testing, model fine-tuning |
-| Performance bottlenecks | Medium | Medium | Optimization, caching strategies |
-| Integration challenges | Low | Medium | Early API design, modular approach |
-| Timeline delays | Medium | High | Buffer time, agile adjustments |
-| Resource constraints | Low | Medium | Cloud alternatives, optimization |
-
-## Quality Assurance {.smaller}
-
-::: {.panel-tabset}
-### Testing Strategy
-
-**1. Unit Testing**
-- Individual component testing
-- Python unittest/pytest
-- >80% code coverage target
-
-**2. Integration Testing**
-- API endpoint testing
-- Database connectivity
-- Model pipeline integration
-
-**3. System Testing**
-- End-to-end workflows
-- Performance benchmarking
-- Load testing
-
-**4. User Acceptance**
-- Interface usability
-- Response accuracy
-- Feature completeness
-
-### Success Metrics
-
-**Performance**
-- Response time <3 seconds
-- Retrieval accuracy >85%
-- System uptime >99%
-
-**Quality**
-- Zero critical bugs at launch
-- Complete documentation
-- User satisfaction >4/5
-:::
-
-# References {background-color="#2C5F87"}
-
-## Key References {.smaller}
-
-::: {.references style="font-size: 0.75em;"}
-1. Google Cloud. (2024). *Document AI Overview*. Retrieved from https://cloud.google.com/document-ai
-
-2. Amazon Web Services. (2024). *Amazon Textract – Extract Text and Data from Documents*. Retrieved from https://aws.amazon.com/textract
-
-3. Microsoft Azure. (2024). *Form Recognizer Documentation*. Retrieved from https://azure.microsoft.com/en-us/products/form-recognizer
-
-4. LangChain. (2024). *Building Applications with Retrieval-Augmented Generation (RAG)*. Retrieved from https://python.langchain.com
-
-5. Hugging Face. (2024). *Document AI: Understanding Documents with Transformers*. Retrieved from https://huggingface.co/blog/document-ai
-
-6. Lewis, P., et al. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*. arXiv preprint.
-
-7. FAISS. (2024). *Facebook AI Similarity Search Library*. Retrieved from https://faiss.ai
-
-8. Tesseract OCR. (2024). *Optical Character Recognition Engine*. Retrieved from https://github.com/tesseract-ocr/tesseract
-:::
+| Risk | Mitigation |
+|------|------------|
+| Model accuracy issues | Extensive testing, model fine-tuning |
+| Performance bottlenecks | Optimization, caching strategies |
+| Integration challenges | Early API design, modular approach |
+| Timeline delays | Buffer time, agile adjustments |
 
 # Thank You {background-color="#1E4D6B"}
-
-## Questions & Discussion {.center}
-
-**Contact Information**
-
-- **Amna Ikram**
-  ikramamna980@gmail.com
-- **Zain Ul Hassan**
-  zainulhassan4330@gmail.com
-
-- **Ezza Ansar**
-  ezzaansar05@gmail.com
-
-::: {.fragment}
-::: {.r-fit-text style="margin-top: 2em; color: #4A90E2;"}
-We appreciate your time and feedback!
-:::
-:::
