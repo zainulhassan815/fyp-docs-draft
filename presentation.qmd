@@ -1,13 +1,5 @@
 ---
-title: "Intelligent Document Retrieval and Question Answering System"
-subtitle: "Using On-Premise AI and Retrieval-Augmented Generation"
-author:
-  - "Amna Ikram (UET-SHCET-LHR-CS-02)"
-  - "Zain Ul Hassan (UET-SHCET-LHR-CS-12)"
-  - "Ezza Ansar (UET-SHCET-LHR-CS-13)"
-institute:
-  Sharif College of Engineering & Technology
-  Department of Computer Science
+title: ""
 format:
   revealjs:
     theme: [default, custom-theme.scss]
@@ -24,6 +16,37 @@ format:
     code-fold: false
     highlight-style: monokai
 ---
+
+##
+<img src="uet.jpeg" style="position: absolute; top: 0; left: 0; width: 160px; height: auto;">
+<img src="scet.jpeg" style="position: absolute; top: 0; right: 0; width: 160px; height: auto;">
+
+<center>
+**Sharif College of Engineering & Technology**<br/>
+Department of Computer Science
+</center>
+
+<br/>
+
+<center>
+**Intelligent Document Retrieval and Question Answering System**<br/>
+*Using On-Premise AI and Retrieval-Augmented Generation*
+</center>
+
+<br/>
+
+| Sr. | Student ID | Name |
+|:---:|:-----------|:-----|
+| 1 | UET-SHCET-LHR-CS-02 | Amna Ikram |
+| 2 | UET-SHCET-LHR-CS-12 | Zain Ul Hassan |
+| 3 | UET-SHCET-LHR-CS-13 | Ezza Ansar |
+
+<br/>
+
+| Supervisor | Co-Supervisor |
+|:-----------|:--------------|
+| Ms. Hirra Mustafa | Dr. Mazhar Iqbal |
+
 # Introduction {background-color="#2C5F87"}
 
 ## Project Overview
