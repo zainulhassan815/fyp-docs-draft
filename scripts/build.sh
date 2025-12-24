@@ -4,7 +4,7 @@
 cd "$(dirname "$0")/.."
 
 # Generate document from markdown
-pandoc src/SRS_Document.md -o build/output.docx \
+pandoc src/SRS_Document.md -o build/SRS_Document.docx \
   --reference-doc=templates/custom-reference.docx \
   --lua-filter=scripts/docx-filter.lua \
   --toc --toc-depth=3
@@ -12,4 +12,4 @@ pandoc src/SRS_Document.md -o build/output.docx \
 # Merge cover page and apply styles
 python3 scripts/merge_cover.py
 
-echo "Done: build/output.docx"
+echo "Done: build/SRS_Document.docx"

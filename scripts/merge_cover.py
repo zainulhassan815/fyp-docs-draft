@@ -11,7 +11,7 @@ import shutil
 
 def main():
     cover = Document('templates/cover.docx')
-    content = Document('build/output.docx')
+    content = Document('build/SRS_Document.docx')
 
     # Add page break at end of cover
     p = cover.add_paragraph()
@@ -23,21 +23,21 @@ def main():
     # Compose with cover as base (stable)
     composer = Composer(cover)
     composer.append(content)
-    composer.save('build/output.docx')
+    composer.save('build/SRS_Document.docx')
 
     # Replace styles.xml with reference-doc styles
     temp_dir = 'build/temp_docx'
     with zipfile.ZipFile('templates/custom-reference.docx', 'r') as ref:
         styles_xml = ref.read('word/styles.xml')
 
-    with zipfile.ZipFile('build/output.docx', 'r') as z:
+    with zipfile.ZipFile('build/SRS_Document.docx', 'r') as z:
         z.extractall(temp_dir)
 
     with open(os.path.join(temp_dir, 'word', 'styles.xml'), 'wb') as f:
         f.write(styles_xml)
 
-    os.remove('build/output.docx')
-    with zipfile.ZipFile('build/output.docx', 'w', zipfile.ZIP_DEFLATED) as z:
+    os.remove('build/SRS_Document.docx')
+    with zipfile.ZipFile('build/SRS_Document.docx', 'w', zipfile.ZIP_DEFLATED) as z:
         for root, dirs, files in os.walk(temp_dir):
             for file in files:
                 path = os.path.join(root, file)
