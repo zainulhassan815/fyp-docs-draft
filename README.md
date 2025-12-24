@@ -11,16 +11,15 @@ This repository maintains project documentation using Markdown as the source for
 
 ## How It Works
 
-```
-src/SRS_Document.md
-        ↓
-    [pandoc]  ←── templates/custom-reference.docx (styles)
-        ↓           ←── scripts/docx-filter.lua (formatting rules)
-build/SRS_Document.docx
-        ↓
-[merge_cover.py]  ←── templates/cover.docx
-        ↓
-Final document with cover page
+```mermaid
+flowchart TD
+    A["src/SRS_Document.md"] --> B["pandoc"]
+    C["templates/custom-reference.docx"] --> B
+    D["scripts/docx-filter.lua"] --> B
+    B --> E["build/SRS_Document.docx"]
+    E --> F["merge_cover.py"]
+    G["templates/cover.docx"] --> F
+    F --> H["Final Document"]
 ```
 
 ## Usage
