@@ -137,7 +137,7 @@ The system architecture consists of several interconnected components working to
 | **Frontend Interface**       | Provides user-facing web application for all system interactions                   |
 | **Security Layer**           | Implements authentication, authorization, and data protection mechanisms           |
 
-![Figure 1: Architecture Diagram](./images/architecture_diagram.jpeg){width=100%}
+![Figure 1: Architecture Diagram](./src/images/architecture_diagram.jpeg){width=100%}
 
 ### External Interfaces
 
@@ -836,22 +836,22 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## Use Case Diagram
 
-![Figure 2: Use Case Diagram](./images/use_case_diagram.jpeg){width=100%}
+![Figure 2: Use Case Diagram](./src/images/use_case_diagram.jpeg){width=100%}
 
 ## Activity Diagram
 
-![Figure 3: Activity Diagram](./images/activity_diagram.png){height=8in}
+![Figure 3: Activity Diagram](./src/images/activity_diagram.png){height=8in}
 
 ## DFD Diagrams
 
 ### Level 0
 
-![Figure 4: DFD Level 0 Diagram](./images/dfd_level_0.jpeg){width=100%}
+![Figure 4: DFD Level 0 Diagram](./src/images/dfd_level_0.jpeg){width=100%}
 
 ### Level 1
 
-![Figure 5: DFD Level 1 Diagram](./images/dfd_level_1.jpeg){width=100%}
+![Figure 5: DFD Level 1 Diagram](./src/images/dfd_level_1.jpeg){width=100%}
 
 ### Level 2
 
-![Figure 6: DFD Level 2 Diagram](./images/dfd_level_2.png){width=100%}
+![Figure 6: DFD Level 2 Diagram](./src/images/dfd_level_2.png){width=100%}

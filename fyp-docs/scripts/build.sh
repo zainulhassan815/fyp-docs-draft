@@ -1,8 +1,11 @@
 #!/bin/bash
 
-pandoc SRS_Document.md -o output.docx \
-  --reference-doc=custom-reference.docx \
-  --lua-filter=docx-filter.lua \
+# Change to project root directory
+cd "$(dirname "$0")/.."
+
+pandoc src/SRS_Document.md -o build/output.docx \
+  --reference-doc=templates/custom-reference.docx \
+  --lua-filter=scripts/docx-filter.lua \
   --toc --toc-depth=3
 
 python3 << 'EOF'
@@ -14,8 +17,8 @@ import zipfile
 import os
 import shutil
 
-cover = Document('cover.docx')
-content = Document('output.docx')
+cover = Document('templates/cover.docx')
+content = Document('build/output.docx')
 
 # Add page break at end of cover
 p = cover.add_paragraph()
@@ -27,21 +30,21 @@ run._r.append(br)
 # Compose with cover as base (stable)
 composer = Composer(cover)
 composer.append(content)
-composer.save('output.docx')
+composer.save('build/output.docx')
 
 # Replace styles.xml with reference-doc styles
-temp_dir = 'temp_docx'
-with zipfile.ZipFile('custom-reference.docx', 'r') as ref:
+temp_dir = 'build/temp_docx'
+with zipfile.ZipFile('templates/custom-reference.docx', 'r') as ref:
     styles_xml = ref.read('word/styles.xml')
 
-with zipfile.ZipFile('output.docx', 'r') as z:
+with zipfile.ZipFile('build/output.docx', 'r') as z:
     z.extractall(temp_dir)
 
 with open(os.path.join(temp_dir, 'word', 'styles.xml'), 'wb') as f:
     f.write(styles_xml)
 
-os.remove('output.docx')
-with zipfile.ZipFile('output.docx', 'w', zipfile.ZIP_DEFLATED) as z:
+os.remove('build/output.docx')
+with zipfile.ZipFile('build/output.docx', 'w', zipfile.ZIP_DEFLATED) as z:
     for root, dirs, files in os.walk(temp_dir):
         for file in files:
             path = os.path.join(root, file)
@@ -50,4 +53,4 @@ with zipfile.ZipFile('output.docx', 'w', zipfile.ZIP_DEFLATED) as z:
 shutil.rmtree(temp_dir)
 EOF
 
-echo "Done: output.docx"
+echo "Done: build/output.docx"
