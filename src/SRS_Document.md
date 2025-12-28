@@ -173,9 +173,9 @@ Using Retrieval-Augmented Generation technology, the system provides context-awa
 
 HR personnel create and save job descriptions defining required skills, education levels, experience requirements, and other criteria. The HR module connects securely to organizational Gmail accounts through OAuth authentication. It automatically syncs and collects resume attachments from incoming emails, maintaining a complete history of collected resumes. The module also supports sending follow-up emails or digital forms to selected candidates.
 
-### Integration and Automation
+### Integration and Workflows
 
-A well-defined API layer facilitates integration with external applications and automated workflows. For instance, résumés received via email can trigger automated processing pipelines. Processed results can be shared with HR management systems or reporting tools through dedicated API endpoints.
+A well-defined API layer facilitates integration with external applications and workflows. For instance, resumes received via email can trigger processing pipelines. Processed results can be shared with HR management systems or reporting tools through dedicated API endpoints.
 
 ### Privacy and Security
 
@@ -237,7 +237,6 @@ The Email Service is an external, non-human system that enables automated email-
 ### Integration Environment
 
 - The system integrates with Gmail services using OAuth 2.0 for the HR resume collection feature
-- It integrates with organizational LDAP or Active Directory services for centralized user authentication
 - Future integrations may include document management systems, enterprise resource planning platforms, or other business applications via RESTful APIs
 
 ## Design and Implementation Constraints
@@ -836,7 +835,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## Use Case Diagram
 
-![Figure 2: Use Case Diagram](./src/images/use_case_diagram.jpeg){width=100%}
+![Figure 2: Use Case Diagram](./src/images/use_case_diagram.png){width=100%}
 
 ## Activity Diagram
 
