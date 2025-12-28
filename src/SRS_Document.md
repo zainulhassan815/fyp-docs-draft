@@ -132,18 +132,18 @@ The system works as an independent document processing platform that can connect
 
 The system is made up of several connected components:
 
-| Component              | Description                                                              |
-| ---------------------- | ------------------------------------------------------------------------ |
-| **Document Ingestion** | Handles file uploads, format validation, and document routing            |
-| **Processing Engine**  | Performs OCR, text extraction, classification, and metadata generation   |
-| **AI/NLP Module**      | Generates vector embeddings, runs semantic search, and powers RAG        |
-| **Vector Database**    | Stores document embeddings for similarity-based retrieval                |
-| **HR Module**          | Manages Gmail integration, resume collection, and candidate shortlisting |
-| **Backend API**        | Coordinates system operations and handles business logic                 |
-| **Frontend Interface** | Web application for user interactions                                    |
-| **Security Layer**     | Handles authentication, authorization, and data protection               |
+| **Component**      | **Description**                                                          |
+| ------------------ | ------------------------------------------------------------------------ |
+| Document Ingestion | Handles file uploads, format validation, and document routing            |
+| Processing Engine  | Performs OCR, text extraction, classification, and metadata generation   |
+| AI/NLP Module      | Generates vector embeddings, runs semantic search, and powers RAG        |
+| Vector Database    | Stores document embeddings for similarity-based retrieval                |
+| HR Module          | Manages Gmail integration, resume collection, and candidate shortlisting |
+| Backend API        | Coordinates system operations and handles business logic                 |
+| Frontend Interface | Web application for user interactions                                    |
+| Security Layer     | Handles authentication, authorization, and data protection               |
 
-![Figure 1: Architecture Diagram](./src/images/architecture_diagram.png){width=100%}
+![Figure 1: Architecture Diagram](./src/images/architecture_diagram.png){width=50%}
 
 ### External Interfaces
 
@@ -271,7 +271,7 @@ The Email Service is an external system that handles email-based tasks in the HR
 
 ### Performance Constraints
 
-| Metric                 | Requirement                                      |
+| **Metric**             | **Requirement**                                  |
 | ---------------------- | ------------------------------------------------ |
 | OCR Processing         | Complete within 30 seconds per standard document |
 | Search Queries         | Return results within 2 seconds                  |
@@ -395,23 +395,11 @@ This feature provides user authentication and role-based access control so that 
 
 ### Functional Requirements
 
-**REQ-3.1.1: User Login**
-
-The system shall allow users to log in using email and password.
-
-_Use Case Reference: UC-1 – Login_
-
-**REQ-3.1.2: Password Reset**
-
-The system shall allow users to reset their password using a verification mechanism.
-
-_Use Case Reference: UC-2 – Reset Password_
-
-**REQ-3.1.3: Access Restriction**
-
-The system shall restrict access to features unless the user is authenticated.
-
-_Use Case Reference: UC-1 – Login_
+| **#** | **Requirement**                                              | **Use Case** |
+| ----- | ------------------------------------------------------------ | ------------ |
+| FR01  | Allow users to log in using email and password               | UC-01        |
+| FR02  | Allow users to reset password using a verification mechanism | UC-02        |
+| FR03  | Restrict access to features unless user is authenticated     | UC-01        |
 
 ## Document Upload and Processing
 
@@ -425,23 +413,11 @@ This feature allows HR personnel to upload documents and process them for analys
 
 ### Functional Requirements
 
-**REQ-3.2.1: Document Upload**
-
-The system shall allow HR personnel to upload files such as resumes and HR documents.
-
-_Use Case Reference: UC-3 – Upload Files_
-
-**REQ-3.2.2: Text Extraction**
-
-The system shall extract text from uploaded documents using OCR when needed.
-
-_Use Case Reference: UC-4 – Process Document_
-
-**REQ-3.2.3: Document Storage**
-
-The system shall store uploaded documents along with extracted text for retrieval.
-
-_Use Case Reference: UC-3 – Upload Files_
+| **#** | **Requirement**                                                     | **Use Case** |
+| ----- | ------------------------------------------------------------------- | ------------ |
+| FR04  | Allow HR personnel to upload files such as resumes and HR documents | UC-03        |
+| FR05  | Extract text from uploaded documents using OCR when needed          | UC-04        |
+| FR06  | Store uploaded documents along with extracted text for retrieval    | UC-03        |
 
 ## Search Document
 
@@ -455,23 +431,11 @@ This feature allows users to search documents and refine results using filters.
 
 ### Functional Requirements
 
-**REQ-3.3.1: Document Search**
-
-The system shall allow users to search documents using keywords or natural language queries.
-
-_Use Case Reference: UC-5 – Search_
-
-**REQ-3.3.2: Search Criteria**
-
-The system shall allow users to search based on criteria such as skills, job role, or date.
-
-_Use Case Reference: UC-5 – Search_
-
-**REQ-3.3.3: Result Ranking**
-
-The system shall display search results ranked by relevance.
-
-_Use Case Reference: UC-5 – Search_
+| **#** | **Requirement**                                                        | **Use Case** |
+| ----- | ---------------------------------------------------------------------- | ------------ |
+| FR07  | Allow users to search documents using keywords or natural language     | UC-05        |
+| FR08  | Allow users to search based on criteria such as skills, job role, date | UC-05        |
+| FR09  | Display search results ranked by relevance                             | UC-05        |
 
 ## Filter Document
 
@@ -485,11 +449,9 @@ This feature allows HR personnel to filter documents based on various criteria.
 
 ### Functional Requirements
 
-**REQ-3.4.1: Document Filter**
-
-The system shall allow users to filter documents based on criteria such as skills, job role, or date.
-
-_Use Case Reference: UC-6 – Filter Document_
+| **#** | **Requirement**                                                        | **Use Case** |
+| ----- | ---------------------------------------------------------------------- | ------------ |
+| FR10  | Allow users to filter documents based on criteria (skills, role, date) | UC-06        |
 
 ## Job Creation and Management
 
@@ -503,17 +465,10 @@ This feature allows HR personnel to create and manage job postings for resume sc
 
 ### Functional Requirements
 
-**REQ-3.5.1: Job Description Creation**
-
-The system shall allow HR personnel to create job descriptions with required criteria.
-
-_Use Case Reference: UC-7 – Create Job_
-
-**REQ-3.5.2: Job Posting Editing**
-
-The system shall allow HR personnel to edit existing job postings.
-
-_Use Case Reference: UC-8 – Edit Job_
+| **#** | **Requirement**                                             | **Use Case** |
+| ----- | ----------------------------------------------------------- | ------------ |
+| FR11  | Allow HR personnel to create job descriptions with criteria | UC-06        |
+| FR12  | Allow HR personnel to edit existing job postings            | UC-07        |
 
 ## Resume Viewing and Candidate Screening
 
@@ -527,29 +482,12 @@ This feature allows HR personnel to review resumes and shortlist candidates.
 
 ### Functional Requirements
 
-**REQ-3.6.1: View Resume**
-
-The system shall allow HR personnel to view and read extracted resume content.
-
-_Use Case Reference: UC-10 – View Resume_
-
-**REQ-3.6.2: Shortlist Candidate**
-
-The system shall allow HR personnel to shortlist candidates based on job relevance.
-
-_Use Case Reference: UC-11 – Shortlist Candidate_
-
-**REQ-3.6.3: Reject Candidate**
-
-The system shall allow HR personnel to reject candidates.
-
-_Use Case Reference: UC-12 – Reject Candidate_
-
-**REQ-3.6.4: Export to Excel**
-
-The system shall allow HR personnel to export shortlisted candidates to Excel format.
-
-_Use Case Reference: UC-13 – Export Excel_
+| **#** | **Requirement**                                                   | **Use Case** |
+| ----- | ----------------------------------------------------------------- | ------------ |
+| FR13  | Allow HR personnel to view and read extracted resume content      | UC-12        |
+| FR14  | Allow HR personnel to shortlist candidates based on job relevance | UC-12        |
+| FR15  | Allow HR personnel to reject candidates                           | UC-12        |
+| FR16  | Allow HR personnel to export shortlisted candidates to Excel      | UC-05        |
 
 ## Email Integration and Resume Synchronization
 
@@ -564,17 +502,10 @@ This feature connects the system with email services to collect resumes.
 
 ### Functional Requirements
 
-**REQ-3.7.1: Connect Email**
-
-The system shall allow HR personnel to connect their email account.
-
-_Use Case Reference: UC-14 – Connect Email_
-
-**REQ-3.7.2: Sync Resume from Email**
-
-The system shall sync resume attachments from connected email accounts.
-
-_Use Case Reference: UC-15 – Sync Resume_
+| **#** | **Requirement**                                       | **Use Case** |
+| ----- | ----------------------------------------------------- | ------------ |
+| FR17  | Allow HR personnel to connect their email account     | UC-08        |
+| FR18  | Sync resume attachments from connected email accounts | UC-09        |
 
 ## Logs and Metadata Management
 
@@ -588,23 +519,16 @@ This feature provides visibility into system activities and document data.
 
 ### Functional Requirements
 
-**REQ-3.8.1: View Activity Logs**
-
-The system shall allow users to view activity logs.
-
-_Use Case Reference: UC-17 – View Logs_
-
-**REQ-3.8.2: View Document Metadata**
-
-The system shall allow users to view extracted document metadata such as skills and experience.
-
-_Use Case Reference: UC-18 – View Metadata_
+| **#** | **Requirement**                                                      | **Use Case** |
+| ----- | -------------------------------------------------------------------- | ------------ |
+| FR19  | Allow users to view activity logs                                    | UC-10        |
+| FR20  | Allow users to view extracted document metadata (skills, experience) | UC-11        |
 
 # Use Cases
 
 ## UC-01: Login
 
-| Field                        | Description                                                                            |
+| **Field**                    | **Description**                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------- |
 | **Use Case #**               | UC-01                                                                                  |
 | **Context of Use**           | HR personnel logs in to access the system                                              |
@@ -622,7 +546,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-02: Reset Password
 
-| Field                        | Description                                           |
+| **Field**                    | **Description**                                       |
 | ---------------------------- | ----------------------------------------------------- |
 | **Use Case #**               | UC-02                                                 |
 | **Context of Use**           | User resets forgotten password                        |
@@ -640,7 +564,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-03: Search Documents
 
-| Field                        | Description                                              |
+| **Field**                    | **Description**                                          |
 | ---------------------------- | -------------------------------------------------------- |
 | **Use Case #**               | UC-03                                                    |
 | **Context of Use**           | HR personnel searches stored documents                   |
@@ -658,7 +582,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-04: Filter Search
 
-| Field                        | Description                         |
+| **Field**                    | **Description**                     |
 | ---------------------------- | ----------------------------------- |
 | **Use Case #**               | UC-04                               |
 | **Context of Use**           | HR personnel refines search results |
@@ -676,7 +600,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-05: Export Excel
 
-| Field                        | Description                                    |
+| **Field**                    | **Description**                                |
 | ---------------------------- | ---------------------------------------------- |
 | **Use Case #**               | UC-05                                          |
 | **Context of Use**           | HR personnel exports search results            |
@@ -694,7 +618,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-06: Create Job
 
-| Field                        | Description                      |
+| **Field**                    | **Description**                  |
 | ---------------------------- | -------------------------------- |
 | **Use Case #**               | UC-06                            |
 | **Context of Use**           | HR personnel creates job opening |
@@ -712,7 +636,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-07: Edit/Delete Job
 
-| Field                        | Description                          |
+| **Field**                    | **Description**                      |
 | ---------------------------- | ------------------------------------ |
 | **Use Case #**               | UC-07                                |
 | **Context of Use**           | HR personnel updates job information |
@@ -730,7 +654,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-08: Receive Email
 
-| Field                        | Description                                              |
+| **Field**                    | **Description**                                          |
 | ---------------------------- | -------------------------------------------------------- |
 | **Use Case #**               | UC-08                                                    |
 | **Context of Use**           | System receives resumes via email                        |
@@ -749,7 +673,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-09: Sync Resumes
 
-| Field                        | Description                        |
+| **Field**                    | **Description**                    |
 | ---------------------------- | ---------------------------------- |
 | **Use Case #**               | UC-09                              |
 | **Context of Use**           | System syncs resumes from email    |
@@ -767,7 +691,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-10: View Logs
 
-| Field                        | Description                          |
+| **Field**                    | **Description**                      |
 | ---------------------------- | ------------------------------------ |
 | **Use Case #**               | UC-10                                |
 | **Context of Use**           | HR personnel reviews system activity |
@@ -785,7 +709,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-11: View Metadata
 
-| Field                        | Description                          |
+| **Field**                    | **Description**                      |
 | ---------------------------- | ------------------------------------ |
 | **Use Case #**               | UC-11                                |
 | **Context of Use**           | HR personnel views document metadata |
@@ -803,7 +727,7 @@ _Use Case Reference: UC-18 – View Metadata_
 
 ## UC-12: Read Resumes
 
-| Field                        | Description                       |
+| **Field**                    | **Description**                   |
 | ---------------------------- | --------------------------------- |
 | **Use Case #**               | UC-12                             |
 | **Context of Use**           | HR personnel reads resume content |

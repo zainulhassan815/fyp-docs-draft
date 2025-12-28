@@ -14,3 +14,13 @@ function Para(para)
     return pandoc.Div({para}, pandoc.Attr("", {"figure"}))
   end
 end
+
+-- Make tables auto-fit to window width
+function Table(tbl)
+  if tbl.colspecs then
+    for i, colspec in ipairs(tbl.colspecs) do
+      tbl.colspecs[i] = {colspec[1], nil}
+    end
+  end
+  return tbl
+end
