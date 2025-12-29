@@ -4,13 +4,13 @@
 
 ## Purpose
 
-This project helps organizations find and understand information buried in large collections of documents. Reviewing documents manually, especially resumes, takes too much time and leads to mistakes. Our system automates this work using AI, making it faster and more reliable.
+The project is intended to help organizations in effectively managing, searching, and extracting meaningful information from large and unstructured collection of documents. Manual document review and resume screening processes are time-consuming, error-prone, and inefficient. This project aims to reduce human effort and operational delays by introducing an automated solution that enhances document understanding and information retrieval. By leveraging artificial intelligence techniques, the system seeks to improve accuracy, consistency, and speed in document analysis and HR decision-making processes.
 
-The system is built to handle document search and resume screening, with room to expand into other areas like general document management.
+Additionally, the project is proposed to support automated documentation. The system serves as a foundation for scalable AI-driven documentation that can be applied to a variety of organizational domains, such as management and recruitment.
 
 ## Project Scope
 
-Most businesses struggle to manage and make sense of large document collections. This system solves that problem by automating document review and providing tools to search, understand, and analyze documents.
+The problem that most businesses face when trying to manage and gain insight from large collections of documents is addressed by the AI-Powered HR Screening and Document Retrieval System Using RAG. The time-consuming manual review of documents is eliminated by the system, which also provides a capable system for document comprehension and analysis.
 
 ### Key Capabilities
 
