@@ -4,9 +4,7 @@
 
 ## Purpose
 
-The project is intended to help organizations in effectively managing, searching, and extracting meaningful information from large and unstructured collection of documents. Manual document review and resume screening processes are time-consuming, error-prone, and inefficient. This project aims to reduce human effort and operational delays by introducing an automated solution that enhances document understanding and information retrieval. By leveraging artificial intelligence techniques, the system seeks to improve accuracy, consistency, and speed in document analysis and HR decision-making processes.
-
-Additionally, the project is proposed to support automated documentation. The system serves as a foundation for scalable AI-driven documentation that can be applied to a variety of organizational domains, such as management and recruitment.
+The project is intended to help organizations in effectively managing, searching, and extracting meaningful information from large and unstructured collection of documents. Manual document scrutiny and resume screening processes are time-consuming, error-prone, and inefficient. The proposed project addresses these challenges by using AI driven tools that enhance document understanding and information retrieval.
 
 ## Project Scope
 
@@ -21,69 +19,25 @@ The system processes these file types:
 - PDF files
 - Microsoft Word documents
 - Scanned images
-
-**Text Extraction (OCR)**
-
-For scanned or image-based documents, the system extracts readable text. It then:
-
 - Classifies documents by type
-- Tags them with relevant metadata
-- Converts them into vector embeddings for search
 
 **Natural Language Interface**
 
 - Search documents using plain English queries
 - Ask questions about document content
+- Tags them with relevant metadata
 
 **Retrieval-Augmented Generation (RAG)**
 
 - Finds relevant document content based on the user's query
-- Uses semantic search with vector embeddings
-- Gives the AI model factual context from stored documents
-- Generates responses grounded in source data
-- Helps reduce incorrect or irrelevant answers
-- Supports question answering for HR and document analysis tasks
+- Uses semantic search
+- Gives the factual context from stored documents
 
-### HR Resume Screening
+### Document Screening
 
-- Helps HR staff screen resumes and shortlist candidates
-- Collects resume attachments from incoming emails
+- Helps HR Team in document screening of collected attachments from incoming emails
 - Handles multiple resume formats
-- Extracts candidate information:
-  - Skills
-  - Education
-  - Work experience
-  - Contact details
-- Matches and ranks candidates against:
-  - Job descriptions
-  - Required skills and experience
-- Reduces:
-  - Manual screening effort
-  - HR workload and processing time
-
-### Benefits
-
-- Reduces manual document processing
-- Helps minimize errors in document review and analysis
-- Saves time for HR and other departments
-
-### Objectives
-
-- Simplify repetitive document review and classification tasks
-- Use AI to support HR screening and compliance monitoring
-- Make organizational knowledge easier to access and manage
-
-### Strategic Alignment
-
-This system uses AI to improve document retrieval and resume screening. It offers a practical approach to document search and analysis that can work with different types of organizational documents. The system handles moderate document volumes and can be extended later to support larger datasets if needed.
-
-### Out of Scope
-
-This release does not include:
-
-- Integration with third-party applicant tracking systems (e.g., Indeed, Greenhouse)
-- Processing of video or audio files
-- Native mobile apps for iOS and Android (planned for future releases)
+- Matches and ranks candidates against job specific requirements
 
 ## References
 
@@ -124,9 +78,7 @@ The following documents and resources were consulted during the preparation of t
 
 This is a standalone system built to help organizations process and search documents using AI. It offers semantic search, text extraction, and question answering features.
 
-### System Context
-
-The system works as an independent document processing platform that can connect with existing tools and workflows. It complements existing content management systems by adding AI-based search and analysis features.
+### Literature Review
 
 ### Major System Components
 
@@ -147,7 +99,7 @@ The system is made up of several connected components:
 
 ### External Interfaces
 
-The system connects to Gmail (e.g., HR email accounts) for resume collection in the HR module. Email integration uses OAuth authentication without storing credentials. Future versions may include connections to ERP systems and document management platforms.
+The system connects to HR Team email accounts for document collection. Email integration uses OAuth authentication without storing credentials. Future versions may include connections to ERP systems and document management platforms.
 
 ### Hardware Platform
 
@@ -172,9 +124,9 @@ A dashboard lets users view, sort, filter, preview, download, and delete documen
 
 Users can search using natural language queries instead of exact keywords. The system uses vector embeddings to find documents based on meaning, not just matching words. Users can filter results by document type, date range, or other metadata. Results are ranked by relevance and show matching text with highlights.
 
-### Question Answering System
+### RAG System
 
-Using Retrieval-Augmented Generation (RAG), the system answers questions about uploaded documents. Users ask questions in plain language through a chat interface. The system finds relevant content and generates responses based on that content.
+Using Retrieval-Augmented Generation (RAG) methodology, the system answers questions about uploaded documents. Users ask questions in plain language through a chat interface. The system finds relevant content and generates responses based on that content.
 
 **Example queries:**
 
@@ -185,10 +137,6 @@ Using Retrieval-Augmented Generation (RAG), the system answers questions about u
 ### Resume Screening
 
 HR personnel create job descriptions with required skills, education, experience, and other criteria. The HR module connects to Gmail accounts using OAuth authentication and collects resume attachments from incoming emails. It keeps a history of collected resumes and lets HR personnel send follow-up emails to candidates.
-
-### Integration and Workflows
-
-The API layer allows integration with external applications. For example, resumes received via email can start processing tasks. Results can be shared with HR management systems or reporting tools through API endpoints.
 
 ### Privacy and Security
 
@@ -269,28 +217,6 @@ The Email Service is an external system that handles email-based tasks in the HR
 - AI models should be deployable on cloud or local infrastructure based on needs
 - The system should support both CPU-only and GPU-accelerated deployments
 
-### Performance Constraints
-
-| **Metric**             | **Requirement**                                  |
-| ---------------------- | ------------------------------------------------ |
-| OCR Processing         | Complete within 30 seconds per standard document |
-| Search Queries         | Return results within 2 seconds                  |
-| RAG Question Answering | Generate responses within 10 seconds             |
-| Concurrent Users       | Handle multiple users without major slowdowns    |
-| Document Capacity      | Support at least 100,000 documents               |
-
-### Interface Constraints
-
-- Gmail integration should use OAuth 2.0 and follow Gmail API usage policies and rate limits
-- The web interface should work without special software or browser plugins
-- The system should show clear error messages when processing fails
-
-### Regulatory and Policy Constraints
-
-- Organizations deploying the system are responsible for having rights to process uploaded documents
-- The system should keep different users' data separate and enforce access controls
-- AI-generated content should be clearly identified
-
 ## User Documentation
 
 The system will include the following documentation:
@@ -363,13 +289,6 @@ Documentation for each version including:
 - OCR provides acceptable accuracy for standard printed documents
 - Document quality affects extraction accuracy, especially for scanned or handwritten files
 - RAG returns relevant answers for most queries
-
-### Organizational Assumptions
-
-- Organizations provide administrative support for setup and maintenance
-- Users have basic computer and web application skills
-- Backup and recovery procedures are handled by the deploying organization
-- HR departments define clear job requirements for candidate evaluation
 
 ### Dependencies
 
@@ -749,7 +668,7 @@ This feature provides visibility into system activities and document data.
 
 ## Use Case Diagram
 
-![Figure 2: Use Case Diagram](./src/images/use_case_diagram.png){width=100%}
+![Figure 2: Use Case Diagram](./src/images/use_case_diagram.jpeg){width=100%}
 
 ## Activity Diagram
 
@@ -763,7 +682,7 @@ This feature provides visibility into system activities and document data.
 
 ### Level 1
 
-![Figure 5: DFD Level 1 Diagram](./src/images/dfd_level_1.jpeg){width=100%}
+![Figure 5: DFD Level 1 Diagram](./src/images/dfd_level_1.png){height=80in}
 
 ### Level 2
 
