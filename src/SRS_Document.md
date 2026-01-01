@@ -80,6 +80,19 @@ This is a standalone system built to help organizations process and search docum
 
 ### Literature Review
 
+| **Name** | **Technology** | **Release Date** |
+| -------- | -------------- | ---------------- |
+| LangChain | RAG Framework, LLM Orchestration | 2022 |
+| FAISS | Vector Similarity Search | 2017 |
+| Pinecone | Vector Database | 2019 |
+| Weaviate | Vector Database, Hybrid Search | 2019 |
+| ChromaDB | Vector Database | 2022 |
+| Eightfold AI | AI Recruitment, Deep Learning | 2016 |
+| Greenhouse | ATS, AI Resume Filtering | 2012 |
+| Google Document AI | Document Processing, OCR | 2020 |
+| Amazon Textract | Document Text Extraction | 2018 |
+| Tesseract | Open-source OCR Engine | 2006 |
+
 ### Major System Components
 
 The system is made up of several connected components:
