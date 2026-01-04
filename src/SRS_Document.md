@@ -80,18 +80,18 @@ This is a standalone system built to help organizations process and search docum
 
 ### Literature Review
 
-| **Name** | **Technology** | **Release Date** |
-| -------- | -------------- | ---------------- |
-| LangChain | RAG Framework, LLM Orchestration | 2022 |
-| FAISS | Vector Similarity Search | 2017 |
-| Pinecone | Vector Database | 2019 |
-| Weaviate | Vector Database, Hybrid Search | 2019 |
-| ChromaDB | Vector Database | 2022 |
-| Eightfold AI | AI Recruitment, Deep Learning | 2016 |
-| Greenhouse | ATS, AI Resume Filtering | 2012 |
-| Google Document AI | Document Processing, OCR | 2020 |
-| Amazon Textract | Document Text Extraction | 2018 |
-| Tesseract | Open-source OCR Engine | 2006 |
+| **Name**           | **Technology**                   | **Release Date** |
+| ------------------ | -------------------------------- | ---------------- |
+| LangChain          | RAG Framework, LLM Orchestration | 2022             |
+| FAISS              | Vector Similarity Search         | 2017             |
+| Pinecone           | Vector Database                  | 2019             |
+| Weaviate           | Vector Database, Hybrid Search   | 2019             |
+| ChromaDB           | Vector Database                  | 2022             |
+| Eightfold AI       | AI Recruitment, Deep Learning    | 2016             |
+| Greenhouse         | ATS, AI Resume Filtering         | 2012             |
+| Google Document AI | Document Processing, OCR         | 2020             |
+| Amazon Textract    | Document Text Extraction         | 2018             |
+| Tesseract          | Open-source OCR Engine           | 2006             |
 
 ### Major System Components
 
@@ -695,8 +695,158 @@ This feature provides visibility into system activities and document data.
 
 ### Level 1
 
-![Figure 5: DFD Level 1 Diagram](./src/images/dfd_level_1.png){height=80in}
+![Figure 5: DFD Level 1 Diagram](./src/images/dfd_level_1.png){height=6in}
 
 ### Level 2
 
 ![Figure 6: DFD Level 2 Diagram](./src/images/dfd_level_2.png){width=100%}
+
+## Class Diagram
+
+![Figure 7: Class Diargam](./src/images/class-diagram.png){height=8in}
+
+\pagebreak
+
+# External Interface Requirements
+
+## User Interfaces
+
+The system provides a web-based user interface for HR personnel. No client-side installation is required. The interface supports document upload, search, resume screening, and interaction with the Retrieval-Augmented Generation (RAG) module.
+
+## Common UI Elements
+
+The following user interface elements are consistently applied across all system screens to ensure usability, consistency, and ease of navigation.
+
+### Header / Navigation Bar
+
+- System logo and application title
+- Navigation links to main modules (Dashboard, Documents, Search, HR Module, Logs)
+- User account menu with profile access and logout option
+
+### Standard Controls
+
+- Action buttons such as Upload, Search, Filter, View, Download, Export to Excel
+- Form input fields for text entry and selection
+
+### Search Interface
+
+- Global search bar supporting keyword and natural language queries
+- Filter controls for document type, date range, skills, and job roles
+
+### Feedback and Status Indicators
+
+- Success and error messages displayed as toast notifications
+- Loading indicators during document processing, search execution, and AI response generation
+
+### Data Presentation
+
+- Tabular views for documents, resumes, and logs
+- Pagination and sorting options for large result sets
+
+### Security and Session Handling
+
+- Visible login status
+- Automatic session timeout and redirection to login on expiry
+
+## Key Screens with Expected Output
+
+### Screen 1 – Login Screen
+
+**Expected Output:**
+
+- Clean login screen with a blue background and system branding
+- Centered login box for user access
+- Email and password input fields
+- "Forgot password?" option for account recovery
+- Sign in button with optional Google login
+- Simple and user-friendly design for HR users
+
+![Figure 7: Login Screen](./src/images/screenshots/login.png){width=100%}
+
+### Screen 2 – Dashboard Screen
+
+**Expected Output:**
+
+- Overview of system activity including:
+  - Total documents uploaded
+  - Total resumes processed
+  - Active job postings
+- Quick navigation links to:
+  - Document upload
+  - Search and retrieval
+  - Resume screening module
+  - Recent activity summary
+
+![Figure 8: Dashboard Screen](./src/images/screenshots/dashboard.jpeg){width=100%}
+
+### Screen 3 – Document Upload and Management
+
+**Expected Output:**
+
+- File upload interface supporting PDF, Word, and image formats
+- Upload progress indicator
+- List of uploaded documents showing document name, upload date and processing status
+- Actions to preview, download, or delete documents
+
+![Figure 9: Document Management Screen](./src/images/screenshots/documents.jpeg){width=100%}
+
+### Screen 4 – Search and Question Answering (RAG Interface)
+
+**Expected Output:**
+
+- Search input for keyword and natural language queries
+- Display of ranked search results based on semantic relevance
+- AI-generated answers using Retrieval-Augmented Generation
+- References to source documents used in responses
+- Filtering options for refining results
+
+![Figure 10: Search and RAG Interface](./src/images/screenshots/search-and-rag.jpeg){width=100%}
+
+### Screen 5 – Resume Screening Module
+
+**Expected Output:**
+
+- Job selection interface with defined screening criteria
+- List of candidate resumes matched to the job
+- Extracted candidate details including skills, education and work experience
+- Actions to shortlist, reject, or export candidate data to Excel
+
+![Figure 11: Resume Screening Module](./src/images/screenshots/candidates.jpeg){width=100%}
+
+### Screen 6 – Logs and Metadata View
+
+**Expected Output:**
+
+- System activity logs including document uploads, searches, and screenings
+- Metadata view showing extracted document attributes
+- Filtering and sorting options for logs and metadata
+
+![Figure 12: Activity Logs Screen](./src/images/screenshots/activity-logs.jpeg){width=80%}
+
+### Screen 7 – Create Job Screen
+
+**Expected Output:**
+
+- Form-based screen to create a new job posting
+- Fields for job title, department, location, employment type, and job description
+- Section for required and preferred skills
+- Education level and experience range inputs
+- Optional salary range and job status selection
+- "Create Job" button to save the job
+- "Cancel" button to discard changes
+
+![Figure 13: Create Job Screen](./src/images/screenshots/create-jobs.jpeg){width=100%}
+
+### Screen 8 – Jobs Listing Screen
+
+**Expected Output:**
+
+- Dashboard screen displaying all job postings
+- Job cards showing job title, department, location, and employment type
+- Status labels (Active, Draft, Closed) for each job
+- Posted date and number of applicants visible on each card
+- "Create Job" button to add a new job posting
+- Options menu for managing individual job posts
+- Clean grid-based layout for easy job management
+
+![Figure 14: Jobs Listing Screen](./src/images/screenshots/jobs.jpeg){width=100%}
