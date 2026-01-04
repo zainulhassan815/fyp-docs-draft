@@ -12,4 +12,7 @@ pandoc src/SRS_Document.md -o build/SRS_Document.docx \
 # Merge cover page and apply styles
 python3 scripts/merge_cover.py
 
+# Auto-fit all tables to window width
+python3 scripts/autofit_tables.py
+
 echo "Done: build/SRS_Document.docx"
