@@ -1,0 +1,105 @@
+# Entity-Relationship Diagram — Hireflow
+direction: right
+
+*.style.font-size: 24
+(* -> *)[*].style.font-size: 20
+
+users: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  email: varchar(320) { constraint: unique }
+  hashed_password: varchar
+  role: "enum(hr, admin)"
+  is_active: boolean
+}
+
+documents: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  owner_id: uuid { constraint: foreign_key }
+  filename: varchar
+  status: "enum(pending..ready)"
+  document_type: "enum(resume..)"
+  authored_by_id: uuid { constraint: foreign_key }
+  search_tsv: tsvector
+}
+
+document_elements: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  document_id: uuid { constraint: foreign_key }
+  kind: enum
+  content: text
+}
+
+candidates: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  owner_id: uuid { constraint: foreign_key }
+  source_document_id: uuid { constraint: foreign_key }
+  name: varchar
+  email: varchar
+  skills: "varchar[]"
+}
+
+jobs: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  owner_id: uuid { constraint: foreign_key }
+  title: varchar
+  required_skills: "varchar[]"
+  status: enum
+}
+
+applications: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  candidate_id: uuid { constraint: foreign_key }
+  job_id: uuid { constraint: foreign_key }
+  score: float
+  status: enum
+}
+
+candidate_attachments: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  candidate_id: uuid { constraint: foreign_key }
+  document_id: uuid { constraint: foreign_key }
+  role: enum
+}
+
+gmail_connections: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  user_id: uuid { constraint: foreign_key }
+  email: varchar
+}
+
+gmail_ingested_messages: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  connection_id: uuid { constraint: foreign_key }
+  message_id: varchar
+}
+
+activity_logs: {
+  shape: sql_table
+  id: uuid { constraint: primary_key }
+  user_id: uuid { constraint: foreign_key }
+  action: varchar
+  created_at: timestamptz
+}
+
+users.id -> documents.owner_id: owns
+users.id -> jobs.owner_id: owns
+users.id -> candidates.owner_id: owns
+users.id -> gmail_connections.user_id
+users.id -> activity_logs.user_id
+documents.id -> document_elements.document_id
+documents.id -> candidates.source_document_id: parsed from
+candidates.id -> documents.authored_by_id: authored
+candidates.id -> applications.candidate_id
+jobs.id -> applications.job_id
+candidates.id -> candidate_attachments.candidate_id
+documents.id -> candidate_attachments.document_id
+gmail_connections.id -> gmail_ingested_messages.connection_id

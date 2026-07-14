@@ -1,0 +1,46 @@
+# Component Diagram — Hireflow (software modules & dependencies)
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+direction: down
+
+classes: {
+  box: {style: {stroke-width: 2}}
+  store: {shape: cylinder; style: {stroke-width: 2}}
+  grp: {style: {stroke-dash: 4}}
+}
+
+frontend: Web Frontend {class: box}
+api: API Server (FastAPI) {class: box}
+
+modules: Backend Modules {
+  class: grp
+  auth: Authentication {class: box}
+  docs: Documents {class: box}
+  search: Search & RAG {class: box}
+  screening: Screening {class: box}
+  gmail: Gmail Sync {class: box}
+}
+
+shared: Persistence & Adapters {class: box}
+
+worker: Ingestion Worker {class: box}
+
+resources: Data & Providers {
+  class: grp
+  db: PostgreSQL {class: store}
+  vectors: ChromaDB {class: store}
+  storage: Object Storage {class: store}
+  llm: LLM (Claude) {class: box}
+}
+
+frontend -> api: REST
+api -> modules
+worker -> modules: async
+modules -> shared
+shared -> resources.db
+shared -> resources.vectors
+shared -> resources.storage
+shared -> resources.llm

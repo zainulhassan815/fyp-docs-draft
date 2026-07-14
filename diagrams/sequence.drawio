@@ -1,0 +1,155 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="System Sequence Diagram - Hireflow" id="seq-system-hireflow">
+    <mxGraphModel dx="1700" dy="1340" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1340" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ================= LIFELINES ================= -->
+        <mxCell id="llUser" value="HR User" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;participant=umlActor;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="60" y="40" width="80" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="llWeb" value="Web App&#10;(React SPA)" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="245" y="40" width="150" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="llApi" value="Backend API&#10;(FastAPI)" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="485" y="40" width="150" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="llWorker" value="Async Worker&#10;(Celery)" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="735" y="40" width="150" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="llStores" value="Data Stores&#10;(PostgreSQL · ChromaDB · MinIO)" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="985" y="40" width="170" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="llLlm" value="LLM Provider&#10;(Claude / Ollama)" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="1245" y="40" width="150" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="llGmail" value="Gmail&#10;(Email Service)" parent="1" vertex="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;size=48;fontStyle=1;">
+          <mxGeometry x="1485" y="40" width="150" height="1250" as="geometry" />
+        </mxCell>
+
+        <!-- ================= SCENARIO FRAMES ================= -->
+        <mxCell id="frA" value="Authenticate" parent="1" vertex="1" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;verticalAlign=top;align=left;fontSize=12;fontStyle=1;width=140;height=24;">
+          <mxGeometry x="55" y="110" width="1580" height="185" as="geometry" />
+        </mxCell>
+        <mxCell id="frB" value="Upload document &amp; async indexing" parent="1" vertex="1" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;verticalAlign=top;align=left;fontSize=12;fontStyle=1;width=260;height=24;">
+          <mxGeometry x="55" y="305" width="1580" height="215" as="geometry" />
+        </mxCell>
+        <mxCell id="frC" value="Ask a question (RAG, streaming)" parent="1" vertex="1" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;verticalAlign=top;align=left;fontSize=12;fontStyle=1;width=250;height=24;">
+          <mxGeometry x="55" y="530" width="1580" height="272" as="geometry" />
+        </mxCell>
+        <mxCell id="frD" value="Match candidates to a job" parent="1" vertex="1" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;verticalAlign=top;align=left;fontSize=12;fontStyle=1;width=210;height=24;">
+          <mxGeometry x="55" y="812" width="1580" height="185" as="geometry" />
+        </mxCell>
+        <mxCell id="frE" value="Sync candidate emails (Gmail)" parent="1" vertex="1" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;verticalAlign=top;align=left;fontSize=12;fontStyle=1;width=240;height=24;">
+          <mxGeometry x="55" y="1007" width="1580" height="250" as="geometry" />
+        </mxCell>
+
+        <!-- ================= MESSAGES ================= -->
+        <!-- A. Authenticate -->
+        <mxCell id="a1" value="log in (email, password)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="150" as="sourcePoint" /><mxPoint x="320" y="150" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="a2" value="POST /auth/login" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="320" y="184" as="sourcePoint" /><mxPoint x="560" y="184" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="a3" value="verify credentials (Argon2id)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="218" as="sourcePoint" /><mxPoint x="1070" y="218" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="a4" value="user record" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1070" y="251" as="sourcePoint" /><mxPoint x="560" y="251" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="a5" value="JWT access + refresh tokens" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="284" as="sourcePoint" /><mxPoint x="320" y="284" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- B. Upload & async indexing -->
+        <mxCell id="b1" value="upload document" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="345" as="sourcePoint" /><mxPoint x="320" y="345" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="b2" value="POST /documents (file)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="320" y="379" as="sourcePoint" /><mxPoint x="560" y="379" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="b3" value="save file (MinIO) + row (status: pending)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="412" as="sourcePoint" /><mxPoint x="1070" y="412" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="b4" value="enqueue process_document" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="445" as="sourcePoint" /><mxPoint x="810" y="445" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="b5" value="202 Accepted {status: pending}" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="478" as="sourcePoint" /><mxPoint x="320" y="478" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="b6" value="extract, chunk, embed, index (status: ready)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="810" y="507" as="sourcePoint" /><mxPoint x="1070" y="507" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- C. Ask a question (RAG) -->
+        <mxCell id="c1" value="ask question" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="570" as="sourcePoint" /><mxPoint x="320" y="570" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c2" value="POST /rag/stream  (SSE)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="320" y="603" as="sourcePoint" /><mxPoint x="560" y="603" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c3" value="hybrid retrieve (vector + lexical), owner-scoped" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="636" as="sourcePoint" /><mxPoint x="1070" y="636" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c4" value="top-k chunks" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1070" y="669" as="sourcePoint" /><mxPoint x="560" y="669" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c5" value="generate answer (streamed)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="702" as="sourcePoint" /><mxPoint x="1320" y="702" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c6" value="answer tokens" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1320" y="735" as="sourcePoint" /><mxPoint x="560" y="735" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c7" value="SSE: citations + answer deltas" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="765" as="sourcePoint" /><mxPoint x="320" y="765" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="c8" value="render answer with citations" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="320" y="791" as="sourcePoint" /><mxPoint x="100" y="791" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- D. Match candidates -->
+        <mxCell id="d1" value="match candidates to job" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="852" as="sourcePoint" /><mxPoint x="320" y="852" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="d2" value="POST /jobs/{id}/match" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="320" y="885" as="sourcePoint" /><mxPoint x="560" y="885" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="d3" value="score candidates → applications" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="918" as="sourcePoint" /><mxPoint x="1070" y="918" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="d4" value="ranked {score, breakdown}" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1070" y="951" as="sourcePoint" /><mxPoint x="560" y="951" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="d5" value="ranked candidates" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="984" as="sourcePoint" /><mxPoint x="320" y="984" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <!-- E. Gmail sync -->
+        <mxCell id="e1" value="sync mailbox" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="1047" as="sourcePoint" /><mxPoint x="320" y="1047" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="POST /gmail/sync" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="320" y="1080" as="sourcePoint" /><mxPoint x="560" y="1080" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="fetch messages + attachments" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="1113" as="sourcePoint" /><mxPoint x="1560" y="1113" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="messages" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1560" y="1146" as="sourcePoint" /><mxPoint x="560" y="1146" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="enqueue ingest (attachments)" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="1179" as="sourcePoint" /><mxPoint x="810" y="1179" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="create documents → indexing pipeline" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="810" y="1212" as="sourcePoint" /><mxPoint x="1070" y="1212" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e7" value="sync summary {new candidates}" parent="1" edge="1" style="html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=12;align=center;verticalAlign=bottom;endArrow=openThin;endFill=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="560" y="1243" as="sourcePoint" /><mxPoint x="320" y="1243" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

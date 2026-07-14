@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Layered System Architecture - Hireflow" id="arch-layered-hireflow">
+    <mxGraphModel dx="1120" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1130" pageHeight="780" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===== flow arrows (behind bands) ===== -->
+        <mxCell id="ar1" parent="1" edge="1" style="html=1;endArrow=classic;startArrow=classic;strokeColor=#444444;strokeWidth=2;rounded=0;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="540" y="150" as="sourcePoint" /><mxPoint x="540" y="184" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="ar2" parent="1" edge="1" style="html=1;endArrow=classic;startArrow=classic;strokeColor=#444444;strokeWidth=2;rounded=0;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="540" y="304" as="sourcePoint" /><mxPoint x="540" y="338" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="ar3" parent="1" edge="1" style="html=1;endArrow=classic;startArrow=classic;strokeColor=#444444;strokeWidth=2;rounded=0;">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="540" y="458" as="sourcePoint" /><mxPoint x="540" y="492" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="ar4" value="external APIs" parent="1" edge="1" style="html=1;endArrow=classic;dashed=1;strokeColor=#444444;strokeWidth=2;rounded=0;fontSize=11;fontColor=#444444;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1040" y="398" as="sourcePoint" /><mxPoint x="1040" y="660" as="targetPoint" />
+            <Array as="points"><mxPoint x="1085" y="398" /><mxPoint x="1085" y="660" /></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ===== LAYER BANDS ===== -->
+        <mxCell id="bPres" value="Presentation" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e9f2fb;strokeColor=#2f4b6e;fontColor=#1f3350;fontStyle=1;fontSize=16;align=left;verticalAlign=middle;spacingLeft=18;">
+          <mxGeometry x="40" y="40" width="1000" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="bApp" value="Application" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e9f7ee;strokeColor=#2f6b47;fontColor=#1f4a30;fontStyle=1;fontSize=16;align=left;verticalAlign=middle;spacingLeft=18;">
+          <mxGeometry x="40" y="184" width="1000" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bProc" value="Processing" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1ebfb;strokeColor=#5a3f86;fontColor=#3f2a63;fontStyle=1;fontSize=16;align=left;verticalAlign=middle;spacingLeft=18;">
+          <mxGeometry x="40" y="338" width="1000" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bStore" value="Storage" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fdf4e3;strokeColor=#8a6a2f;fontColor=#5f4820;fontStyle=1;fontSize=16;align=left;verticalAlign=middle;spacingLeft=18;">
+          <mxGeometry x="40" y="492" width="1000" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="bExt" value="External&#10;Services" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbeef0;strokeColor=#8a3f4c;fontColor=#5f2a33;fontStyle=1;fontSize=15;align=left;verticalAlign=middle;spacingLeft=18;dashed=1;">
+          <mxGeometry x="40" y="636" width="1000" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Presentation components ===== -->
+        <mxCell id="c_spa" value="React 19 SPA (TypeScript)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f4b6e;fontColor=#000000;fontSize=13;">
+          <mxGeometry x="270" y="68" width="340" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="c_nginx" value="nginx reverse proxy" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f4b6e;fontColor=#000000;fontSize=13;">
+          <mxGeometry x="670" y="68" width="340" height="54" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Application components ===== -->
+        <mxCell id="a_api" value="REST API&#10;(31 endpoints)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f6b47;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="250" y="214" width="144" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a_auth" value="Authentication &amp; Security" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f6b47;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="409" y="214" width="144" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a_doc" value="Document Management" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f6b47;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="568" y="214" width="144" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a_search" value="Search &amp; RAG Service" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f6b47;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="727" y="214" width="144" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a_match" value="Job &amp; Candidate Matching" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2f6b47;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="886" y="214" width="144" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Processing components ===== -->
+        <mxCell id="p_celery" value="Celery Worker&#10;(asynchronous)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#5a3f86;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="250" y="368" width="185" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p_ingest" value="Document Ingestion&#10;(OCR, extract, chunk)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#5a3f86;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="448" y="368" width="185" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p_embed" value="Embedding &amp; Indexing&#10;(sentence-transformers)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#5a3f86;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="646" y="368" width="185" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p_rag" value="Hybrid Search &amp;&#10;RAG Engine" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#5a3f86;fontColor=#000000;fontSize=12;">
+          <mxGeometry x="844" y="368" width="185" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Storage components ===== -->
+        <mxCell id="s_pg" value="PostgreSQL" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8a6a2f;fontColor=#000000;fontSize=13;">
+          <mxGeometry x="250" y="519" width="185" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="s_chroma" value="ChromaDB" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8a6a2f;fontColor=#000000;fontSize=13;">
+          <mxGeometry x="448" y="519" width="185" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="s_redis" value="Redis" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8a6a2f;fontColor=#000000;fontSize=13;">
+          <mxGeometry x="646" y="519" width="185" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="s_minio" value="MinIO" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8a6a2f;fontColor=#000000;fontSize=13;">
+          <mxGeometry x="844" y="519" width="185" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ===== External components ===== -->
+        <mxCell id="e_llm" value="LLM Provider (Claude / Ollama)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8a3f4c;fontColor=#000000;fontSize=13;dashed=1;">
+          <mxGeometry x="270" y="660" width="340" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="e_gmail" value="Gmail (Email Service)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8a3f4c;fontColor=#000000;fontSize=13;dashed=1;">
+          <mxGeometry x="670" y="660" width="340" height="52" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

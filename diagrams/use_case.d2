@@ -1,0 +1,41 @@
+# Use Case Diagram — Hireflow
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+direction: right
+
+classes: {
+  actor: {shape: person}
+  uc: {shape: oval}
+}
+
+hr: HR Personnel {class: actor}
+email: Email Service {class: actor}
+
+system: Hireflow System {
+  login: Login {class: uc}
+  reset: Reset Password {class: uc}
+  upload: Upload Document {class: uc}
+  search: Search Documents {class: uc}
+  ask: Ask Questions (RAG) {class: uc}
+  filter: Filter Results {class: uc}
+  job: Create / Manage Job {class: uc}
+  screen: Screen Candidates {class: uc}
+  sync: Sync Resumes {class: uc}
+  logs: View Activity Logs {class: uc}
+  export: Export to Excel {class: uc}
+}
+
+hr -> system.login
+hr -> system.reset
+hr -> system.upload
+hr -> system.search
+hr -> system.ask
+hr -> system.filter
+hr -> system.job
+hr -> system.screen
+hr -> system.logs
+hr -> system.export
+email -> system.sync

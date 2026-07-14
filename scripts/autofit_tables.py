@@ -4,8 +4,29 @@
 from docx import Document
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
-from docx.shared import Twips
+from docx.shared import Pt
 import sys
+
+
+def set_table_font(table, pt):
+    """Set the font of every run in a table so wide tables fit the page width."""
+    size = Pt(pt)
+    for row in table.rows:
+        for cell in row.cells:
+            for para in cell.paragraphs:
+                for run in para.runs:
+                    run.font.size = size
+
+
+def font_pt_for_columns(n_cols):
+    """Graduated font size: only shrink genuinely wide tables, leave narrow ones alone."""
+    if n_cols >= 8:
+        return 8
+    if n_cols >= 6:
+        return 9
+    if n_cols == 5:
+        return 10
+    return None  # <= 4 columns: keep the document default size
 
 
 def set_table_autofit_window(table):
@@ -47,6 +68,9 @@ def autofit_tables(docx_path, output_path=None):
 
     for table in doc.tables:
         set_table_autofit_window(table)
+        pt = font_pt_for_columns(len(table.columns))
+        if pt is not None:
+            set_table_font(table, pt)
 
     doc.save(output_path)
     print(f"Processed {table_count} table(s) in {docx_path}")

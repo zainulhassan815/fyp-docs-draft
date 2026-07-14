@@ -1,0 +1,150 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="DFD Level 2 - Document Processing &amp; Retrieval" id="dfd2-hireflow">
+    <mxGraphModel dx="1500" dy="820" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1520" pageHeight="820" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- section labels -->
+        <mxCell id="labIng" value="Ingestion pipeline  (asynchronous worker)" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontStyle=2;fontSize=12;fontColor=#000000;strokeColor=none;fillColor=none;">
+          <mxGeometry x="240" y="40" width="360" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="labQry" value="Query pipeline  (per request)" parent="1" vertex="1" style="text;html=1;align=left;verticalAlign=middle;fontStyle=2;fontSize=12;fontColor=#000000;strokeColor=none;fillColor=none;">
+          <mxGeometry x="240" y="474" width="320" height="24" as="geometry" />
+        </mxCell>
+
+        <!-- external -->
+        <mxCell id="xUser" value="HR User" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;">
+          <mxGeometry x="40" y="520" width="130" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="xLlm" value="LLM Provider&#10;(Anthropic Claude)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;">
+          <mxGeometry x="1305" y="700" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- data stores -->
+        <mxCell id="d8" value="D8   Object Store (MinIO)" parent="1" vertex="1" style="shape=partialRectangle;top=1;bottom=1;left=1;right=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;align=center;fontSize=11;">
+          <mxGeometry x="30" y="100" width="180" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" value="D2   Documents &amp; Elements&#10;(PostgreSQL)" parent="1" vertex="1" style="shape=partialRectangle;top=1;bottom=1;left=1;right=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;align=center;fontSize=11;">
+          <mxGeometry x="360" y="300" width="200" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" value="D6   Vector Collection&#10;(ChromaDB)" parent="1" vertex="1" style="shape=partialRectangle;top=1;bottom=1;left=1;right=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;align=center;fontSize=11;">
+          <mxGeometry x="720" y="300" width="200" height="52" as="geometry" />
+        </mxCell>
+
+        <!-- ingestion processes -->
+        <mxCell id="i1" value="2.1&#10;Extract&#10;elements" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="250" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="i2" value="2.2&#10;Persist&#10;elements" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="425" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="i3" value="2.3&#10;Classify&#10;document" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="600" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="i4" value="2.4&#10;Chunk" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="775" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="i5" value="2.5&#10;Contextualise" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="950" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="i6" value="2.6&#10;Embed" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="1125" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="i7" value="2.7&#10;Index" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="1300" y="90" width="150" height="78" as="geometry" />
+        </mxCell>
+
+        <!-- query processes -->
+        <mxCell id="q1" value="3.1&#10;Parse &amp; normalise&#10;query" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="250" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="q2" value="3.2&#10;Vector&#10;search" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="425" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="q3" value="3.3&#10;Lexical&#10;full-text search" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="600" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="q4" value="3.4&#10;Metadata&#10;filter" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="775" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="q5" value="3.5&#10;Fuzzy&#10;fallback" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="950" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="q6" value="3.6&#10;Reciprocal-rank&#10;fusion" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="1125" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="q7" value="3.7&#10;Answer&#10;generation" parent="1" vertex="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=11;">
+          <mxGeometry x="1300" y="520" width="150" height="82" as="geometry" />
+        </mxCell>
+
+        <!-- ===== ingestion flows ===== -->
+        <mxCell id="ia" value="fetch blob" parent="1" source="d8" target="i1" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="120" y="60" /><mxPoint x="280" y="60" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ib" value="typed elements" parent="1" source="i1" target="i2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ic" value="persist elements" parent="1" source="i2" target="d2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id" value="document text" parent="1" source="i2" target="i3" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ie" value="classified doc" parent="1" source="i3" target="i4" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="if" value="chunks" parent="1" source="i4" target="i5" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ig" value="contextualised&#10;chunks" parent="1" source="i5" target="i6" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ih" value="embeddings" parent="1" source="i6" target="i7" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ii" value="index vectors" parent="1" source="i7" target="d6" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1375" y="250" /><mxPoint x="880" y="250" /></Array></mxGeometry>
+        </mxCell>
+
+        <!-- ===== query flows ===== -->
+        <mxCell id="qa" value="search / NL query" parent="1" source="xUser" target="q1" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qb" value="normalised query" parent="1" source="q1" target="q2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qc" value="vector hits" parent="1" source="d6" target="q2" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="760" y="430" /><mxPoint x="500" y="430" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="qd" value="candidate set" parent="1" source="q2" target="q3" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qe" value="lexical hits" parent="1" source="d2" target="q3" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="500" y="410" /><mxPoint x="675" y="410" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="qf" value="merged hits" parent="1" source="q3" target="q4" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qg" value="filtered hits" parent="1" source="q4" target="q5" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qh" value="ranked hits" parent="1" source="q5" target="q6" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qi" value="fused context" parent="1" source="q6" target="q7" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qj" value="prompt" parent="1" source="q7" target="xLlm" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.35;exitY=1;exitDx=0;exitDy=0;entryX=0.35;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qk" value="answer" parent="1" source="xLlm" target="q7" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0.65;exitY=0;exitDx=0;exitDy=0;entryX=0.65;entryY=1;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ql" value="cited answer" parent="1" source="q7" target="xUser" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=10;exitX=0;exitY=0.85;exitDx=0;exitDy=0;entryX=1;entryY=0.8;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="230" y="675" /></Array></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

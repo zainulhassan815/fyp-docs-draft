@@ -1,0 +1,27 @@
+# Sequence Diagram — Streaming RAG Query
+shape: sequence_diagram
+
+*.style.font-size: 24
+(* -> *)[*].style.font-size: 20
+
+browser: Browser
+route: "API Route\nPOST /rag/stream"
+rag: RagService
+search: SearchService
+chroma: ChromaDB
+pg: PostgreSQL
+claude: "Claude LLM"
+
+browser -> route: POST /rag/stream (question)
+route -> rag: stream_query(user, question)
+rag -> search: retrieve_chunks(question)
+search -> chroma: vector similarity search
+chroma -> search: top-k chunks
+search -> pg: lexical FTS + trigram fallback
+pg -> search: ranked rows
+search -> rag: fused chunks (RRF)
+rag -> rag: context gate + intent classify + compose prompt
+rag -> claude: stream(system, context, question)
+claude -> browser: "SSE: citations"
+claude -> browser: "SSE: delta x N (answer tokens)"
+claude -> browser: "SSE: done (confidence, intent)"

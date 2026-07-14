@@ -1,11 +1,22 @@
-# Build output
-build/
+# Build output is now tracked in the repo (kept intentionally)
 
 # macOS
 .DS_Store
 
-# MS Word temp files
+# MS Word temp/lock files
 ~$*
 
 # Temp files
 *.tmp
+
+# Python bytecode cache
+__pycache__/
+
+# Editor / Obsidian vault config
+.obsidian/
+
+# Windows folder metadata
+desktop.ini
+
+# Nested product repo (lives at github.com/zainulhassan815/hireflow)
+hireflow/

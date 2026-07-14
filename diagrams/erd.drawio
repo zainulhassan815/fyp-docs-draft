@@ -1,0 +1,173 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="ERD - Hireflow" id="erd-hireflow">
+    <mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="900" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ================= ENTITIES ================= -->
+
+        <!-- gmail_connections -->
+        <mxCell id="eGConn" value="gmail_connections" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="40" y="40" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eGConnA" value="gmail_connection_id (PK)&#10;user_id (FK)&#10;gmail_email&#10;refresh_token&#10;scopes" parent="eGConn" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <!-- gmail_ingested_messages -->
+        <mxCell id="eGMsg" value="gmail_ingested_messages" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="40" y="270" width="220" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="eGMsgA" value="gmail_ingested_message_id (PK)&#10;gmail_connection_id (FK)&#10;gmail_message_id&#10;ingest_status" parent="eGMsg" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- users -->
+        <mxCell id="eUser" value="users" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="600" y="40" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eUserA" value="user_id (PK)&#10;email&#10;hashed_password&#10;role&#10;is_active" parent="eUser" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <!-- activity_logs -->
+        <mxCell id="eLog" value="activity_logs" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="1180" y="40" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eLogA" value="activity_log_id (PK)&#10;user_id (FK)&#10;action&#10;resource_type&#10;resource_id" parent="eLog" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <!-- jobs -->
+        <mxCell id="eJob" value="jobs" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="1180" y="320" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eJobA" value="job_id (PK)&#10;user_id (FK)&#10;title&#10;required_skills&#10;status" parent="eJob" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <!-- candidates -->
+        <mxCell id="eCand" value="candidates" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="600" y="300" width="220" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="eCandA" value="candidate_id (PK)&#10;user_id (FK)&#10;document_id (FK)&#10;name&#10;email&#10;skills" parent="eCand" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- documents -->
+        <mxCell id="eDoc" value="documents" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="290" y="540" width="220" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="eDocA" value="document_id (PK)&#10;user_id (FK)&#10;filename&#10;status&#10;document_type&#10;candidate_id (FK)" parent="eDoc" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- document_elements -->
+        <mxCell id="eDocEl" value="document_elements" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="40" y="560" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eDocElA" value="document_element_id (PK)&#10;document_id (FK)&#10;kind&#10;text&#10;order_index" parent="eDocEl" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <!-- candidate_attachments -->
+        <mxCell id="eCAtt" value="candidate_attachments" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="590" y="560" width="220" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="eCAttA" value="candidate_attachment_id (PK)&#10;candidate_id (FK)&#10;document_id (FK)&#10;role" parent="eCAtt" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- applications -->
+        <mxCell id="eApp" value="applications" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="1000" y="560" width="220" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="eAppA" value="application_id (PK)&#10;candidate_id (FK)&#10;job_id (FK)&#10;status&#10;score&#10;match_breakdown" parent="eApp" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- ================= RELATIONSHIPS (crow's-foot) ================= -->
+
+        <!-- users 1 - many documents (owner) -->
+        <mxCell id="rUserDoc" value="owns" parent="1" source="eUser" target="eDoc" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0;exitY=0.85;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="135" />
+              <mxPoint x="270" y="578" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- users 1 - many candidates (owner) -->
+        <mxCell id="rUserCand" value="owns" parent="1" source="eUser" target="eCand" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- users 1 - many jobs (owner) -->
+        <mxCell id="rUserJob" value="owns" parent="1" source="eUser" target="eJob" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000" y="376" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- users 1 - many gmail_connections -->
+        <mxCell id="rUserGConn" value="connects" parent="1" source="eUser" target="eGConn" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- users 0..1 - 0..many activity_logs (actor, SET NULL) -->
+        <mxCell id="rUserLog" value="acts in" parent="1" source="eUser" target="eLog" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERzeroToOne;startFill=0;endArrow=ERzeroToMany;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- gmail_connections 1 - many gmail_ingested_messages -->
+        <mxCell id="rGConnMsg" value="ingests" parent="1" source="eGConn" target="eGMsg" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- documents 1 - many document_elements -->
+        <mxCell id="rDocEl" value="contains" parent="1" source="eDoc" target="eDocEl" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- candidates 0..1 - 0..1 documents (source_document_id) -->
+        <mxCell id="rCandSrcDoc" value="derived from" parent="1" source="eCand" target="eDoc" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERzeroToOne;startFill=0;endArrow=ERzeroToOne;endFill=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- candidates 0..1 - 0..many documents (authored_by_id) -->
+        <mxCell id="rCandAuthDoc" value="authors" parent="1" source="eCand" target="eDoc" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERzeroToOne;startFill=0;endArrow=ERzeroToMany;endFill=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- candidates 1 - many candidate_attachments -->
+        <mxCell id="rCandCAtt" value="has" parent="1" source="eCand" target="eCAtt" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- documents 1 - many candidate_attachments -->
+        <mxCell id="rDocCAtt" value="attached as" parent="1" source="eDoc" target="eCAtt" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- candidates 1 - many applications -->
+        <mxCell id="rCandApp" value="submits" parent="1" source="eCand" target="eApp" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- jobs 1 - many applications -->
+        <mxCell id="rJobApp" value="receives" parent="1" source="eJob" target="eApp" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

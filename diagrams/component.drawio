@@ -1,0 +1,87 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Component Diagram - Hireflow" id="component-hireflow">
+    <mxGraphModel dx="1120" dy="760" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="720" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===== PRESENTATION ===== -->
+        <mxCell id="bSpa" value="&#171;component&#187;&#10;React 19 SPA" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;spacingLeft=12;">
+          <mxGeometry x="150" y="60" width="420" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ===== GATEWAY ===== -->
+        <mxCell id="cNginx" value="&#171;component&#187;&#10;nginx reverse proxy" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;spacingLeft=12;">
+          <mxGeometry x="230" y="160" width="260" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- ===== APPLICATION TIER (package) ===== -->
+        <mxCell id="dBackend" value="FastAPI Backend" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=8;spacingLeft=14;">
+          <mxGeometry x="140" y="256" width="440" height="234" as="geometry" />
+        </mxCell>
+        <mxCell id="dApi" value="&#171;component&#187;&#10;API Layer" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=12;">
+          <mxGeometry x="164" y="296" width="392" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dSvc" value="&#171;component&#187;&#10;Service Layer" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=12;">
+          <mxGeometry x="164" y="340" width="392" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dDom" value="&#171;component&#187;&#10;Domain Layer" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=12;">
+          <mxGeometry x="164" y="384" width="392" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dAdp" value="&#171;component&#187;&#10;Adapter Layer  (Protocol interfaces)" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=12;">
+          <mxGeometry x="164" y="428" width="392" height="42" as="geometry" />
+        </mxCell>
+
+        <!-- ===== DATA TIER (package) ===== -->
+        <mxCell id="fStores" value="Data &amp; Infrastructure" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=8;spacingLeft=14;">
+          <mxGeometry x="140" y="540" width="440" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="fPg" value="PostgreSQL" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=14;">
+          <mxGeometry x="156" y="582" width="100" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="fChroma" value="ChromaDB" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=14;">
+          <mxGeometry x="266" y="582" width="100" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="fRedis" value="Redis" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=14;">
+          <mxGeometry x="376" y="582" width="100" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="fMinio" value="MinIO" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=14;">
+          <mxGeometry x="486" y="582" width="90" height="52" as="geometry" />
+        </mxCell>
+
+        <!-- ===== ASYNC WORKER ===== -->
+        <mxCell id="eWorker" value="&#171;component&#187;&#10;Celery Worker&#10;(async ingestion)" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;spacingLeft=12;">
+          <mxGeometry x="700" y="300" width="230" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ===== EXTERNAL SYSTEMS (package) ===== -->
+        <mxCell id="gExt" value="External Systems" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingTop=8;spacingLeft=14;dashed=1;">
+          <mxGeometry x="700" y="450" width="320" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="gLlm" value="&#171;component&#187;&#10;LLM Provider (Claude / Ollama)" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=12;">
+          <mxGeometry x="720" y="490" width="280" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="gGmail" value="&#171;component&#187;&#10;Gmail (Email Service)" parent="1" vertex="1" style="shape=component;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=12;spacingLeft=12;">
+          <mxGeometry x="720" y="572" width="280" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- ================= DEPENDENCIES ================= -->
+        <mxCell id="e2" value="«use»" parent="1" source="bSpa" target="cNginx" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" parent="1" source="cNginx" target="dApi" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;dashed=1;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" parent="1" source="dAdp" target="fStores" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;dashed=1;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Redis broker" parent="1" source="dBackend" target="eWorker" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="external APIs" parent="1" source="dAdp" target="gExt" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.2;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

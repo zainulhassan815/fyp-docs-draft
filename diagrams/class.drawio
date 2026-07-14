@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Class Diagram - Hireflow" id="class-hireflow">
+    <mxGraphModel dx="1200" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="820" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="cUser" value="User" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="460" y="30" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cUserA" value="+ user_id: UUID&#10;+ email: str&#10;+ role: enum&#10;+ is_active: bool" parent="cUser" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cGConn" value="GmailConnection" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="60" y="40" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cGConnA" value="+ gmail_connection_id: UUID&#10;+ email: str" parent="cGConn" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cLog" value="ActivityLog" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="900" y="40" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cLogA" value="+ activity_log_id: UUID&#10;+ action: str&#10;+ created_at: datetime" parent="cLog" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cGMsg" value="GmailIngestedMessage" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="60" y="280" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cGMsgA" value="+ gmail_ingested_message_id: UUID&#10;+ message_id: str" parent="cGMsg" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cDoc" value="Document" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="300" y="270" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cDocA" value="+ document_id: UUID&#10;+ filename: str&#10;+ status: enum&#10;+ document_type: enum" parent="cDoc" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cCand" value="Candidate" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="600" y="270" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cCandA" value="+ candidate_id: UUID&#10;+ name: str&#10;+ skills: str[]&#10;+ experience_years: int" parent="cCand" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cJob" value="Job" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="900" y="270" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cJobA" value="+ job_id: UUID&#10;+ title: str&#10;+ required_skills: str[]&#10;+ status: enum" parent="cJob" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="74" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cElem" value="DocumentElement" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="300" y="520" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="cElemA" value="+ document_element_id: UUID&#10;+ kind: enum&#10;+ content: str" parent="cElem" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cAtt" value="CandidateAttachment" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="560" y="520" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cAttA" value="+ candidate_attachment_id: UUID&#10;+ role: enum" parent="cAtt" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cApp" value="Application" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;">
+          <mxGeometry x="880" y="520" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="cAppA" value="+ application_id: UUID&#10;+ score: float&#10;+ status: enum" parent="cApp" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontSize=11;">
+          <mxGeometry y="26" width="220" height="64" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r1" value="owns" parent="1" source="cUser" target="cDoc" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=0.25;exitY=1;entryX=0.5;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r2" value="owns" parent="1" source="cUser" target="cCand" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=0.75;exitY=1;entryX=0.5;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r3" value="owns" parent="1" source="cUser" target="cJob" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0.5;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1000" y="200" /></Array></mxGeometry></mxCell>
+        <mxCell id="r4" value="owns" parent="1" source="cUser" target="cGConn" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r5" value="records" parent="1" source="cUser" target="cLog" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r6" value="contains" parent="1" source="cDoc" target="cElem" edge="1" style="startArrow=diamondThin;startFill=1;endArrow=none;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r7" value="parsed from" parent="1" source="cCand" target="cDoc" edge="1" style="endArrow=open;endFill=0;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r8" value="applies via" parent="1" source="cCand" target="cApp" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=1;exitY=0.75;entryX=0;entryY=0.5;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r9" value="receives" parent="1" source="cJob" target="cApp" edge="1" style="endArrow=none;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r10" value="has" parent="1" source="cCand" target="cAtt" edge="1" style="startArrow=diamondThin;startFill=1;endArrow=none;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.75;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r11" value="references" parent="1" source="cAtt" target="cDoc" edge="1" style="endArrow=open;endFill=0;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=0.5;entryY=1;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r12" value="contains" parent="1" source="cGConn" target="cGMsg" edge="1" style="startArrow=diamondThin;startFill=1;endArrow=none;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=11;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell value="1" parent="r1" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r1" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r2" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r2" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r3" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r3" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r4" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r4" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r5" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r5" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r6" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r6" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r7" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="0..1" parent="r7" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r8" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r8" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r9" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r9" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r10" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r10" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r11" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r11" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="1" parent="r12" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+        <mxCell value="*" parent="r12" vertex="1" connectable="0" style="edgeLabel;html=1;resizable=0;points=[];fontSize=11;"><mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

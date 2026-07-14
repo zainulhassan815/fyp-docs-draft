@@ -1,0 +1,218 @@
+<style>
+  :root{
+    --black:#000000; --ink:#141414; --dark:#242424; --gray:#555555; --mid:#6f6f6f; --line:#333333;
+    --t-blue:#f3f7fd; --t-mint:#f2faf5; --t-lav:#f7f5fd; --t-cream:#fdfbf3; --t-warm:#fbf6f2;
+    --tile-a:#eef4fc; --tile-b:#eef8f1;
+  }
+  *{box-sizing:border-box;}
+  @page{ size:24in 60in; margin:0; }
+  html,body{margin:0;padding:0;background:#9a9a9a;}
+  body{font-family:"Times New Roman",Times,serif;color:var(--ink);
+       -webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .standee{
+    width:24in; height:60in; margin:0 auto;
+    background:linear-gradient(165deg,#fdfdff 0%,#f4f7fc 48%,#eef4fb 78%,#f3eff9 100%);
+    display:flex; flex-direction:column; padding:1.2in 1in; gap:0.3in;
+  }
+
+  /* ---------- header ---------- */
+  .head{display:grid;grid-template-columns:2in 1fr 2in;align-items:center;
+        border-bottom:4px solid var(--black);padding-bottom:0.28in;}
+  .head .crest{width:1.9in;height:1.9in;object-fit:contain;}
+  .head .qr{width:1.9in;justify-self:end;}
+  .head .qr img{display:block;width:100%;height:auto;}
+  .head .titles{text-align:center;}
+  .head .title{color:var(--black);font-weight:700;font-size:87px;line-height:1.05;text-wrap:balance;}
+  .head .product{margin-top:12px;color:var(--dark);font-weight:700;font-size:48px;letter-spacing:3px;text-transform:uppercase;}
+  .head .disc{margin-top:16px;color:var(--ink);font-weight:700;font-size:39px;}
+  .head .uni{margin-top:6px;color:var(--gray);font-size:32px;font-style:italic;}
+
+  /* ---------- meta strip ---------- */
+  .meta{display:grid;grid-template-columns:1fr 1.3fr;border:3px solid var(--black);background:var(--t-blue);}
+  .meta .cell{padding:0.22in 0.34in;}
+  .meta .cell + .cell{border-left:3px solid var(--black);}
+  .meta .lbl{color:var(--gray);font-weight:700;font-size:28px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  .meta .row{font-size:38px;font-weight:700;margin-top:5px;}
+  .meta .members{display:flex;flex-wrap:wrap;gap:8px 40px;}
+  .meta .members span{font-size:37px;font-weight:700;}
+  .meta .members small{display:block;font-size:24px;font-weight:400;font-style:italic;color:var(--gray);}
+
+  /* ---------- body ---------- */
+  .body{display:grid;grid-template-columns:1fr 1fr;gap:0.3in;flex:1;min-height:0;}
+  .col{display:flex;flex-direction:column;gap:0.3in;min-height:0;}
+  .card{border:3px solid var(--black);display:flex;flex-direction:column;background:#ffffff;}
+  .card.b{background:var(--t-blue);} .card.m{background:var(--t-mint);}
+  .card.l{background:var(--t-lav);} .card.c{background:var(--t-cream);} .card.w{background:var(--t-warm);}
+  .card > h2{margin:0;background:var(--ink);color:#fff;font-size:43px;font-weight:700;
+        text-transform:uppercase;letter-spacing:1px;padding:0.16in 0.3in;}
+  .card .in{padding:0.3in 0.36in;font-size:43px;line-height:1.48;}
+  .card .in p{margin:0 0 18px;} .card .in p:last-child{margin-bottom:0;}
+  .grow{flex:1;}
+  ul.list{list-style:square;margin:0;padding-left:36px;}
+  ul.list li{margin-bottom:16px;} ul.list li:last-child{margin-bottom:0;}
+  .lead{font-weight:700;}
+
+  /* figure (enlarged component diagram) */
+  .fig{margin:0;flex:1;display:flex;flex-direction:column;justify-content:center;background:#ffffff;}
+  .fig img{display:block;width:100%;height:auto;padding:0.34in 0.3in 0;}
+  figcaption{font-style:italic;font-size:31px;color:var(--gray);padding:20px 0.36in 0.3in;}
+
+  /* results stat tiles */
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0.3in 0.36in;}
+  .tile{border:2px solid var(--ink);padding:22px 14px 18px;text-align:center;display:flex;flex-direction:column;justify-content:center;}
+  .tile:nth-child(odd){background:var(--tile-a);} .tile:nth-child(even){background:var(--tile-b);}
+  .tile .n{font-size:71px;font-weight:700;color:var(--black);line-height:1;font-variant-numeric:tabular-nums;}
+  .tile .k{font-size:26px;color:var(--gray);margin-top:12px;line-height:1.22;}
+
+  .refs .in{font-size:36px;line-height:1.4;}
+  .refs ol{margin:0;padding-left:36px;} .refs li{margin-bottom:12px;}
+
+  /* technologies strip */
+  .tech{border:3px solid var(--black);background:var(--t-mint);}
+  .tech > h2{margin:0;background:var(--ink);color:#fff;font-size:43px;font-weight:700;
+        text-transform:uppercase;letter-spacing:1px;padding:0.16in 0.3in;}
+  .tech .pills{display:flex;flex-wrap:wrap;gap:16px 18px;padding:0.3in 0.36in;}
+  .tech .pill{border:2px solid var(--line);background:#fff;padding:10px 24px;font-size:33px;font-weight:700;}
+
+  .foot{display:flex;justify-content:space-between;align-items:center;color:var(--gray);
+        font-size:31px;font-weight:700;padding-top:0.18in;border-top:4px solid var(--black);}
+</style>
+
+<div class="standee">
+
+  <header class="head">
+    <img class="crest" src="src/images/scet-crest.jpeg" alt="Sharif College of Engineering and Technology crest" />
+    <div class="titles">
+      <div class="title">AI-Powered HR Screening and Document Retrieval System Using RAG</div>
+      <div class="product">Hireflow</div>
+      <div class="disc">BS Computer Science, Session 2022</div>
+      <div class="uni">Sharif College of Engineering and Technology, Lahore (Affiliated with UET Lahore)</div>
+    </div>
+    <div class="qr"><img src="src/images/qr-github.svg" alt="GitHub repository QR code" /></div>
+  </header>
+
+  <section class="meta">
+    <div class="cell">
+      <div class="lbl">Supervision</div>
+      <div class="row">Supervisor: Ms. Hirra Mustafa</div>
+      <div class="row">Co-Supervisor: Dr. Mazhar Iqbal</div>
+    </div>
+    <div class="cell">
+      <div class="lbl">Group Members</div>
+      <div class="members">
+        <span>Amna Ikram<small>UET-SHCET-LHR-CS-02</small></span>
+        <span>Zain Ul Hassan<small>UET-SHCET-LHR-CS-12</small></span>
+        <span>Ezza Ansar<small>UET-SHCET-LHR-CS-13</small></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="body">
+
+    <!-- LEFT COLUMN -->
+    <div class="col">
+      <div class="card b grow">
+        <h2>Objective / Abstract</h2>
+        <div class="in">
+          <p class="lead">Hireflow is a self-hostable, AI-powered HR screening and document-retrieval platform built on Retrieval-Augmented Generation (RAG).</p>
+          <p>It lets HR teams ingest heterogeneous documents, search and question them in plain language, and automatically screen and rank candidates against job criteria, with every answer traceable to its source. Key objectives:</p>
+          <ul class="list">
+            <li>Ingest and OCR PDF, Word, and scanned documents (PyMuPDF and Tesseract), with over 95% text accuracy on printed material.</li>
+            <li>Semantic hybrid search over a ChromaDB vector store.</li>
+            <li>Grounded, source-cited answers via RAG (Anthropic Claude), refusing out-of-scope questions.</li>
+            <li>Transparent, weighted resume-to-job scoring.</li>
+            <li>Automated candidate intake through Gmail synchronisation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card c">
+        <h2>Introduction</h2>
+        <div class="in">
+          <p>Organisations accumulate large volumes of unstructured documents, and HR teams spend the majority of their time manually reviewing resumes, on average around 23 hours to fill a single position.</p>
+          <p>Keyword search matches literal tokens rather than meaning, so a query for &ldquo;machine learning engineer&rdquo; misses a strong candidate who wrote &ldquo;ML researcher&rdquo;. Hireflow replaces manual review and rigid keyword filters with semantic retrieval and grounded question-answering, unifying document intake, search, and candidate screening in one coherent platform.</p>
+        </div>
+      </div>
+
+      <div class="card m grow">
+        <h2>Methodology</h2>
+        <div class="in">
+          <p class="lead">Two pipelines drive the system.</p>
+          <p><b>Ingestion (asynchronous, on a Celery worker):</b> each document is extracted, classified, chunked, contextualised, embedded with the bge-small-en-v1.5 model, and indexed into ChromaDB. Text and metadata are stored in PostgreSQL and the original files in MinIO.</p>
+          <p><b>Retrieval and RAG (per request):</b> the query is parsed and normalised; vector, lexical (tsvector), metadata, and fuzzy retrieval then run and are combined by Reciprocal-Rank Fusion. An intent-aware prompt is composed and a source-cited answer is streamed from Claude.</p>
+          <p>The backend is a strictly layered FastAPI application (API, Service, Domain, and Adapter layers) with Protocol-based, swappable providers, so business rules stay testable and infrastructure remains replaceable. The frontend is a React 19 single-page application.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col">
+      <div class="card grow">
+        <h2>Designed Project</h2>
+        <figure class="fig">
+          <img src="src/images/architecture_diagram.png" alt="Hireflow layered system architecture" />
+          <figcaption>Figure 1: Hireflow layered system architecture. The Presentation, Application, Processing, and Storage layers sit over the data stores, with external LLM and Gmail services.</figcaption>
+        </figure>
+      </div>
+
+      <div class="card l">
+        <h2>Results</h2>
+        <div class="tiles">
+          <div class="tile"><div class="n">72 ms</div><div class="k">Hybrid search, median latency</div></div>
+          <div class="tile"><div class="n">947 ms</div><div class="k">RAG time to first token</div></div>
+          <div class="tile"><div class="n">1.5 s</div><div class="k">Full streamed RAG answer</div></div>
+          <div class="tile"><div class="n">0.57 ms</div><div class="k">Per-chunk embedding on GPU</div></div>
+          <div class="tile"><div class="n">&gt;95%</div><div class="k">OCR text accuracy, printed</div></div>
+          <div class="tile"><div class="n">31</div><div class="k">Working REST API endpoints</div></div>
+        </div>
+      </div>
+
+      <div class="card c grow">
+        <h2>Conclusion</h2>
+        <div class="in">
+          <p>Hireflow meets its four objectives: document management, natural-language search, transparent resume screening, and automated intake, in one coherent, self-hostable system. Every generated answer is source-attributed, and out-of-scope questions are refused rather than hallucinated.</p>
+          <p>Future work includes login rate-limiting, refresh-token revocation on password change, and horizontal scaling of the worker pool.</p>
+        </div>
+      </div>
+
+      <div class="card b refs">
+        <h2>References</h2>
+        <div class="in">
+          <ol>
+            <li>Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS 33.</li>
+            <li>Reimers and Gurevych (2019). Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks. EMNLP.</li>
+            <li>Vaswani et al. (2017). Attention Is All You Need. NeurIPS 30.</li>
+            <li>Johnson, Douze and J&eacute;gou (2019). Billion-scale Similarity Search with GPUs (FAISS). IEEE TBD.</li>
+            <li>Smith (2007). An Overview of the Tesseract OCR Engine. ICDAR.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNOLOGIES STRIP -->
+  <section class="tech">
+    <h2>Technologies Used</h2>
+    <div class="pills">
+      <span class="pill">Python</span>
+      <span class="pill">FastAPI</span>
+      <span class="pill">React 19</span>
+      <span class="pill">TypeScript</span>
+      <span class="pill">PostgreSQL 15</span>
+      <span class="pill">ChromaDB</span>
+      <span class="pill">Redis</span>
+      <span class="pill">Celery</span>
+      <span class="pill">MinIO</span>
+      <span class="pill">Anthropic Claude</span>
+      <span class="pill">sentence-transformers</span>
+      <span class="pill">Tesseract OCR</span>
+      <span class="pill">PyMuPDF</span>
+      <span class="pill">Docker</span>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Final Year Project, 2026</span>
+    <span>github.com/zainulhassan815/hireflow</span>
+  </div>
+</div>
