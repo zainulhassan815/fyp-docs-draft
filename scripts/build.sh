@@ -27,4 +27,10 @@ python3 scripts/box_code.py
 # Insert auto-generating List of Figures and List of Tables after the TOC
 python3 scripts/add_lists.py
 
+# Outline the UI screenshots so their white edges are visible
+python3 scripts/border_screenshots.py
+
+# Right-aligned page number in the footer of every section
+python3 scripts/add_page_numbers.py
+
 echo "Done: build/SRS_Document.docx"

@@ -31,7 +31,7 @@ fi
 echo "Template: $TEMPLATE"
 
 # Keep a copy of the template in the repo.
-cp "$TEMPLATE" "templates/$(basename "$TEMPLATE")"
+cp "$TEMPLATE" "templates/$(basename "$TEMPLATE")" 2>/dev/null || true
 
 # 1. Sample markdown exercising every construct so pandoc emits all style hooks.
 cat > "$TMP/sample.md" <<'MD'
@@ -156,6 +156,39 @@ merged = re.sub(
     r'<w:style w:type="table" w:default="1" w:styleId="Table">.*?</w:style>',
     TABLE_STYLE, merged, count=1, flags=re.S,
 )
+
+# The SCET template leaves Heading 3+ with no explicit size, so they inherit Normal
+# (12 pt) and read as no larger than body text.  Pin an explicit hierarchy above the
+# 12 pt body: H1 16, H2 14, H3 13, H4 12 -- all bold Times New Roman.
+HEADING_SIZES = {'Heading1': 32, 'Heading2': 28, 'Heading3': 26, 'Heading4': 24}  # half-points
+for sid, half in HEADING_SIZES.items():
+    for style_id in (sid, sid + 'Char'):
+        m = re.search(r'<w:style [^>]*w:styleId="%s".*?</w:style>' % style_id, merged, re.S)
+        if not m:
+            continue
+        blk = m.group(0)
+        rpr = ('<w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" '
+               'w:cs="Times New Roman"/><w:b/><w:bCs/>'
+               '<w:sz w:val="%d"/><w:szCs w:val="%d"/></w:rPr>' % (half, half))
+        blk_new = re.sub(r'<w:rPr>.*?</w:rPr>', rpr, blk, count=1, flags=re.S)
+        if blk_new == blk:  # style had no rPr at all
+            blk_new = blk.replace('</w:style>', rpr + '</w:style>')
+        merged = merged.replace(blk, blk_new, 1)
+
+# Fenced code blocks keep their border but lose the grey fill (reads as highlighting
+# in print).
+merged = merged.replace('<w:shd w:val="clear" w:color="auto" w:fill="F5F5F5"/>', '')
+
+# The SCET template's caption style is 9 pt accent-blue, which reads as a coloured
+# highlight in an otherwise black-and-white report.  Black, 11 pt, still bold.
+m = re.search(r'<w:style [^>]*w:styleId="Caption".*?</w:style>', merged, re.S)
+if m:
+    blk = m.group(0)
+    blk_new = re.sub(r'<w:rPr>.*?</w:rPr>',
+                     '<w:rPr><w:b/><w:bCs/><w:color w:val="000000"/>'
+                     '<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>',
+                     blk, count=1, flags=re.S)
+    merged = merged.replace(blk, blk_new, 1)
 
 tmp = tempfile.mktemp(suffix='.docx')
 with zipfile.ZipFile(out) as zin, zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:

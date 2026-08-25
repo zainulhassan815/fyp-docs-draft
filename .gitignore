@@ -1,10 +1,13 @@
-# Build output is now tracked in the repo (kept intentionally)
+# Build output is now tracked in the repo (kept intentionally), except the
+# intermediate the pipeline writes before it is copied to Documentation.docx
+build/SRS_Document.docx
 
 # macOS
 .DS_Store
 
-# MS Word temp/lock files
+# MS Word / LibreOffice temp+lock files
 ~$*
+.~lock.*#
 
 # Temp files
 *.tmp

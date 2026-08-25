@@ -1,7 +1,7 @@
 # FYP Session Handoff
 
-Last updated: 2026-07-14. Active focus: **rebuilding all report diagrams in draw.io
-standard UML/ER/DFD notation** (the prof rejected the previous versions).
+Last updated: 2026-08-24. Active focus: **supervisor feedback fixes on the report**
+(see §7).
 
 ## 1. Project at a glance
 - Report: **Hireflow — AI Powered HR Screening and Document Retrieval System Using RAG** (BSCS, SCET).
@@ -65,11 +65,49 @@ The scratchpad venv gets wiped between sessions — recreate it, then run the 4 
 - Constrain edge ends with `exitX/exitY/entryX/entryY` to avoid lines crossing shapes; add `<Array as="points">` waypoints for clean orthogonal routing.
 
 ## 5. Open items / decisions pending
-- **Table 3.3** still lists **UC-08 Receive Email** (removed from the use-case diagram). Recommended: remove it from the table + renumber so text matches the diagram. NOT yet done (waiting on user OK).
 - **Page size**: report is **US Letter** (from SCET template); the uni formatting preset says **A4**. Unresolved.
-- **List of Figures / List of Tables**: caption styles are now distinct (`Image Caption`, `Table Caption`), so in Word: References → Insert Table of Figures → Options → From style. Not auto-inserted (offered a build-time field-injection option; declined so far).
-- **Output filename**: user renamed the build to `build/Documentation.docx` (kept open in Word). The pipeline still writes `build/SRS_Document.docx`; copy/rename after building.
-- Superseded: earlier `diagrams/*.d2` files and the user's 4 hand-styled PNGs (class/component/erd/sequence) are being replaced by the draw.io rebuilds.
+- **Output filename**: the pipeline writes `build/SRS_Document.docx`; `scripts/build.sh` does not rename it, so copy to `build/Documentation.docx` after building.
 
-## 6. Suggested next step
-**All diagrams are rebuilt in draw.io** (Activity, Use Case, Class, ERD, Sequence, Architecture, Component, DFD 0/1/2). Next: run a final `./scripts/build.sh` (via scratchpad venv — see §2) to regenerate `build/SRS_Document.docx`, confirm 0 placeholders and a valid docx, then copy/rename to `build/Documentation.docx`. Resolve the §5 open items with the user (Table 3.3 UC-08 removal, A4 vs Letter, List of Figures/Tables insertion) when they're ready.
+## 6. Build gotchas
+- **pandoc** must be installed (`brew install pandoc`).
+- `python-docx`/`docxcompose` are not in system python (PEP 668). Create a scratchpad venv and run the build with it on PATH:
+  ```
+  python3 -m venv "$SCR/venv" && "$SCR/venv/bin/pip" install -q python-docx docxcompose
+  PATH="$SCR/venv/bin:$PATH" bash scripts/build.sh
+  ```
+  (Running `scripts/build.sh` through a copied script breaks it: it resolves paths from its own location.)
+
+## 7. Supervisor feedback (2026-08-24) - all six addressed
+| Feedback | Fix |
+|---|---|
+| Explain ingestion pipeline | §5.2 rewritten: seven-stage walkthrough + **Table 5.2** (stage / input / processing / output), plus version-stamping and failure-severity rationale. |
+| Add existing systems in table | §2.2's R1-R7 bullet blocks replaced by **Table 2.1** (ref / system / problem / methodology / features / limitations / relevance). Closes the missing-Table-2.1 gap; Table 6.2/6.3 renumbered to 6.1/6.2 to close the same gap in Ch. 6. |
+| Unnecessary highlights and bolds | 44 mid-sentence `**bold**` spans stripped from `src/SRS_Document.md` (run-in labels at paragraph/bullet start kept - they act as sub-headings). Grey fill removed from fenced code blocks; blue accent caption colour changed to black. |
+| No page number | New `scripts/add_page_numbers.py` puts a centred `{ PAGE }` field in the footer of every section; wired into `scripts/build.sh`. |
+| Abstract too long | Cut 229 -> 158 words in `templates/cover.docx`. |
+| Heading size less than paragraph | The SCET template left Heading 3+ with no size, so they inherited Normal (12 pt). `scripts/build-reference.sh` now pins H1 16 / H2 14 / H3 13 / H4 12 pt, bold Times New Roman, above the 12 pt body. |
+
+Style/caption fixes live in `scripts/build-reference.sh` (which regenerates `templates/custom-reference.docx`), so re-running it will not clobber them.
+
+## 8. Use-case cleanup (2026-08-24)
+`UC-08 Receive Email` was in Table 3.3 but not in the diagram, so it was removed and
+the list renumbered. Renumbering exposed a second, pre-existing defect: the FR->UC
+column in Table 3.1 had been written against an older use-case list and was offset
+(FR04 "upload files" pointed at *Search Documents*, FR10 "filter documents" at
+*Create Job*, FR07-09 "search" at *Export to Excel*).
+
+FR04/FR05/FR06 had **no** valid target at all: the diagram had no upload use case,
+even though upload is the system's primary entry action, and the traceability row
+carrying the upload tests (TC-DOCS-001/004/005) was mislabelled as *Search
+Documents*. On the user's decision, **`Upload Document` was added to
+`diagrams/use_case.drawio`** as UC-03 (HR Personnel actor), the diagram re-exported
+to `src/images/use_case_diagram.png`, and every downstream reference realigned.
+
+Final state: **12 use cases**, table and diagram in exact agreement, all 20 FRs
+mapped to a semantically correct use case, and every traceability-matrix row
+matching Table 3.3. Verify with the cross-check in git history for this commit.
+
+**draw.io was not installed on this machine** - `brew install --cask drawio`. Export:
+```
+/Applications/draw.io.app/Contents/MacOS/draw.io -x -f png -s 3 --crop -b 20 -o OUT.png IN.drawio --no-sandbox
+```

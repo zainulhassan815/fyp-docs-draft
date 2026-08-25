@@ -93,63 +93,21 @@ This project sits at the intersection of three fields: document understanding, i
 
 ## 2.2 Existing Systems / Related Work
 
-A range of commercial products, cloud services, and open-source tools address parts of the problem that Hireflow tackles. Traditional ATS platforms such as Greenhouse and Workday automate applicant pipelines but lean heavily on keyword filters and structured fields; AI recruitment platforms such as Eightfold AI apply deep learning to candidate matching. Cloud document-understanding services (Google Cloud Document AI [1], Amazon Textract [2], Azure Form Recognizer [3]) extract text and structure at scale, though they are proprietary and usage-priced. RAG frameworks such as LangChain [4] coordinate retrieval-augmented pipelines, while transformer-based document and language models [5][6] support both understanding and generation. Lower down the stack, vector search libraries such as FAISS [8] and OCR engines such as Tesseract [9] supply the retrieval and text-extraction primitives. The representative systems reviewed for this project are summarized below, each characterised by its research problem, method and tools, key features, limitations, and relevance to Hireflow.
+A range of commercial products, cloud services, and open-source tools address parts of the problem that Hireflow tackles. Traditional ATS platforms such as Greenhouse and Workday automate applicant pipelines but lean heavily on keyword filters and structured fields; AI recruitment platforms such as Eightfold AI apply deep learning to candidate matching. Cloud document-understanding services (Google Cloud Document AI [1], Amazon Textract [2], Azure Form Recognizer [3]) extract text and structure at scale, though they are proprietary and usage-priced. RAG frameworks such as LangChain [4] coordinate retrieval-augmented pipelines, while transformer-based document and language models [5][6] support both understanding and generation. Lower down the stack, vector search libraries such as FAISS [8] and OCR engines such as Tesseract [9] supply the retrieval and text-extraction primitives.
 
-**R1, Greenhouse Software (2012): Cloud Applicant Tracking System with resume filtering.**
+The representative systems reviewed for this project are summarized in Table 2.1, each characterised by its research problem, method and tools, key features, limitations, and relevance to Hireflow.
 
-- **Research problem:** managing and filtering high volumes of job applicants.
-- **Methodology & tools:** structured fields with keyword/boolean rules over parsed resumes; commercial ATS and resume parser.
-- **Key features:** pipeline management, keyword filters, and structured candidate records.
-- **Limitations:** keyword-based matching misses semantics; rigid rules; limited free-form question answering.
-- **Relevance:** establishes the ATS baseline that Hireflow improves on with semantic ranking.
+| Ref | System (Year) | Research Problem | Methodology & Tools | Key Features | Limitations | Relevance to Hireflow |
+| --- | --- | --- | --- | --- | --- | --- |
+| R1 | Greenhouse Software (2012) | Managing and filtering high volumes of job applicants | Structured fields with keyword/boolean rules over parsed resumes; commercial ATS and resume parser | Pipeline management, keyword filters, structured candidate records | Keyword matching misses semantics; rigid rules; limited free-form question answering | Establishes the ATS baseline that Hireflow improves on with semantic ranking |
+| R2 | Eightfold AI (2016) | Bias and inefficiency in candidate-job matching | Learned embeddings of candidates and roles for similarity matching; proprietary deep-learning models | AI candidate matching, skills inference, ranking | Proprietary, closed, and costly, with limited transparency and provenance | Validates ML-based ranking and motivates open, explainable ranking with citations |
+| R3 | Google Cloud Document AI, Amazon Textract, Azure Form Recognizer (2018-2020) [1][2][3] | Extracting structured data from unstructured documents | Deep OCR with layout analysis and form/entity extraction, delivered as managed cloud APIs | High-accuracy OCR, entity and table extraction, scalability | Proprietary, per-use cost, cloud lock-in, data leaving the premises | Motivates an on-premise, open OCR pipeline (PyMuPDF + Tesseract) |
+| R4 | Lewis et al. / LangChain (2020-2022) [4] | LLMs hallucinate and lack access to private or current data | Retrieve relevant chunks from a vector store, then condition an LLM on them; LangChain, vector databases, LLMs | Grounded, citable answers over private corpora | Answer quality depends heavily on retrieval and chunking, and needs tuning | The core paradigm adopted by Hireflow for document question answering |
+| R5 | Hugging Face / Transformer community (2019-2021) [5][6] | Understanding document text and semantics | Pretrained transformer encoders for embeddings and LLMs for generation; Transformers and sentence-transformers | Semantic embeddings, classification, generation | Compute-heavy, and general models need domain adaptation | The basis for Hireflow's embeddings and LLM answer generation |
+| R6 | Johnson, Douze & Jegou / FAISS (2017) [8] | Fast similarity search over very large collections of vectors | Approximate nearest-neighbour indexing of dense embeddings; the FAISS library | Efficient, scalable approximate-nearest-neighbour search | A library only, no ingestion, OCR, or application layer | Supports semantic retrieval; Hireflow uses ChromaDB in the same role |
+| R7 | Smith / Tesseract community (2006-2018) [9] | Reading text from scanned images and PDFs | LSTM-based OCR over rasterised document images; Tesseract and pytesseract | Free, offline, multi-format OCR | Accuracy drops on poor scans and handwriting; no semantic understanding | Provides the OCR stage of Hireflow's ingestion pipeline |
 
-**R2, Eightfold AI (2016): Deep-learning talent intelligence platform.**
-
-- **Research problem:** bias and inefficiency in candidate-job matching.
-- **Methodology & tools:** learned embeddings of candidates and roles for similarity matching; proprietary deep-learning models.
-- **Key features:** AI candidate matching, skills inference, and ranking.
-- **Limitations:** proprietary, closed, and costly, with limited transparency and provenance.
-- **Relevance:** validates ML-based ranking and motivates open, explainable ranking with citations.
-
-**R3, Google / Amazon / Microsoft (2018-2020): Cloud Document AI, Textract, and Form Recognizer [1][2][3].**
-
-- **Research problem:** extracting structured data from unstructured documents.
-- **Methodology & tools:** deep OCR with layout analysis and form/entity extraction, delivered as managed cloud APIs.
-- **Key features:** high-accuracy OCR, entity and table extraction, and scalability.
-- **Limitations:** proprietary, per-use cost, cloud lock-in, and data leaving the premises.
-- **Relevance:** motivates an on-premise, open OCR pipeline (PyMuPDF + Tesseract).
-
-**R4, Lewis et al. / LangChain (2020-2022): Retrieval-Augmented Generation and RAG coordination [4].**
-
-- **Research problem:** LLMs hallucinate and lack access to private or current data.
-- **Methodology & tools:** retrieve relevant chunks from a vector store, then condition an LLM on them; LangChain, vector databases, and LLMs.
-- **Key features:** grounded, citable answers over private corpora.
-- **Limitations:** answer quality depends heavily on retrieval and chunking, and needs tuning.
-- **Relevance:** the core paradigm adopted by Hireflow for document question answering.
-
-**R5, Hugging Face / Transformer community (2019-2021): Transformer document-AI and embedding/LLM models [5][6].**
-
-- **Research problem:** understanding document text and semantics.
-- **Methodology & tools:** pretrained transformer encoders for embeddings and LLMs for generation; Transformers and sentence-transformers.
-- **Key features:** semantic embeddings, classification, and generation.
-- **Limitations:** compute-heavy, and general models need domain adaptation.
-- **Relevance:** the basis for Hireflow's embeddings and LLM answer generation.
-
-**R6, Johnson, Douze & Jégou / FAISS (2017): FAISS vector similarity search library [8].**
-
-- **Research problem:** fast similarity search over very large collections of vectors.
-- **Methodology & tools:** approximate nearest-neighbour indexing of dense embeddings; the FAISS library.
-- **Key features:** efficient, scalable approximate-nearest-neighbour search.
-- **Limitations:** a library only, no ingestion, OCR, or application layer.
-- **Relevance:** supports semantic retrieval; Hireflow uses ChromaDB in the same role.
-
-**R7, Smith / Tesseract community (2006-2018): Tesseract open-source OCR engine [9].**
-
-- **Research problem:** reading text from scanned images and PDFs.
-- **Methodology & tools:** LSTM-based OCR over rasterised document images; Tesseract and pytesseract.
-- **Key features:** free, offline, multi-format OCR.
-- **Limitations:** accuracy drops on poor scans and handwriting; no semantic understanding.
-- **Relevance:** provides the OCR stage of Hireflow's ingestion pipeline.
+Table 2.1: Review of Existing Systems and Related Work
 
 ## 2.3 Comparison of Existing Systems
 
@@ -213,19 +171,19 @@ The functional requirements were drawn from the SRS System Features section and 
 | FR02 | Authentication & Access Control | Allow users to reset their password using a verification mechanism | UC-02 |
 | FR03 | Authentication & Access Control | Restrict access to features unless the user is authenticated | UC-01 |
 | FR04 | Document Upload & Processing | Allow HR personnel to upload files such as resumes and HR documents | UC-03 |
-| FR05 | Document Upload & Processing | Extract text from uploaded documents using OCR when needed | UC-04 |
+| FR05 | Document Upload & Processing | Extract text from uploaded documents using OCR when needed | UC-03 |
 | FR06 | Document Upload & Processing | Store uploaded documents together with their extracted text for retrieval | UC-03 |
-| FR07 | Search & Retrieval | Allow users to search documents using keywords or natural language | UC-05 |
+| FR07 | Search & Retrieval | Allow users to search documents using keywords or natural language | UC-04 |
 | FR08 | Search & Retrieval | Allow users to search based on criteria such as skills, job role, and date | UC-05 |
-| FR09 | Search & Retrieval | Display search results ranked by relevance | UC-05 |
-| FR10 | Filter Documents | Allow users to filter documents based on criteria (skills, role, date) | UC-06 |
-| FR11 | Job Creation & Management | Allow HR personnel to create job descriptions with screening criteria | UC-06 |
-| FR12 | Job Creation & Management | Allow HR personnel to edit existing job postings | UC-07 |
+| FR09 | Search & Retrieval | Display search results ranked by relevance | UC-04 |
+| FR10 | Filter Documents | Allow users to filter documents based on criteria (skills, role, date) | UC-05 |
+| FR11 | Job Creation & Management | Allow HR personnel to create job descriptions with screening criteria | UC-07 |
+| FR12 | Job Creation & Management | Allow HR personnel to edit existing job postings | UC-08 |
 | FR13 | Resume Viewing & Screening | Allow HR personnel to view and read extracted resume content | UC-12 |
 | FR14 | Resume Viewing & Screening | Allow HR personnel to shortlist candidates based on job relevance | UC-12 |
 | FR15 | Resume Viewing & Screening | Allow HR personnel to reject candidates | UC-12 |
-| FR16 | Resume Viewing & Screening | Allow HR personnel to export shortlisted candidates to a spreadsheet | UC-05 |
-| FR17 | Email Integration & Resume Sync | Allow HR personnel to connect their email account | UC-08 |
+| FR16 | Resume Viewing & Screening | Allow HR personnel to export shortlisted candidates to a spreadsheet | UC-06 |
+| FR17 | Email Integration & Resume Sync | Allow HR personnel to connect their email account | UC-09 |
 | FR18 | Email Integration & Resume Sync | Sync resume attachments from connected email accounts | UC-09 |
 | FR19 | Logs & Metadata Management | Allow users to view activity logs | UC-10 |
 | FR20 | Logs & Metadata Management | Allow users to view extracted document metadata (skills, experience) | UC-11 |
@@ -281,7 +239,7 @@ Table 3.2: Tools and Technologies
 
 ## 3.5 Use Cases / User Stories
 
-Twelve use cases model the system's behaviour, spanning authentication, document handling, search, job management, screening, email integration, and auditing. HR Personnel are the primary actor in most of them. The Email Service acts as an external actor for resume intake and synchronisation. Figure 3.1 presents the overall use case diagram.
+Twelve use cases model the system's behaviour, spanning authentication, document upload and handling, search, job management, screening, email integration, and auditing. HR Personnel are the primary actor in most of them. The Email Service acts as an external actor for resume intake and synchronisation. Figure 3.1 presents the overall use case diagram.
 
 ![Figure 3.1: Use Case Diagram](src/images/use_case_diagram.png){width=100%}
 
@@ -291,12 +249,12 @@ The main use cases identified in the SRS are summarised below.
 | -------- | ---- | ------------- | ------- |
 | UC-01 | Login | HR Personnel | Authenticate with email and password to access the system |
 | UC-02 | Reset Password | HR Personnel | Recover access to a forgotten account via a verification mechanism |
-| UC-03 | Search Documents | HR Personnel | Search stored documents and view ranked results |
-| UC-04 | Filter Search | HR Personnel | Refine search results using metadata filters |
-| UC-05 | Export to Excel | HR Personnel | Export results or shortlisted candidates to a spreadsheet |
-| UC-06 | Create Job | HR Personnel | Create a job posting with screening criteria |
-| UC-07 | Edit/Delete Job | HR Personnel | Update or remove an existing job posting |
-| UC-08 | Receive Email | Email Service | Receive resumes as email attachments and store them |
+| UC-03 | Upload Document | HR Personnel | Upload resumes and HR documents for text extraction, indexing, and storage |
+| UC-04 | Search Documents | HR Personnel | Search stored documents and view ranked results |
+| UC-05 | Filter Search | HR Personnel | Refine search results using metadata filters |
+| UC-06 | Export to Excel | HR Personnel | Export results or shortlisted candidates to a spreadsheet |
+| UC-07 | Create Job | HR Personnel | Create a job posting with screening criteria |
+| UC-08 | Edit/Delete Job | HR Personnel | Update or remove an existing job posting |
 | UC-09 | Sync Resumes | Email Service | Fetch and process resume attachments from connected accounts |
 | UC-10 | View Logs | HR Personnel | Review system activity and audit trail |
 | UC-11 | View Metadata | HR Personnel | View extracted document metadata such as skills and experience |
@@ -341,17 +299,17 @@ This chapter turns the requirements set out earlier into a concrete technical de
 
 Hireflow follows a layered, service-oriented architecture that separates presentation, application coordination, domain logic, and infrastructure. The design goal is straightforward: business rules should be testable in isolation, infrastructure providers should be swappable, and long-running work should never block the request path.
 
-At the outermost tier, a **React 19 single-page application** (built with TypeScript, Vite, Tailwind CSS v4 and shadcn/ui) runs in the browser and communicates exclusively through a generated, type-safe SDK. The SDK is produced from the backend's OpenAPI specification via `openapi-ts`, so every request and response stays contractually aligned with the server. In production, an **nginx** reverse proxy serves the compiled static frontend and forwards `/api/` traffic to the backend. The data stores remain on a private Docker network with no host-exposed ports.
+At the outermost tier, a React 19 single-page application (built with TypeScript, Vite, Tailwind CSS v4 and shadcn/ui) runs in the browser and communicates exclusively through a generated, type-safe SDK. The SDK is produced from the backend's OpenAPI specification via `openapi-ts`, so every request and response stays contractually aligned with the server. In production, an nginx reverse proxy serves the compiled static frontend and forwards `/api/` traffic to the backend. The data stores remain on a private Docker network with no host-exposed ports.
 
-The **FastAPI API layer** is the system's HTTP boundary. Routes are deliberately thin, five lines or fewer per handler: they validate requests using Pydantic v2 schemas, invoke a service, and serialise the result. Shared concerns are handled here through dependency injection, covering authentication (`CurrentUser`), role gating (`RequireAdmin`), and a central error handler that maps domain exceptions to HTTP status codes. Routes never raise `HTTPException` directly. Instead, services raise typed `DomainError` subclasses (for example `NotFound`, `Forbidden`, `FileTooLarge`) that the handler translates. The public surface comprises 31 endpoints grouped by tag: authentication, documents, search, RAG, jobs, candidates, users, and activity logs.
+The FastAPI API layer is the system's HTTP boundary. Routes are deliberately thin, five lines or fewer per handler: they validate requests using Pydantic v2 schemas, invoke a service, and serialise the result. Shared concerns are handled here through dependency injection, covering authentication (`CurrentUser`), role gating (`RequireAdmin`), and a central error handler that maps domain exceptions to HTTP status codes. Routes never raise `HTTPException` directly. Instead, services raise typed `DomainError` subclasses (for example `NotFound`, `Forbidden`, `FileTooLarge`) that the handler translates. The public surface comprises 31 endpoints grouped by tag: authentication, documents, search, RAG, jobs, candidates, users, and activity logs.
 
-Beneath the API sits the **service layer**, the application's coordination tier. Around ten services (authentication, document, search, RAG, job, candidate, matching, activity, and others) orchestrate repositories and adapters to fulfil use cases. Services depend only on abstractions: repositories for data access and *Protocol*-typed adapters for infrastructure. This is what makes the system testable. A service can be instantiated in a unit test with in-memory fakes, needing neither a database nor Docker. The **domain layer** underneath holds pure business rules, such as authorization checks and exception definitions, and imports nothing from infrastructure.
+Beneath the API sits the service layer, the application's coordination tier. Around ten services (authentication, document, search, RAG, job, candidate, matching, activity, and others) orchestrate repositories and adapters to fulfil use cases. Services depend only on abstractions: repositories for data access and *Protocol*-typed adapters for infrastructure. This is what makes the system testable. A service can be instantiated in a unit test with in-memory fakes, needing neither a database nor Docker. The domain layer underneath holds pure business rules, such as authorization checks and exception definitions, and imports nothing from infrastructure.
 
-Infrastructure is reached through the **adapter layer**. Each external capability is defined as a Protocol with one or more concrete implementations, which yields runtime-swappable providers: `BlobStorage` (MinIO, replaceable by S3 or GCS), `VectorStore` (ChromaDB), `LlmProvider` (Anthropic Claude or Ollama), `EmbeddingProvider` (sentence-transformers, default `BAAI/bge-small-en-v1.5`), `VisionProvider` for OCR (Claude, Ollama, or Tesseract), `PasswordHasher` (Argon2id), and `TokenIssuer` (JWT). The concrete graph is wired once in a composition root (`api/deps.py`), where heavyweight resources such as the embedding model and vector store are constructed as process singletons.
+Infrastructure is reached through the adapter layer. Each external capability is defined as a Protocol with one or more concrete implementations, which yields runtime-swappable providers: `BlobStorage` (MinIO, replaceable by S3 or GCS), `VectorStore` (ChromaDB), `LlmProvider` (Anthropic Claude or Ollama), `EmbeddingProvider` (sentence-transformers, default `BAAI/bge-small-en-v1.5`), `VisionProvider` for OCR (Claude, Ollama, or Tesseract), `PasswordHasher` (Argon2id), and `TokenIssuer` (JWT). The concrete graph is wired once in a composition root (`api/deps.py`), where heavyweight resources such as the embedding model and vector store are constructed as process singletons.
 
-The supporting infrastructure comprises **PostgreSQL 15** (relational data, plus a generated `tsvector` column powering lexical full-text search), **ChromaDB** (vector embeddings for semantic search), **Redis 7** (Celery broker, JWT revocation denylist, and one-time password-reset tokens), **MinIO** (S3-compatible object storage for uploaded files), and the configured **LLM provider** (Claude) for answer generation and classification fallback.
+The supporting infrastructure comprises PostgreSQL 15 (relational data, plus a generated `tsvector` column powering lexical full-text search), ChromaDB (vector embeddings for semantic search), Redis 7 (Celery broker, JWT revocation denylist, and one-time password-reset tokens), MinIO (S3-compatible object storage for uploaded files), and the configured LLM provider (Claude) for answer generation and classification fallback.
 
-Two pipelines dominate the system's behaviour. The **ingestion pipeline** runs asynchronously in a **Celery worker**. An upload returns HTTP `201` immediately with `status=PENDING`; the worker then fetches the blob from MinIO, extracts layout-aware typed elements (via the `unstructured` library, PyMuPDF, and Tesseract OCR for scanned images), classifies the document, and chunks it with heading- and table-aware rules. Each chunk is contextualised, embedded, and upserted into ChromaDB, while PostgreSQL's search vector auto-populates. On completion the document reaches `status=READY`, at which point an on-ready hook can auto-create a candidate from a resume. The **RAG pipeline** runs inline per request. It retrieves the most relevant chunks (owner-scoped, READY-only), classifies the question's intent, composes a layered system prompt, and streams the answer from Claude with typed citations. Both pipelines and their interactions are depicted in Figure 4.1.
+Two pipelines dominate the system's behaviour. The ingestion pipeline runs asynchronously in a Celery worker. An upload returns HTTP `201` immediately with `status=PENDING`; the worker then fetches the blob from MinIO, extracts layout-aware typed elements (via the `unstructured` library, PyMuPDF, and Tesseract OCR for scanned images), classifies the document, and chunks it with heading- and table-aware rules. Each chunk is contextualised, embedded, and upserted into ChromaDB, while PostgreSQL's search vector auto-populates. On completion the document reaches `status=READY`, at which point an on-ready hook can auto-create a candidate from a resume. The RAG pipeline runs inline per request. It retrieves the most relevant chunks (owner-scoped, READY-only), classifies the question's intent, composes a layered system prompt, and streams the answer from Claude with typed citations. Both pipelines and their interactions are depicted in Figure 4.1.
 
 ![Figure 4.1: System Architecture](src/images/architecture_diagram.png){width=100%}
 
@@ -359,15 +317,15 @@ Two pipelines dominate the system's behaviour. The **ingestion pipeline** runs a
 
 Data Flow Diagrams (DFDs) model the system as a network of processes that transform data, the external entities that supply and consume it, and the data stores that persist it. They are presented in progressively decomposed levels. Level 0, the context diagram, treats the entire system as a single process to fix its boundary and external interactions. Level 1 decomposes that process into the major functional subsystems. Level 2 then expands a chosen subsystem into its constituent steps.
 
-The **Level 0 (context) diagram** situates Hireflow as one process bounded by its external actors. The primary external entity is the **HR user** (and the privileged **Administrator**), who uploads documents, issues search and natural-language queries, manages jobs and candidates, and receives ranked results and cited answers. Two further external entities appear: the **Gmail service**, from which candidate emails and attachments are synced, and the **LLM provider (Anthropic Claude)**, which receives composed prompts and returns generated answers. This level establishes what crosses the system boundary without revealing internal structure, as shown in Figure 4.2.
+The Level 0 (context) diagram situates Hireflow as one process bounded by its external actors. The primary external entity is the HR user (and the privileged Administrator), who uploads documents, issues search and natural-language queries, manages jobs and candidates, and receives ranked results and cited answers. Two further external entities appear: the Gmail service, from which candidate emails and attachments are synced, and the LLM provider (Anthropic Claude), which receives composed prompts and returns generated answers. This level establishes what crosses the system boundary without revealing internal structure, as shown in Figure 4.2.
 
 ![Figure 4.2: DFD Level 0 (Context Diagram)](src/images/dfd_level_0.png){width=100%}
 
-The **Level 1 diagram** decomposes the single context process into the system's principal subsystems and the data stores between them: authentication and session management; document ingestion and storage; the hybrid search and RAG engine; job and candidate management with resume-to-job matching; Gmail synchronisation; and activity logging. It shows how an uploaded file flows from the API into object storage and the asynchronous processing pipeline, how extracted text and metadata land in the relational and vector stores, and how a query fans out across those stores before results are fused and returned. The major data stores are made explicit here: Users, Documents, Candidates, Jobs, Applications, the vector collection, and the activity log (Figure 4.3).
+The Level 1 diagram decomposes the single context process into the system's principal subsystems and the data stores between them: authentication and session management; document ingestion and storage; the hybrid search and RAG engine; job and candidate management with resume-to-job matching; Gmail synchronisation; and activity logging. It shows how an uploaded file flows from the API into object storage and the asynchronous processing pipeline, how extracted text and metadata land in the relational and vector stores, and how a query fans out across those stores before results are fused and returned. The major data stores are made explicit here: Users, Documents, Candidates, Jobs, Applications, the vector collection, and the activity log (Figure 4.3).
 
 ![Figure 4.3: DFD Level 1](src/images/dfd_level_1.png){height=6in}
 
-The **Level 2 diagram** drills into the document-processing and retrieval subsystem, the most data-intensive part of the platform. It expands the ingestion sequence (extract → persist elements → classify → chunk → contextualise → embed → index) and the query sequence (parse and normalise query → vector search → lexical full-text search → metadata filter → fuzzy fallback → reciprocal-rank fusion → answer generation). This exposes how chunks, embeddings, and ranked hits move between the worker, PostgreSQL, ChromaDB, and the LLM provider (Figure 4.4).
+The Level 2 diagram drills into the document-processing and retrieval subsystem, the most data-intensive part of the platform. It expands the ingestion sequence (extract → persist elements → classify → chunk → contextualise → embed → index) and the query sequence (parse and normalise query → vector search → lexical full-text search → metadata filter → fuzzy fallback → reciprocal-rank fusion → answer generation). This exposes how chunks, embeddings, and ranked hits move between the worker, PostgreSQL, ChromaDB, and the LLM provider (Figure 4.4).
 
 ![Figure 4.4: DFD Level 2](src/images/dfd_level_2.png){width=100%}
 
@@ -393,7 +351,7 @@ The Unified Modeling Language (UML) captures the system's static structure and d
 
 ## 4.4 Database Design (ERD, Schema, Data Dictionary)
 
-The persistent state of Hireflow lives in a **PostgreSQL 15** relational schema, complemented by a **ChromaDB** vector store for embeddings. This section describes the entity relationships, provides a schema overview, and documents the core tables as data dictionaries. The relational design derives directly from the implemented SQLAlchemy models.
+The persistent state of Hireflow lives in a PostgreSQL 15 relational schema, complemented by a ChromaDB vector store for embeddings. This section describes the entity relationships, provides a schema overview, and documents the core tables as data dictionaries. The relational design derives directly from the implemented SQLAlchemy models.
 
 **ERD description.** The schema is anchored on the `users` table, the ownership root for the multi-tenant, per-user data model. A user owns many `documents`, `jobs`, and `candidates`; each of those tables carries a `user_id` foreign key referencing `users.user_id` with `ON DELETE CASCADE`. A `document` owns many `document_elements`, its typed extracted regions, via a cascade relationship. A `candidate` is optionally derived from one source `document` (`document_id`, unique, `ON DELETE SET NULL`). The schema deliberately models a mutual foreign-key link: a `document` may point back to its authoring `candidate` (`candidate_id`, `ON DELETE SET NULL`), reflecting the real graph in which a candidate references the resume it was parsed from while resumes and other authored documents reference the candidate. Candidates and jobs form a many-to-many relationship resolved through the `applications` associative entity, which carries the match `score`, a persisted score breakdown, and application `status`. A `candidate_attachments` join table bundles multiple role-tagged documents onto a candidate. Gmail integration adds `gmail_connections` (one per user-mailbox pair) and `gmail_ingested_messages` (a per-message dedup ledger, cascading from the connection). Finally, `activity_logs` records an audit trail, referencing the acting user with `ON DELETE SET NULL` so history survives account deletion.
 
@@ -473,11 +431,11 @@ Alongside the relational schema, ChromaDB holds one collection per embedding mod
 
 ## 4.5 UI/UX Design
 
-The user interface is a **React 19** single-page application written in TypeScript and built with Vite. Its design philosophy is a clean, professional, information-dense workspace suited to HR personnel who work with large document sets and need results at a glance. The visual layer is built on **Tailwind CSS v4** utility classes composed into accessible **shadcn/ui** primitives (backed by Base UI), which gives a consistent component vocabulary across every screen: cards, dialogs, tables, badges, tooltips, and scroll areas. The application supports light and dark theming. All data-bearing components consume the auto-generated, type-safe API SDK through TanStack Query, so loading, empty, and error states are handled uniformly and no screen relies on mock data.
+The user interface is a React 19 single-page application written in TypeScript and built with Vite. Its design philosophy is a clean, professional, information-dense workspace suited to HR personnel who work with large document sets and need results at a glance. The visual layer is built on Tailwind CSS v4 utility classes composed into accessible shadcn/ui primitives (backed by Base UI), which gives a consistent component vocabulary across every screen: cards, dialogs, tables, badges, tooltips, and scroll areas. The application supports light and dark theming. All data-bearing components consume the auto-generated, type-safe API SDK through TanStack Query, so loading, empty, and error states are handled uniformly and no screen relies on mock data.
 
-Navigation is organised around the primary HR workflows, each a dedicated page wired to the real API: a **Dashboard** overview, **Documents** management (upload, list, in-app preview, metadata, and delete), **Search** (combining hybrid keyword/semantic search with a streaming RAG chat), **Jobs** (create, edit, and match candidates), **Candidates** (a screening list with match scores), **Logs** (the activity audit trail), and **Settings** (profile and password). Authentication is handled transparently. An `AuthProvider` hydrates the current user on mount, and a client interceptor attaches the bearer token and silently refreshes it on expiry via a single-flight retry, so the user is never spuriously logged out mid-task.
+Navigation is organised around the primary HR workflows, each a dedicated page wired to the real API: a Dashboard overview, Documents management (upload, list, in-app preview, metadata, and delete), Search (combining hybrid keyword/semantic search with a streaming RAG chat), Jobs (create, edit, and match candidates), Candidates (a screening list with match scores), Logs (the activity audit trail), and Settings (profile and password). Authentication is handled transparently. An `AuthProvider` hydrates the current user on mount, and a client interceptor attaches the bearer token and silently refreshes it on expiry via a single-flight retry, so the user is never spuriously logged out mid-task.
 
-Two screens embody the system's differentiating design work. The **Documents** page provides drag-and-drop upload with real-time status badges reflecting the asynchronous pipeline (pending → processing → ready), giving users immediate feedback while indexing happens out-of-band. The **Search** page implements a conversational layout: the input is pinned to the bottom of the card, messages scroll within a fixed viewport, and assistant answers render as GitHub-flavoured Markdown (tables, lists, and emphasis) with a typing indicator and blinking cursor during streaming. Most importantly, inline **citation chips** are parsed from the answer text and matched against source documents. Hovering a chip reveals the filename, section heading, and snippet; clicking it scrolls the corresponding source card into view with a highlight flash, making every generated claim traceable to its evidence. Representative screens are shown in Figures 4.10 through 4.14.
+Two screens embody the system's differentiating design work. The Documents page provides drag-and-drop upload with real-time status badges reflecting the asynchronous pipeline (pending → processing → ready), giving users immediate feedback while indexing happens out-of-band. The Search page implements a conversational layout: the input is pinned to the bottom of the card, messages scroll within a fixed viewport, and assistant answers render as GitHub-flavoured Markdown (tables, lists, and emphasis) with a typing indicator and blinking cursor during streaming. Most importantly, inline citation chips are parsed from the answer text and matched against source documents. Hovering a chip reveals the filename, section heading, and snippet; clicking it scrolls the corresponding source card into view with a highlight flash, making every generated claim traceable to its evidence. Representative screens are shown in Figures 4.10 through 4.14.
 
 ![Figure 4.10: Dashboard overview](src/images/screenshots/home.png){width=100%}
 
@@ -538,7 +496,23 @@ Production is far more closed. Under `docker-compose.prod.yml` only nginx port 8
 
 **Layered backend.** The backend follows a strict layered architecture that keeps business rules independent of infrastructure. Each layer has an explicit import contract: `domain/` holds pure business rules and exceptions (stdlib only); `models/` holds the SQLAlchemy 2 ORM classes; `schemas/` holds Pydantic v2 request/response DTOs; `repositories/` encapsulate data access; `adapters/` provide `Protocol` definitions with swappable concrete implementations (password hashing, JWT, object storage, vector store, OCR/vision, LLM); `services/` coordinate the application logic; and `api/routes/` expose thin HTTP handlers (target ≤ 5 lines each). One invariant matters above the rest: services never raise `HTTPException`. They raise `DomainError` subclasses, and a single error handler in `api/error_handlers.py` maps those to HTTP status codes (for example `NotFound` → 404, `FileTooLarge` → 413, `UnsupportedFileType` → 415). Adapters are wired to services in a composition root, `api/deps.py`, which exposes `Annotated` dependency aliases (`DocumentServiceDep`, `RagServiceDep`, `CurrentUser`, `RequireAdmin`, etc.) consumed by routes.
 
-**Ingestion pipeline.** Document ingestion runs asynchronously in the Celery worker and is triggered on upload. First the blob is fetched from MinIO. The `unstructured`-based extractor (PyMuPDF for PDFs, Tesseract/pytesseract for OCR of scanned images) then produces typed elements (`Title`, `NarrativeText`, `ListItem`, `Table`) that are persisted to `document_elements`. A two-stage classifier follows, rule-based first and falling back to the LLM when confidence < 0.4, and sets `document_type` and the extracted skills. Heading-, table-, and list-aware chunking produces chunks that carry section-heading and page metadata; each chunk is embedded through the sentence-transformers embedding provider (default `bge-small-en-v1.5`) and upserted into a per-model ChromaDB collection, while PostgreSQL's weighted `search_tsv` column is auto-populated. The document is then marked `READY`, and for resumes an on-ready hook auto-creates a candidate. Every step is version-stamped (`extraction_version`, `chunking_version`, `embedding_model_version`) so that re-indexing can touch only the stale documents. Celery tasks use `acks_late=True` with three retries, and an indexing failure is treated as non-fatal: the document still reaches `READY`, with a warning.
+**Ingestion pipeline.** Ingestion is the path a file travels from the moment it is uploaded to the moment it becomes searchable and answerable. It runs asynchronously in the Celery worker so that the interface never blocks: the upload endpoint stores the raw file in MinIO, creates a document row with `status = PENDING`, returns HTTP 201 at once, and enqueues a Celery task that performs the remaining work in the background. The pipeline has seven stages, each consuming the output of the one before it, as summarised in Table 5.2 and depicted in Figure 4.4.
+
+| # | Stage | Input | Processing | Output |
+| --- | --- | --- | --- | --- |
+| 1 | Fetch | Document ID | The worker fetches the raw blob from MinIO object storage using the stored object key | Raw file bytes |
+| 2 | Extract | Raw file bytes | The `unstructured`-based extractor performs layout-aware parsing: PyMuPDF for digital PDFs, and Tesseract/pytesseract OCR for scanned images and image-only pages | Typed elements (`Title`, `NarrativeText`, `ListItem`, `Table`) persisted to `document_elements` |
+| 3 | Classify | Extracted text | A two-stage classifier runs rule-based keyword and structural heuristics first and falls back to the LLM only when rule confidence is below 0.4 | `document_type` (resume, certificate, report, ...) and extracted skills |
+| 4 | Chunk | Typed elements | Heading-, table-, and list-aware chunking splits the text on semantic boundaries rather than fixed character counts, so a chunk does not straddle two sections | Chunks carrying section-heading and page-number metadata |
+| 5 | Contextualise | Chunks | Each chunk is prefixed with its document title and section heading so that an isolated chunk still carries the context needed to be retrieved and cited correctly | Context-enriched chunk text |
+| 6 | Embed | Enriched chunks | Chunks are batched through the sentence-transformers embedding provider (default `bge-small-en-v1.5`) to produce dense vectors | Embedding vector per chunk |
+| 7 | Index | Vectors + chunk text | Vectors are upserted into a per-model ChromaDB collection while PostgreSQL's weighted `search_tsv` column is auto-populated for lexical search | Document searchable by both semantic and lexical paths |
+
+Table 5.2: Document Ingestion Pipeline Stages
+
+Once indexing succeeds the document is marked `status = READY`, and an on-ready hook fires: for a document classified as a resume, the hook automatically creates a candidate record from the extracted fields, so email-sourced and manually uploaded resumes both enter the candidate pool without further action.
+
+Two design decisions make the pipeline maintainable in production. First, every stage is version-stamped with `extraction_version`, `chunking_version`, and `embedding_model_version`, so when a stage is improved a re-index can be limited to the documents whose stamps are stale, rather than reprocessing the whole corpus. Second, failure is handled by severity rather than uniformly: Celery tasks run with `acks_late = True` and up to three retries so a transient error such as a brief storage outage is retried rather than lost, while an indexing failure is treated as non-fatal, leaving the document at `READY` with a warning so that it remains viewable and lexically searchable even if its vectors are missing. Only an extraction failure, which leaves no text at all, marks the document as failed.
 
 **Search and RAG.** Search merges four retrieval signals via Reciprocal Rank Fusion (k = 60): vector similarity from ChromaDB, weighted lexical full-text search (`ts_rank_cd` over `search_tsv`, filename-A / skills-B / body-C), a SQL metadata path engaged only when structured filters are present, and a `pg_trgm` fuzzy fallback for typo tolerance. All paths respect per-user `owner_id` scoping (admin bypass) and `status = READY`. The RAG service reuses this same retrieval path through a `ChunkRetriever` protocol, applies distance gates, runs an embedding-based intent classifier, composes a three-layer system prompt via `rag_prompts.py`, and streams a grounded answer from Anthropic Claude with typed citations, confidence, and intent on the wire.
 
@@ -640,11 +614,11 @@ This chapter sets out how Hireflow was verified and what that verification showe
 
 ## 6.1 Testing Strategy
 
-Testing followed a layered strategy. At the base, **unit tests** run under `pytest` (`uv run pytest`) against services in isolation. The architecture's acceptance bar is blunt: any service must be instantiable in a test using fake adapters, with no Docker and no network, because services depend only on `Protocol` interfaces. Pure logic is therefore cheap to exercise directly, including the matching score blend, the skill-overlap floor, experience-fit decay, and the timing-safe authentication path.
+Testing followed a layered strategy. At the base, unit tests run under `pytest` (`uv run pytest`) against services in isolation. The architecture's acceptance bar is blunt: any service must be instantiable in a test using fake adapters, with no Docker and no network, because services depend only on `Protocol` interfaces. Pure logic is therefore cheap to exercise directly, including the matching score blend, the skill-overlap floor, experience-fit decay, and the timing-safe authentication path.
 
-Above that sit the **integration and API tests**, which drive full request/response cycles through FastAPI against the real backing services. They cover owner-scoping (cross-tenant access returning 404 to hide existence), the document ingestion pipeline reaching `READY`, RAG retrieval parity with the search pipeline, and the LLM error taxonomy mapping to the correct HTTP codes (503/429/504). **Manual and UAT-style testing** was carried out through the browser and `curl`, following the per-feature manual-test checklists recorded on the tracking issues. This layer covers the interactive surfaces that automated tests cannot easily assert: streaming chat rendering, drag-and-drop, the command palette, theme switching, and keyboard navigation.
+Above that sit the integration and API tests, which drive full request/response cycles through FastAPI against the real backing services. They cover owner-scoping (cross-tenant access returning 404 to hide existence), the document ingestion pipeline reaching `READY`, RAG retrieval parity with the search pipeline, and the LLM error taxonomy mapping to the correct HTTP codes (503/429/504). Manual and UAT-style testing was carried out through the browser and `curl`, following the per-feature manual-test checklists recorded on the tracking issues. This layer covers the interactive surfaces that automated tests cannot easily assert: streaming chat rendering, drag-and-drop, the command palette, theme switching, and keyboard navigation.
 
-Finally, **static analysis and linting** with `ruff` (`uv run ruff check --fix && uv run ruff format` on the backend, `npm run lint && npm run format` on the frontend) is a mandatory gate before any change is committed, under a zero-`noqa` policy. Taken together, these layers give confidence that both the business logic and the wired-up system behave as specified.
+Finally, static analysis and linting with `ruff` (`uv run ruff check --fix && uv run ruff format` on the backend, `npm run lint && npm run format` on the frontend) is a mandatory gate before any change is committed, under a zero-`noqa` policy. Taken together, these layers give confidence that both the business logic and the wired-up system behave as specified.
 
 ## 6.2 Test Cases and Results
 
@@ -727,12 +701,12 @@ The traceability matrix below links a sample of use cases and their functional r
 | Use Case ID | Use Case Name | Functional Requirement ID | Test Case ID(s) | Test Scenario | Status |
 |-------------|---------------|---------------------------|-----------------|---------------|--------|
 | UC-01 | Login | FR01, FR03 | TC-AUTH-006, TC-AUTH-008, TC-AUTH-014 | Login, no-enumeration, token rotation | Pass |
-| UC-03 | Search Documents | FR04, FR05, FR06 | TC-DOCS-001, TC-DOCS-004, TC-DOCS-005 | Ingestion to `ready`, size + MIME guards | Pass |
-| UC-05 | Search & Ask / Export | FR07, FR08, FR09 | TC-SEARCH-005, TC-SEARCH-015, TC-RAG-001, TC-RAG-002 | Hybrid search, typo tolerance, grounded RAG, sentinel | Pass |
+| UC-03 | Upload Document | FR04, FR05, FR06 | TC-DOCS-001, TC-DOCS-004, TC-DOCS-005 | Ingestion to `ready`, size + MIME guards | Pass |
+| UC-04 | Search Documents / Ask | FR07, FR08, FR09 | TC-SEARCH-005, TC-SEARCH-015, TC-RAG-001, TC-RAG-002 | Hybrid search, typo tolerance, grounded RAG, sentinel | Pass |
 | UC-12 | Read Resumes / Screen | FR13, FR14, FR15 | TC-JOBS-010 | Weighted scoring + bounded score | Pass |
 | UC-09 | Sync Resumes | FR17, FR18 | TC-DOCS-046 | On-ready candidate creation from resume | Pass |
 
-Table 6.2: Test Case Traceability Matrix
+Table 6.1: Test Case Traceability Matrix
 
 ![Figure 6.1: Login screen under test](src/images/screenshots/login.png){width=100%}
 
@@ -740,7 +714,7 @@ Table 6.2: Test Case Traceability Matrix
 
 ## 6.3 Performance Evaluation
 
-Performance was measured on the development stack rather than a production server. The test machine was a single laptop running WSL2 with a 13th-generation Intel Core i5-13450HX (16 logical cores) and about 7.6 GiB of RAM allocated to the WSL2 virtual machine. The sentence-transformer embedder ran on an NVIDIA RTX 5050 laptop GPU, the RAG model was the hosted Claude Haiku 4.5, and the corpus held 18 ready documents indexed as 49 chunks. All timings use a monotonic clock, with the first call on each path discarded as warm-up. Table 6.3 summarises the results, which are discussed below.
+Performance was measured on the development stack rather than a production server. The test machine was a single laptop running WSL2 with a 13th-generation Intel Core i5-13450HX (16 logical cores) and about 7.6 GiB of RAM allocated to the WSL2 virtual machine. The sentence-transformer embedder ran on an NVIDIA RTX 5050 laptop GPU, the RAG model was the hosted Claude Haiku 4.5, and the corpus held 18 ready documents indexed as 49 chunks. All timings use a monotonic clock, with the first call on each path discarded as warm-up. Table 6.2 summarises the results, which are discussed below.
 
 | Path | Metric | Result |
 |---|---|---|
@@ -752,7 +726,7 @@ Performance was measured on the development stack rather than a production serve
 | RAG streaming answer | time-to-first-token | 947 ms avg (749 to 1573 ms) |
 | RAG streaming answer | full completion | 1.5 s avg (1.1 to 1.9 s) |
 
-Table 6.3: Measured Performance (Development Stack)
+Table 6.2: Measured Performance (Development Stack)
 
 **Retrieval latency.** Hybrid search combines a ChromaDB vector query, a PostgreSQL weighted full-text query, an optional SQL-metadata query, and a fuzzy fallback, all fused via RRF. The lexical and metadata paths run against indexed PostgreSQL columns (a GIN index on `search_tsv`, JSONB containment for skills), and the vector query is bounded to a small `n_results`, so end-to-end search stays interactive. Over 31 warm queries, the server-side search latency (excluding LLM generation) had a median of 72 ms and a 95th percentile of 167 ms, with a mean of 86 ms and a range of 28 to 261 ms. The one-off cold call that loads the query-embedding model took about 8 seconds and was excluded. These figures reflect the current small index; retrieval latency will grow as the corpus scales.
 
@@ -762,7 +736,7 @@ Table 6.3: Measured Performance (Development Stack)
 
 ## 6.4 Results and Discussion
 
-Measured against the project's objectives, Hireflow delivers the four capabilities set out in the brief. HR personnel can **manage unstructured documents**: the ingestion pipeline reliably parses PDFs, DOCX, and images (with OCR), classifies them, and surfaces them through an in-app multi-format viewer, reaching `READY` within the UX budget and recovering on its own from non-fatal indexing failures. They can **search and ask natural-language questions** through a hybrid retrieval engine that fuses vector, lexical, metadata, and fuzzy signals, backed by a RAG service that returns grounded, cited answers and, when a question falls outside the corpus, refuses it with an exact sentinel rather than hallucinating. They can **screen and rank resumes** against jobs using a transparent four-signal weighted score with a persisted, explainable breakdown. And candidates are **synced automatically**, both from uploaded resumes (on-ready hook) and from Gmail via encrypted OAuth connections with deduplication.
+Measured against the project's objectives, Hireflow delivers the four capabilities set out in the brief. HR personnel can manage unstructured documents: the ingestion pipeline reliably parses PDFs, DOCX, and images (with OCR), classifies them, and surfaces them through an in-app multi-format viewer, reaching `READY` within the UX budget and recovering on its own from non-fatal indexing failures. They can search and ask natural-language questions through a hybrid retrieval engine that fuses vector, lexical, metadata, and fuzzy signals, backed by a RAG service that returns grounded, cited answers and, when a question falls outside the corpus, refuses it with an exact sentinel rather than hallucinating. They can screen and rank resumes against jobs using a transparent four-signal weighted score with a persisted, explainable breakdown. And candidates are synced automatically, both from uploaded resumes (on-ready hook) and from Gmail via encrypted OAuth connections with deduplication.
 
 Feature completeness aside, the testing exercise validated the system's shared guarantees: strict per-user owner scoping (cross-tenant access returns 404 to hide existence, with a documented admin bypass), a timing-safe, non-enumerable auth surface with token rotation, a consistent error envelope, and a fully typed frontend-to-backend contract generated from OpenAPI. The layered architecture, with services depending only on protocols, earned its keep by leaving the core logic unit-testable without any infrastructure.
 
