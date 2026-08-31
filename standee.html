@@ -16,11 +16,10 @@
   }
 
   /* ---------- header ---------- */
-  .head{display:grid;grid-template-columns:2in 1fr 2in;align-items:center;
+  .head{display:grid;grid-template-columns:2.5in 1fr 2.5in;align-items:center;
         border-bottom:4px solid var(--black);padding-bottom:0.28in;}
-  .head .crest{width:1.9in;height:1.9in;object-fit:contain;}
-  .head .qr{width:1.9in;justify-self:end;}
-  .head .qr img{display:block;width:100%;height:auto;}
+  .head .crest{width:2.4in;height:2.4in;object-fit:contain;}
+  .head .logo{width:2.4in;height:2.4in;object-fit:contain;justify-self:end;}
   .head .titles{text-align:center;}
   .head .title{color:var(--black);font-weight:700;font-size:87px;line-height:1.05;text-wrap:balance;}
   .head .product{margin-top:12px;color:var(--dark);font-weight:700;font-size:48px;letter-spacing:3px;text-transform:uppercase;}
@@ -31,11 +30,11 @@
   .meta{display:grid;grid-template-columns:1fr 1.3fr;border:3px solid var(--black);background:var(--t-blue);}
   .meta .cell{padding:0.22in 0.34in;}
   .meta .cell + .cell{border-left:3px solid var(--black);}
-  .meta .lbl{color:var(--gray);font-weight:700;font-size:28px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
-  .meta .row{font-size:38px;font-weight:700;margin-top:5px;}
+  .meta .lbl{color:var(--gray);font-weight:700;font-size:31px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  .meta .row{font-size:42px;font-weight:700;margin-top:5px;}
   .meta .members{display:flex;flex-wrap:wrap;gap:8px 40px;}
-  .meta .members span{font-size:37px;font-weight:700;}
-  .meta .members small{display:block;font-size:24px;font-weight:400;font-style:italic;color:var(--gray);}
+  .meta .members span{font-size:41px;font-weight:700;}
+  .meta .members small{display:block;font-size:28px;font-weight:400;font-style:italic;color:var(--gray);}
 
   /* ---------- body ---------- */
   .body{display:grid;grid-template-columns:1fr 1fr;gap:0.3in;flex:1;min-height:0;}
@@ -45,37 +44,65 @@
   .card.l{background:var(--t-lav);} .card.c{background:var(--t-cream);} .card.w{background:var(--t-warm);}
   .card > h2{margin:0;background:var(--ink);color:#fff;font-size:43px;font-weight:700;
         text-transform:uppercase;letter-spacing:1px;padding:0.16in 0.3in;}
-  .card .in{padding:0.3in 0.36in;font-size:43px;line-height:1.48;}
+  .card .in{padding:0.3in 0.36in;font-size:51px;line-height:1.48;}
   .card .in p{margin:0 0 18px;} .card .in p:last-child{margin-bottom:0;}
-  .grow{flex:1;}
   ul.list{list-style:square;margin:0;padding-left:36px;}
   ul.list li{margin-bottom:16px;} ul.list li:last-child{margin-bottom:0;}
   .lead{font-weight:700;}
 
-  /* figure (enlarged component diagram) */
-  .fig{margin:0;flex:1;display:flex;flex-direction:column;justify-content:center;background:#ffffff;}
+  /* figure (standee-only architecture diagram, drawn in CSS so it stays vector in print) */
+  .fig{margin:0;display:flex;flex-direction:column;justify-content:center;background:#ffffff;}
   .fig img{display:block;width:100%;height:auto;padding:0.34in 0.3in 0;}
-  figcaption{font-style:italic;font-size:31px;color:var(--gray);padding:20px 0.36in 0.3in;}
+
+  .arch{padding:0.36in 0.36in 0;}
+  .band{display:grid;grid-template-columns:3.2in 1fr;align-items:center;
+        border:3px solid var(--line);border-radius:6px;}
+  .band .name{align-self:stretch;display:flex;align-items:center;
+        font-size:32px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+        padding:0.26in 0.22in;border-right:3px solid var(--line);}
+  .band .boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(3in,1fr));gap:14px;padding:0.24in;}
+  .box{background:#fff;border:2px solid var(--line);border-radius:4px;
+       padding:18px 14px;text-align:center;font-size:31px;font-weight:700;line-height:1.2;}
+  .box small{display:block;font-size:25px;font-weight:400;font-style:italic;color:var(--gray);margin-top:6px;}
+  .p-band{background:#dae8fc;} .a-band{background:#d5e8d4;} .r-band{background:#e1d5e7;}
+  .s-band{background:#fff2cc;} .x-band{background:#f8cecc;}
+  /* connector between bands */
+  .down{position:relative;height:0.5in;}
+  .down::before{content:"";position:absolute;left:50%;top:0;width:5px;height:100%;
+        background:var(--line);transform:translateX(-50%);}
+  .down::after{content:"";position:absolute;left:50%;bottom:-1px;transform:translateX(-50%);
+        border-left:16px solid transparent;border-right:16px solid transparent;border-top:20px solid var(--line);}
+  figcaption{font-style:italic;font-size:35px;color:var(--gray);padding:20px 0.36in 0.3in;}
 
   /* results stat tiles */
   .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0.3in 0.36in;}
   .tile{border:2px solid var(--ink);padding:22px 14px 18px;text-align:center;display:flex;flex-direction:column;justify-content:center;}
   .tile:nth-child(odd){background:var(--tile-a);} .tile:nth-child(even){background:var(--tile-b);}
   .tile .n{font-size:71px;font-weight:700;color:var(--black);line-height:1;font-variant-numeric:tabular-nums;}
-  .tile .k{font-size:26px;color:var(--gray);margin-top:12px;line-height:1.22;}
+  .tile .k{font-size:30px;color:var(--gray);margin-top:12px;line-height:1.22;}
 
-  .refs .in{font-size:36px;line-height:1.4;}
+  .refs .in{font-size:41px;line-height:1.4;}
   .refs ol{margin:0;padding-left:36px;} .refs li{margin-bottom:12px;}
 
   /* technologies strip */
   .tech{border:3px solid var(--black);background:var(--t-mint);}
   .tech > h2{margin:0;background:var(--ink);color:#fff;font-size:43px;font-weight:700;
         text-transform:uppercase;letter-spacing:1px;padding:0.16in 0.3in;}
-  .tech .pills{display:flex;flex-wrap:wrap;gap:16px 18px;padding:0.3in 0.36in;}
-  .tech .pill{border:2px solid var(--line);background:#fff;padding:10px 24px;font-size:33px;font-weight:700;}
+
+  /* technology logo tiles */
+  .logos{display:grid;grid-template-columns:repeat(4,1fr);gap:0.42in 0.22in;padding:0.42in 0.36in 0.2in;}
+  .logo-tile{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:14px;}
+  .logo-tile img{height:1.6in;width:auto;}
+  .logo-tile span{font-size:29px;font-weight:700;text-align:center;line-height:1.2;}
+
+  /* repository QR card */
+  .qrcard .in{display:flex;align-items:center;gap:0.4in;}
+  .qrcard img{width:3.8in;height:3.8in;}
+  .qrcard .say{font-size:44px;font-weight:700;line-height:1.35;}
+  .qrcard .say small{display:block;font-size:34px;font-weight:400;font-style:italic;color:var(--gray);margin-top:10px;}
 
   .foot{display:flex;justify-content:space-between;align-items:center;color:var(--gray);
-        font-size:31px;font-weight:700;padding-top:0.18in;border-top:4px solid var(--black);}
+        font-size:35px;font-weight:700;padding-top:0.18in;border-top:4px solid var(--black);}
 </style>
 
 <div class="standee">
@@ -88,7 +115,7 @@
       <div class="disc">BS Computer Science, Session 2022</div>
       <div class="uni">Sharif College of Engineering and Technology, Lahore (Affiliated with UET Lahore)</div>
     </div>
-    <div class="qr"><img src="src/images/qr-github.svg" alt="GitHub repository QR code" /></div>
+    <img class="logo" src="src/images/uet-logo.webp" alt="University of Engineering and Technology Lahore logo" />
   </header>
 
   <section class="meta">
@@ -111,7 +138,7 @@
 
     <!-- LEFT COLUMN -->
     <div class="col">
-      <div class="card b grow">
+      <div class="card b">
         <h2>Objective / Abstract</h2>
         <div class="in">
           <p class="lead">Hireflow is a self-hostable, AI-powered HR screening and document-retrieval platform built on Retrieval-Augmented Generation (RAG).</p>
@@ -134,7 +161,7 @@
         </div>
       </div>
 
-      <div class="card m grow">
+      <div class="card m">
         <h2>Methodology</h2>
         <div class="in">
           <p class="lead">Two pipelines drive the system.</p>
@@ -147,10 +174,57 @@
 
     <!-- RIGHT COLUMN -->
     <div class="col">
-      <div class="card grow">
+      <div class="card">
         <h2>Designed Project</h2>
         <figure class="fig">
-          <img src="src/images/architecture_diagram.png" alt="Hireflow layered system architecture" />
+          <div class="arch">
+            <div class="band p-band">
+              <div class="name">Presentation</div>
+              <div class="boxes">
+                <div class="box">React 19 SPA<small>TypeScript</small></div>
+                <div class="box">nginx<small>reverse proxy</small></div>
+              </div>
+            </div>
+            <div class="down"></div>
+            <div class="band a-band">
+              <div class="name">Application</div>
+              <div class="boxes">
+                <div class="box">REST API<small>31 endpoints</small></div>
+                <div class="box">Authentication<small>&amp; security</small></div>
+                <div class="box">Document<small>management</small></div>
+                <div class="box">Search &amp; RAG<small>service</small></div>
+                <div class="box">Job &amp; candidate<small>matching</small></div>
+              </div>
+            </div>
+            <div class="down"></div>
+            <div class="band r-band">
+              <div class="name">Processing</div>
+              <div class="boxes">
+                <div class="box">Celery worker<small>asynchronous</small></div>
+                <div class="box">Document ingestion<small>OCR, extract, chunk</small></div>
+                <div class="box">Embedding &amp; indexing<small>sentence-transformers</small></div>
+                <div class="box">Hybrid search<small>&amp; RAG engine</small></div>
+              </div>
+            </div>
+            <div class="down"></div>
+            <div class="band s-band">
+              <div class="name">Storage</div>
+              <div class="boxes">
+                <div class="box">PostgreSQL<small>metadata</small></div>
+                <div class="box">ChromaDB<small>vectors</small></div>
+                <div class="box">Redis<small>queue &amp; cache</small></div>
+                <div class="box">MinIO<small>object store</small></div>
+              </div>
+            </div>
+            <div class="down"></div>
+            <div class="band x-band">
+              <div class="name">External services</div>
+              <div class="boxes">
+                <div class="box">LLM provider<small>Claude / Ollama</small></div>
+                <div class="box">Gmail<small>email service</small></div>
+              </div>
+            </div>
+          </div>
           <figcaption>Figure 1: Hireflow layered system architecture. The Presentation, Application, Processing, and Storage layers sit over the data stores, with external LLM and Gmail services.</figcaption>
         </figure>
       </div>
@@ -167,7 +241,7 @@
         </div>
       </div>
 
-      <div class="card c grow">
+      <div class="card c">
         <h2>Conclusion</h2>
         <div class="in">
           <p>Hireflow meets its four objectives: document management, natural-language search, transparent resume screening, and automated intake, in one coherent, self-hostable system. Every generated answer is source-attributed, and out-of-scope questions are refused rather than hallucinated.</p>
@@ -175,41 +249,34 @@
         </div>
       </div>
 
-      <div class="card b refs">
-        <h2>References</h2>
-        <div class="in">
-          <ol>
-            <li>Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS 33.</li>
-            <li>Reimers and Gurevych (2019). Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks. EMNLP.</li>
-            <li>Vaswani et al. (2017). Attention Is All You Need. NeurIPS 30.</li>
-            <li>Johnson, Douze and J&eacute;gou (2019). Billion-scale Similarity Search with GPUs (FAISS). IEEE TBD.</li>
-            <li>Smith (2007). An Overview of the Tesseract OCR Engine. ICDAR.</li>
-          </ol>
-        </div>
+    <!-- TECHNOLOGIES STRIP -->
+    <section class="tech">
+      <h2>Technologies Used</h2>
+      <div class="logos">
+        <div class="logo-tile"><img src="src/images/logos/python.svg" alt="" /><span>Python</span></div>
+        <div class="logo-tile"><img src="src/images/logos/fastapi.svg" alt="" /><span>FastAPI</span></div>
+        <div class="logo-tile"><img src="src/images/logos/react.svg" alt="" /><span>React 19</span></div>
+        <div class="logo-tile"><img src="src/images/logos/typescript.svg" alt="" /><span>TypeScript</span></div>
+        <div class="logo-tile"><img src="src/images/logos/postgresql.svg" alt="" /><span>PostgreSQL 15</span></div>
+        <div class="logo-tile"><img src="src/images/logos/redis.svg" alt="" /><span>Redis</span></div>
+        <div class="logo-tile"><img src="src/images/logos/celery.svg" alt="" /><span>Celery</span></div>
+        <div class="logo-tile"><img src="src/images/logos/minio.svg" alt="" /><span>MinIO</span></div>
+        <div class="logo-tile"><img src="src/images/logos/anthropic.svg" alt="" /><span>Anthropic Claude</span></div>
+        <div class="logo-tile"><img src="src/images/logos/huggingface.svg" alt="" /><span>sentence-transformers</span></div>
+        <div class="logo-tile"><img src="src/images/logos/docker.svg" alt="" /><span>Docker</span></div>
       </div>
+    </section>
+
+    <section class="card b qrcard">
+      <h2>Project Repository</h2>
+      <div class="in">
+        <img src="src/images/qr-github.svg" alt="GitHub repository QR code" />
+        <div class="say">Scan for source code, documentation, and demo video.<small>github.com/zainulhassan815/hireflow</small></div>
+      </div>
+    </section>
     </div>
   </div>
 
-  <!-- TECHNOLOGIES STRIP -->
-  <section class="tech">
-    <h2>Technologies Used</h2>
-    <div class="pills">
-      <span class="pill">Python</span>
-      <span class="pill">FastAPI</span>
-      <span class="pill">React 19</span>
-      <span class="pill">TypeScript</span>
-      <span class="pill">PostgreSQL 15</span>
-      <span class="pill">ChromaDB</span>
-      <span class="pill">Redis</span>
-      <span class="pill">Celery</span>
-      <span class="pill">MinIO</span>
-      <span class="pill">Anthropic Claude</span>
-      <span class="pill">sentence-transformers</span>
-      <span class="pill">Tesseract OCR</span>
-      <span class="pill">PyMuPDF</span>
-      <span class="pill">Docker</span>
-    </div>
-  </section>
 
   <div class="foot">
     <span>Final Year Project, 2026</span>
