@@ -33,4 +33,9 @@ python3 scripts/border_screenshots.py
 # Right-aligned page number in the footer of every section
 python3 scripts/add_page_numbers.py
 
+# Bake real entries + page numbers into the TOC and the two lists, so they
+# display without needing Word to refresh the fields (renders via LibreOffice,
+# repeating until the page numbers settle)
+python3 scripts/fill_lists.py
+
 echo "Done: build/SRS_Document.docx"
