@@ -160,7 +160,17 @@ merged = re.sub(
 # The SCET template leaves Heading 3+ with no explicit size, so they inherit Normal
 # (12 pt) and read as no larger than body text.  Pin an explicit hierarchy above the
 # 12 pt body: H1 16, H2 14, H3 13, H4 12 -- all bold Times New Roman.
-HEADING_SIZES = {'Heading1': 32, 'Heading2': 28, 'Heading3': 26, 'Heading4': 24}  # half-points
+# size in half-points, then space before/after in twips.  The SCET template
+# leaves every heading at ``w:after="0"``, so a heading sits directly on top of
+# the paragraph under it and the page reads squashed.  Give each level room
+# below as well as above.
+HEADING_SIZES = {'Heading1': 32, 'Heading2': 28, 'Heading3': 26, 'Heading4': 24}
+HEADING_SPACING = {                     # (before, after)
+    'Heading1': (480, 240),
+    'Heading2': (360, 180),
+    'Heading3': (300, 150),
+    'Heading4': (240, 120),
+}
 for sid, half in HEADING_SIZES.items():
     for style_id in (sid, sid + 'Char'):
         m = re.search(r'<w:style [^>]*w:styleId="%s".*?</w:style>' % style_id, merged, re.S)
@@ -174,6 +184,21 @@ for sid, half in HEADING_SIZES.items():
         if blk_new == blk:  # style had no rPr at all
             blk_new = blk.replace('</w:style>', rpr + '</w:style>')
         merged = merged.replace(blk, blk_new, 1)
+
+# Room above and below every heading.
+for sid, (before, after) in HEADING_SPACING.items():
+    m = re.search(r'<w:style [^>]*w:styleId="%s".*?</w:style>' % sid, merged, re.S)
+    if not m:
+        continue
+    blk = m.group(0)
+    spacing = '<w:spacing w:before="%d" w:after="%d"/>' % (before, after)
+    if re.search(r'<w:spacing[^>]*/>', blk):
+        blk_new = re.sub(r'<w:spacing[^>]*/>', spacing, blk, count=1)
+    elif '<w:pPr>' in blk:
+        blk_new = blk.replace('<w:pPr>', '<w:pPr>' + spacing, 1)
+    else:
+        blk_new = blk.replace('</w:style>', '<w:pPr>' + spacing + '</w:pPr></w:style>')
+    merged = merged.replace(blk, blk_new, 1)
 
 # Fenced code blocks keep their border but lose the grey fill (reads as highlighting
 # in print).
