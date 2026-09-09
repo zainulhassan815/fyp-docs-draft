@@ -167,6 +167,30 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
+
+        <!-- conversations -->
+        <mxCell id="eConv" value="conversations" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="40" y="730" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eConvA" value="conversation_id (PK)&#10;owner_id (FK)&#10;title&#10;archived" parent="eConv" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <!-- chat_messages -->
+        <mxCell id="eMsg" value="chat_messages" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;">
+          <mxGeometry x="310" y="740" width="220" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="eMsgA" value="chat_message_id (PK)&#10;conversation_id (FK)&#10;role&#10;content" parent="eMsg" vertex="1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;overflow=hidden;html=1;whiteSpace=wrap;fontColor=#000000;">
+          <mxGeometry y="26" width="220" height="86" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rUserConv" value="owns" parent="1" source="eUser" target="eConv" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=0;exitY=0.6;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry x="0.75" relative="1" as="geometry">
+            <Array as="points"><mxPoint x="272" y="107" /><mxPoint x="272" y="700" /><mxPoint x="150" y="700" /></Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rConvMsg" value="contains" parent="1" source="eConv" target="eMsg" edge="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;strokeColor=#000000;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry" /></mxCell>
       </root>
     </mxGraphModel>
   </diagram>

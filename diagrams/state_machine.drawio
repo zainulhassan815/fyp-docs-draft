@@ -1,0 +1,50 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="State Machine - Document Lifecycle" id="state-hireflow">
+    <mxGraphModel dx="1000" dy="1000" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="330" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="init" value="" parent="1" vertex="1" style="ellipse;fillColor=#000000;strokeColor=#000000;">
+          <mxGeometry x="20" y="86" width="26" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pending" value="Pending" parent="1" vertex="1" style="rounded=1;arcSize=25;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=15;">
+          <mxGeometry x="190" y="70" width="140" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="processing" value="Processing" parent="1" vertex="1" style="rounded=1;arcSize=25;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=15;">
+          <mxGeometry x="480" y="70" width="150" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ready" value="Ready" parent="1" vertex="1" style="rounded=1;arcSize=25;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=15;">
+          <mxGeometry x="790" y="70" width="140" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="failed" value="Failed" parent="1" vertex="1" style="rounded=1;arcSize=25;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=15;">
+          <mxGeometry x="480" y="235" width="150" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fin" value="" parent="1" vertex="1" style="shape=endState;fillColor=#000000;strokeColor=#000000;">
+          <mxGeometry x="1000" y="85" width="28" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t1" value="upload accepted" parent="1" edge="1" source="init" target="pending" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=0;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=13;labelBackgroundColor=#ffffff;verticalAlign=bottom;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="t2" value="worker starts task" parent="1" edge="1" source="pending" target="processing" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=0;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=13;labelBackgroundColor=#ffffff;verticalAlign=bottom;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="t3" value="extracted and indexed" parent="1" edge="1" source="processing" target="ready" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=0;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=13;labelBackgroundColor=#ffffff;verticalAlign=bottom;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="t4" value="extraction failure" parent="1" edge="1" source="processing" target="failed" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=0;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=13;labelBackgroundColor=#ffffff;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="t5" value="" parent="1" edge="1" source="ready" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=0;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="t6" value="re-index" parent="1" edge="1" source="ready" target="processing" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=0;strokeColor=#000000;exitX=0.5;exitY=0;entryX=0.5;entryY=0;fontSize=13;labelBackgroundColor=#ffffff;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="860" y="26" /><mxPoint x="555" y="26" /></Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

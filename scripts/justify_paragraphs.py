@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Set justified alignment on body-text paragraphs only.
+"""Justify body-text paragraphs and set them to 1.5 line spacing.
+
+The department's preset asks for 1.5 spacing, but applying it document-wide via
+``docDefaults`` would stretch table cells, captions and code blocks as well.
+Running prose is the target, and it is exactly the set this script already
+selects, so both the alignment and the spacing are applied here.
 
 Headings, captions, code blocks, list items, and table-cell paragraphs are left
 untouched (table cells are never in Document.paragraphs; the other cases are excluded
@@ -8,6 +13,8 @@ by style name)."""
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 import sys
+
+LINE_SPACING = 1.5
 
 # Only genuine running-prose body styles are justified.
 BODY_STYLES = {"Normal", "Body Text", "First Paragraph"}
@@ -22,9 +29,10 @@ def justify(docx_path):
         # cover's centred title block (CENTER) and pre-justified declaration untouched.
         if name in BODY_STYLES and p.alignment is None:
             p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            p.paragraph_format.line_spacing = LINE_SPACING
             count += 1
     doc.save(docx_path)
-    print(f"Justified {count} body paragraph(s) in {docx_path}")
+    print(f"Justified {count} body paragraph(s) at {LINE_SPACING} spacing in {docx_path}")
 
 
 def main():

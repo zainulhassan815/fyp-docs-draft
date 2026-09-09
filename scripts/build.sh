@@ -1,4 +1,8 @@
 #!/bin/bash
+# Stop at the first failing step.  Without this a missing Python dependency
+# (docxcompose, say) lets merge_cover.py die quietly and the build still
+# reports success, having silently dropped the whole cover and front matter.
+set -euo pipefail
 
 # Change to project root directory
 cd "$(dirname "$0")/.."
@@ -29,6 +33,9 @@ python3 scripts/add_lists.py
 
 # Outline the UI screenshots so their white edges are visible
 python3 scripts/border_screenshots.py
+
+# Split off the front matter and give body pages a running chapter-name header
+python3 scripts/add_header.py
 
 # Right-aligned page number in the footer of every section
 python3 scripts/add_page_numbers.py
