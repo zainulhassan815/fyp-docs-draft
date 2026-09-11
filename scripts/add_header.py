@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""Put a running chapter-name header on the body pages only.
+"""Put the project title in the header of the body pages only.
 
 The front matter (title page, certificates, declaration, abstract, contents and
 the three lists) must stay bare, so the document is split into two Word sections
 at Chapter 1.  The split reuses the page-break paragraph pandoc already emits
 there, so no blank page appears.
-
-The body header is a STYLEREF field pointing at Heading 1, so each page shows
-whichever chapter it belongs to.  Word and LibreOffice both resolve it live.
 """
 
 import copy
@@ -16,11 +13,16 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Pt
+from docx.shared import Inches, Pt
 
 DOC = 'build/SRS_Document.docx'
+# The SCET template ships w:header="0", which puts the header hard against the
+# paper edge, inside the strip most printers cannot reach. Word's own default.
+HEADER_DISTANCE = Inches(0.5)
+# A light rule separates the header without competing with the body text.
+RULE_COLOUR = 'A6A6A6'
 BODY_START = 'CHAPTER 1'
-FIELD = 'STYLEREF "Heading 1" \\* MERGEFORMAT'
+TITLE = 'AI Powered HR Screening and Document Retrieval System Using RAG'
 
 
 def text_of(para):
@@ -61,17 +63,8 @@ def split_at_body(doc):
     raise SystemExit(f'ERROR: no paragraph starting with {BODY_START!r}')
 
 
-def styleref(paragraph):
-    run = paragraph.add_run()
-    for kind, instr in (('begin', None), (None, FIELD), ('end', None)):
-        if kind:
-            node = OxmlElement('w:fldChar')
-            node.set(qn('w:fldCharType'), kind)
-        else:
-            node = OxmlElement('w:instrText')
-            node.set(qn('xml:space'), 'preserve')
-            node.text = f' {instr} '
-        run._r.append(node)
+def title_run(paragraph):
+    run = paragraph.add_run(TITLE)
     run.font.name = 'Times New Roman'
     run.font.size = Pt(11)
     return run
@@ -81,7 +74,8 @@ def rule_below(paragraph):
     pPr = paragraph._p.get_or_add_pPr()
     borders = OxmlElement('w:pBdr')
     bottom = OxmlElement('w:bottom')
-    for key, value in (('val', 'single'), ('sz', '6'), ('space', '4'), ('color', '000000')):
+    for key, value in (('val', 'single'), ('sz', '4'), ('space', '6'),
+                       ('color', RULE_COLOUR)):
         bottom.set(qn('w:' + key), value)
     borders.append(bottom)
     pPr.append(borders)
@@ -103,6 +97,9 @@ def main():
     for para in front.header.paragraphs:
         para.clear()
 
+    for section in doc.sections:
+        section.header_distance = HEADER_DISTANCE
+
     body.header.is_linked_to_previous = False
     body.different_first_page_header_footer = False
     para = body.header.paragraphs[0] if body.header.paragraphs else body.header.add_paragraph()
@@ -110,7 +107,7 @@ def main():
         run._r.getparent().remove(run._r)
     para.text = ''
     para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    styleref(para)
+    title_run(para)
     rule_below(para)
 
     doc.save(DOC)

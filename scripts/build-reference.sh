@@ -200,17 +200,28 @@ for sid, (before, after) in HEADING_SPACING.items():
         blk_new = blk.replace('</w:style>', '<w:pPr>' + spacing + '</w:pPr></w:style>')
     merged = merged.replace(blk, blk_new, 1)
 
+# The template's Header and Footer styles carry tab stops from a 1in-margin
+# layout: a centre stop at 4680 and a right stop at 9360 twips.  This report has
+# 1.25in margins, so a tab lands on the stale centre stop instead of the right
+# margin.  Drop them and let the footer paragraph define the one stop it needs.
+for sid in ('Header', 'Footer'):
+    m = re.search(r'<w:style [^>]*w:styleId="%s".*?</w:style>' % sid, merged, re.S)
+    if m:
+        blk = m.group(0)
+        merged = merged.replace(
+            blk, re.sub(r'<w:tabs>.*?</w:tabs>', '', blk, flags=re.S), 1)
+
 # Fenced code blocks keep their border but lose the grey fill (reads as highlighting
 # in print).
 merged = merged.replace('<w:shd w:val="clear" w:color="auto" w:fill="F5F5F5"/>', '')
 
 # The SCET template's caption style is 9 pt accent-blue, which reads as a coloured
-# highlight in an otherwise black-and-white report.  Black, 11 pt, still bold.
+# highlight in an otherwise black-and-white report.  Black, 11 pt, not bold.
 m = re.search(r'<w:style [^>]*w:styleId="Caption".*?</w:style>', merged, re.S)
 if m:
     blk = m.group(0)
     blk_new = re.sub(r'<w:rPr>.*?</w:rPr>',
-                     '<w:rPr><w:b/><w:bCs/><w:color w:val="000000"/>'
+                     '<w:rPr><w:color w:val="000000"/>'
                      '<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>',
                      blk, count=1, flags=re.S)
     merged = merged.replace(blk, blk_new, 1)

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Give the below-table caption paragraphs the 'Table Caption' style.
+"""Give the table caption paragraphs the 'Table Caption' style.
 
-Our table captions are written as plain paragraphs directly under each table (so they
-render below the table, not above like pandoc's caption syntax). Pandoc styles them
-'Body Text', which Word cannot isolate for a List of Tables. This restyles every
+Our table captions are written as plain paragraphs directly above each table, which is
+where the department wants them. Pandoc styles them 'Body Text', which Word cannot
+isolate for a List of Tables. This restyles every
 paragraph that starts with 'Table N.N:' to 'Table Caption', so Word can build the list
 from that style. Figure captions already use 'Image Caption', so they are left alone."""
 

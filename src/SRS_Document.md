@@ -105,6 +105,8 @@ A range of commercial products, cloud services, and open-source tools address pa
 
 The representative systems reviewed for this project are summarised in Table 2.1, each characterised by its research problem, method and tools, key features, limitations, and relevance to Hireflow.
 
+Table 2.1: Review of Existing Systems and Related Work
+
 | Ref | System (Year) | Research Problem | Methodology & Tools | Key Features | Limitations | Relevance to Hireflow |
 | --- | --- | --- | --- | --- | --- | --- |
 | R1 | Greenhouse Software (2012) | Managing and filtering high volumes of job applicants | Structured fields with keyword/boolean rules over parsed resumes; commercial ATS and resume parser | Pipeline management, keyword filters, structured candidate records | Keyword matching misses semantics; rigid rules; limited free-form question answering | Establishes the ATS baseline that Hireflow improves on with semantic ranking |
@@ -115,11 +117,11 @@ The representative systems reviewed for this project are summarised in Table 2.1
 | R6 | Johnson, Douze & Jegou / FAISS (2017) [8] | Fast similarity search over very large collections of vectors | Approximate nearest-neighbour indexing of dense embeddings; the FAISS library | Efficient, scalable approximate-nearest-neighbour search | A library only, no ingestion, OCR, or application layer | Supports semantic retrieval; Hireflow uses ChromaDB in the same role |
 | R7 | Smith / Tesseract community (2006-2018) [9] | Reading text from scanned images and PDFs | LSTM-based OCR over rasterised document images; Tesseract and pytesseract | Free, offline, multi-format OCR | Accuracy drops on poor scans and handwriting; no semantic understanding | Provides the OCR stage of Hireflow's ingestion pipeline |
 
-Table 2.1: Review of Existing Systems and Related Work
-
 ## 2.3 Comparison of Existing Systems
 
 Each reviewed system solves one facet of the problem well, but none offers an integrated, HR-focused, provenance-aware solution. Traditional ATS platforms and keyword search excel at structured pipeline management and exact-match filtering, yet their lexical matching misses semantically equivalent phrasing, and their rigid rules cannot answer free-form questions. AI recruitment platforms such as Eightfold AI show the value of learned matching, but they are proprietary, costly, and opaque, offering little insight into why a candidate was ranked. Cloud document-AI services deliver excellent OCR and extraction accuracy at the price of per-use cost, cloud lock-in, and off-premise data handling that is often unacceptable for sensitive HR records. RAG frameworks and transformer models supply the generative and semantic capabilities, but they are building blocks rather than finished applications and demand substantial integration work. Vector search libraries and OCR engines are similarly low-level. The comparison below summarises these trade-offs.
+
+Table 2.2: Comparison of Representative Systems
 
 | System / Approach | Semantic Retrieval | Natural-Language Q&A | Automated Resume Ranking | Provenance / Citations | Open / On-Premise |
 | --- | --- | --- | --- | --- | --- |
@@ -129,11 +131,11 @@ Each reviewed system solves one facet of the problem well, but none offers an in
 | RAG frameworks (LangChain) [4] | Yes | Yes | No (not HR-specific) | Yes (if built) | Yes (self-host) |
 | Hireflow (proposed) | Yes | Yes | Yes (LLM-based) | Yes | Yes |
 
-Table 2.2: Comparison of Representative Systems
-
 ## 2.4 Research Gap
 
 The comparison shows that no single existing system combines semantic retrieval, grounded natural-language question answering, LLM-based candidate ranking, automated email-based resume intake, and transparent source attribution in one HR-oriented, self-hostable platform. Each gap below maps directly to a design choice in Hireflow.
+
+Table 2.3: Research Gap Summary
 
 | Approach / System | Gap Identified | Proposed Improvement |
 | --- | --- | --- |
@@ -142,8 +144,6 @@ The comparison shows that no single existing system combines semantic retrieval,
 | Document collections without Q&A | No way to ask plain-language questions and get a synthesized answer over one's own documents | RAG chat interface that answers natural-language questions over the indexed corpus |
 | Manual resume collection from inboxes | Resumes scattered across email require manual download and filing | Automated Gmail sync via OAuth 2.0 that ingests resume attachments in the background |
 | Naive LLM answers / opaque AI ranking | Answers and rankings lack verifiable sources, harming trust and auditability | Cited, source-attributed answers and logged, auditable screening decisions |
-
-Table 2.3: Research Gap Summary
 
 ## 2.5 Proposed Solution
 
@@ -181,6 +181,8 @@ The project is schedule-feasible. A formal SRS bounded the work up front, coveri
 
 The functional requirements were drawn from the SRS System Features section and grouped by feature area. Each carries a stable identifier (FR01-FR22) and maps to one or more use cases (UC-01-UC-12), giving traceability from requirement to behaviour.
 
+Table 3.1: Functional Requirements (FR01-FR22)
+
 | FR-ID | Feature Area | Requirement | Use Case |
 | ----- | ------------ | ----------- | -------- |
 | FR01 | Authentication & Access Control | Allow users to log in using email and password | UC-01 |
@@ -205,8 +207,6 @@ The functional requirements were drawn from the SRS System Features section and 
 | FR20 | Logs & Metadata Management | Allow users to view extracted document metadata (skills, experience) | UC-11 |
 | FR21 | Search & Retrieval | Keep question-and-answer threads so that follow-up questions can be understood in context | UC-04 |
 | FR22 | Email Integration & Resume Sync | Optionally remove documents when their source email is permanently deleted in Gmail | UC-09 |
-
-Table 3.1: Functional Requirements (FR01-FR22)
 
 Beyond the numbered requirements, the built system adds two behaviours. A RAG question-answering capability returns AI-generated answers with citations to the source documents (`/rag/query` and `/rag/stream`). A candidate-matching capability scores and ranks candidates against a job on skill overlap, experience fit, and vector similarity (`POST /jobs/{id}/match`). Both extend FR07-FR09 (search) and FR13-FR15 (screening) into the semantic and ranking domains that the project's RAG focus promised.
 
@@ -242,6 +242,8 @@ The codebase enforces a strict layered architecture with explicit import rules. 
 
 The tools and technologies below were chosen to implement Hireflow. The selection favours open-source, modular components that meet the SRS constraints of CPU-or-GPU deployment and reduced vendor lock-in.
 
+Table 3.2: Tools and Technologies
+
 | Category | Tool / Technology | Purpose |
 | -------- | ---------- | ------- |
 | Backend Framework | FastAPI (Python 3.12, `uv`) | Asynchronous REST API with automatic OpenAPI generation |
@@ -270,8 +272,6 @@ The tools and technologies below were chosen to implement Hireflow. The selectio
 | Code Quality | ruff | Linting and formatting, run as a gate before a change is committed |
 | Diagramming | draw.io | UML, data-flow, and entity-relationship figures in this report |
 
-Table 3.2: Tools and Technologies
-
 ## 3.5 Use Cases / User Stories
 
 Twelve use cases model the system's behaviour, spanning authentication, document upload and handling, search, job management, screening, email integration, and auditing. HR Personnel are the primary actor in most of them. The Email Service acts as an external actor for resume intake and synchronisation. Figure 3.1 presents the overall use case diagram.
@@ -279,6 +279,8 @@ Twelve use cases model the system's behaviour, spanning authentication, document
 ![Figure 3.1: Use Case Diagram](src/images/use_case_diagram.png){width=100%}
 
 The main use cases identified in the SRS are summarised below.
+
+Table 3.3: Summary of Use Cases (UC-01-UC-12)
 
 | Use Case | Name | Primary Actor | Summary |
 | -------- | ---- | ------------- | ------- |
@@ -295,8 +297,6 @@ The main use cases identified in the SRS are summarised below.
 | UC-11 | View Metadata | HR Personnel | View extracted document metadata such as skills and experience |
 | UC-12 | Read Resumes | HR Personnel | Read extracted resume content and shortlist or reject candidates |
 
-Table 3.3: Summary of Use Cases (UC-01-UC-12)
-
 **User Stories.** The following user stories capture representative goals from the HR user's perspective:
 
 - **US-1 (Search):** As an HR user, I want to ask questions about my documents in plain English so that I can find relevant information without remembering exact keywords or filenames.
@@ -307,6 +307,8 @@ Table 3.3: Summary of Use Cases (UC-01-UC-12)
 ## 3.6 Use Cases Table
 
 To illustrate the full structure of a use case, the User Login flow (UC-01) is documented in detail below, based on the system's actual JWT-based authentication mechanism.
+
+Table 3.4: Sample Use Case, User Login
 
 | Field | Description |
 | ----- | ----------- |
@@ -321,8 +323,6 @@ To illustrate the full structure of a use case, the User Login flow (UC-01) is d
 | Postconditions | The user holds a valid access/refresh token pair and an authenticated session; the login event is written to the audit trail. |
 | Exceptions | Account disabled leads to access forbidden (403). A malformed or expired token on subsequent requests leads to 401 with a prompt to re-authenticate. |
 | Related Functional Requirement(s) | FR01, FR03 |
-
-Table 3.4: Sample Use Case, User Login
 
 ## 3.7 Development Methodology
 
@@ -404,6 +404,8 @@ The persistent state of Hireflow lives in a PostgreSQL 15 relational schema, com
 
 **Schema overview.** Every table has a UUID primary key named after the table (for example `user_id`, `document_id`) and `created_at` / `updated_at` timestamp columns from shared mixins. PostgreSQL-native features are used throughout: enumerated types (`user_role`, `document_status`, `document_type`, `job_status`, `application_status`, `attachment_role`, and others), array columns (`required_skills`, `skills`, `education`, `scopes`), a `JSONB` `metadata` column on `documents`, and a database-generated, weighted `tsvector` column (`search_tsv`) that indexes filename (weight A), skills (weight B), and body text (weight C) for lexical retrieval via a GIN index. Sensitive fields such as `full_name`, `phone`, and Gmail `refresh_token` are stored using an encrypted column type. The four core tables are documented below.
 
+Table 4.1: users Data Dictionary
+
 | Field | Type | Constraints | Description |
 |---|---|---|---|
 | user_id | UUID | PK | Unique identifier |
@@ -415,7 +417,7 @@ The persistent state of Hireflow lives in a PostgreSQL 15 relational schema, com
 | created_at | TIMESTAMPTZ | NOT NULL, DEFAULT now() | Creation timestamp |
 | updated_at | TIMESTAMPTZ | NOT NULL, DEFAULT now() | Last-modified timestamp |
 
-Table 4.1: users Data Dictionary
+Table 4.2: documents Data Dictionary
 
 | Field | Type | Constraints | Description |
 |---|---|---|---|
@@ -436,7 +438,7 @@ Table 4.1: users Data Dictionary
 | search_tsv | TSVECTOR | GENERATED, GIN INDEX | Weighted full-text search vector |
 | created_at / updated_at | TIMESTAMPTZ | NOT NULL | Audit timestamps |
 
-Table 4.2: documents Data Dictionary
+Table 4.3: jobs Data Dictionary
 
 | Field | Type | Constraints | Description |
 |---|---|---|---|
@@ -453,7 +455,7 @@ Table 4.2: documents Data Dictionary
 | status | ENUM(draft, open, closed, archived) | NOT NULL, DEFAULT draft, INDEX | Job posting state |
 | created_at / updated_at | TIMESTAMPTZ | NOT NULL | Audit timestamps |
 
-Table 4.3: jobs Data Dictionary
+Table 4.4: candidates Data Dictionary
 
 | Field | Type | Constraints | Description |
 |---|---|---|---|
@@ -469,8 +471,6 @@ Table 4.3: jobs Data Dictionary
 | supplementary_keywords | VARCHAR[] | NULLABLE | Keywords from non-resume attachments |
 | summary | VARCHAR(1024) | NULLABLE | One-sentence recruiter brief |
 | created_at / updated_at | TIMESTAMPTZ | NOT NULL | Audit timestamps |
-
-Table 4.4: candidates Data Dictionary
 
 Alongside the relational schema, ChromaDB holds one collection per embedding model (named `documents_<model_slug>`). Each stored chunk is keyed as `<document_id>:<chunk_index>` and carries its embedding vector, the chunk text, and metadata (`document_id`, `user_id`, `chunk_index`, `chunk_kind`, `section_heading`, `page_number`, `chunking_version`, plus flattened document-level fields such as `filename` and `document_type`). This denormalised metadata enables owner-scoped, type-filtered vector retrieval without a round-trip to PostgreSQL.
 
@@ -523,6 +523,8 @@ npm run generate-api   # regenerate the typed API client from OpenAPI
 
 First-time provisioning is wrapped in a `make setup` target, which installs dependencies, creates `.env`, starts the services, runs the Alembic migrations, and seeds the initial admin user; `make dev` then runs the API, worker, and frontend together. Configuration lives in one place, `core/config.py`, built on `pydantic-settings` so that a missing required variable fails fast. The most important of these is `JWT_SECRET_KEY`, which must be at least 32 characters. The development topology, with host ports exposed for convenience, is summarised below.
 
+Table 5.1: Development Environment Services and Ports
+
 | Component | Runtime | Port | Purpose |
 |-----------|---------|------|---------|
 | Vite dev server | Host (npm) | 5173 | Frontend (React + TypeScript) |
@@ -532,8 +534,6 @@ First-time provisioning is wrapped in a `make setup` target, which installs depe
 | Redis 7 | Docker | 6379 | Token denylist, reset tokens, Celery broker |
 | ChromaDB | Docker | 8000 | Vector store (chunk + candidate-summary embeddings) |
 | MinIO | Docker | 9000 / 9001 | S3-compatible object storage (originals + viewables) |
-
-Table 5.1: Development Environment Services and Ports
 
 Production is far more closed. Under `docker-compose.prod.yml` only nginx port 80 is exposed. Nginx serves the built frontend and reverse-proxies `/api/` to the backend, while every data store sits on a private Docker network behind password and fail-fast guards.
 
@@ -550,6 +550,8 @@ Every request is checked before it reaches business logic, and the checks sit in
 Access is checked on the same path. Protected routes depend on the current authenticated user, and administrator-only routes sit behind a separate guard. Beyond that, every service scopes its queries to the owner of the record. A request for something belonging to another user is answered as though the record does not exist, rather than as a refusal, because a refusal would confirm that the record is real. The same reasoning applies when linking records across owners.
 
 Failures are handled in one place. Services never raise HTTP errors of their own; they raise domain exceptions, and a single handler translates those into status codes and into one response shape for the whole API, carrying a machine-readable code, a human-readable message, and optional details. A schema validation failure is reported as a 422 that lists the offending field and the reason, so a client can point at the input that was wrong. Anything unanticipated becomes a 500 with the detail logged on the server and kept out of the response. Table 5.2 lists the mapping.
+
+Table 5.2: Domain Error to HTTP Status Mapping
 
 | Domain error | HTTP status | Raised when |
 | --- | --- | --- |
@@ -570,11 +572,11 @@ Failures are handled in one place. Services never raise HTTP errors of their own
 | LLM timeout | 504 | The provider accepted the request but did not answer in time |
 | Validation error | 422 | The request body or parameters failed schema validation |
 
-Table 5.2: Domain Error to HTTP Status Mapping
-
 ### 5.2.3 Ingestion Pipeline
 
 Ingestion is the path a file travels from the moment it is uploaded to the moment it becomes searchable and answerable. It runs asynchronously in the Celery worker so that the interface never blocks: the upload endpoint stores the raw file in MinIO, creates a document row with `status = PENDING`, returns HTTP 201 at once, and enqueues a Celery task that performs the remaining work in the background. The pipeline has seven stages, each consuming the output of the one before it, as summarised in Table 5.3 and depicted in Figure 4.4.
+
+Table 5.3: Document Ingestion Pipeline Stages
 
 | # | Stage | Input | Processing | Output |
 | --- | --- | --- | --- | --- |
@@ -585,8 +587,6 @@ Ingestion is the path a file travels from the moment it is uploaded to the momen
 | 5 | Contextualise | Chunks | Each chunk is prefixed with its document title and section heading so that an isolated chunk still carries the context needed to be retrieved and cited correctly | Context-enriched chunk text |
 | 6 | Embed | Enriched chunks | Chunks are batched through the sentence-transformers embedding provider (default bge-small-en-v1.5) to produce dense vectors | Embedding vector per chunk |
 | 7 | Index | Vectors + chunk text | Vectors are upserted into a per-model ChromaDB collection while PostgreSQL's weighted search_tsv column is auto-populated for lexical search | Document searchable by both semantic and lexical paths |
-
-Table 5.3: Document Ingestion Pipeline Stages
 
 Once indexing succeeds the document is marked `status = READY`, and an on-ready hook fires: for a document classified as a resume, the hook automatically creates a candidate record from the extracted fields, so email-sourced and manually uploaded resumes both enter the candidate pool without further action.
 
@@ -732,6 +732,8 @@ Finally, static analysis and linting with `ruff` (`uv run ruff check --fix && uv
 
 Table 6.1 presents a representative slice of the full suite, spanning authentication, document processing, hybrid search, RAG question-answering, and candidate matching. Each case lists its input, the expected result, and the actual observed result; all reflect the specified and verified behaviour of the implemented system.
 
+Table 6.1: Test Cases and Results
+
 | Test Case | Input | Expected Result | Actual Result | Status |
 | --- | --- | --- | --- | --- |
 | TC-AUTH-006: Login with valid credentials issues tokens | POST /api/auth/login with correct email/password | HTTP 200; access + refresh token in body; token_type=bearer | Both tokens returned; token_type=bearer | Pass |
@@ -747,9 +749,9 @@ Table 6.1 presents a representative slice of the full suite, spanning authentica
 | TC-RAG-002: Out-of-scope question returns the refusal sentinel | POST /api/rag/query with a question unrelated to the corpus | HTTP 200; exact sentinel; confidence null; no fabricated citations | Sentinel "Not in the provided documents." returned | Pass |
 | TC-JOBS-010: Match scores candidates with a breakdown | Run match for a job | Each result has a score plus a breakdown (skill, experience, vector) | Scores and persisted match_breakdown returned | Pass |
 
-Table 6.1: Test Cases and Results
-
 The traceability matrix below links a sample of use cases and their functional requirements to the test cases that exercise them.
+
+Table 6.2: Test Case Traceability Matrix
 
 | Use Case ID | Use Case Name | Functional Requirement ID | Test Case ID(s) | Test Scenario | Status |
 |-------------|---------------|---------------------------|-----------------|---------------|--------|
@@ -759,8 +761,6 @@ The traceability matrix below links a sample of use cases and their functional r
 | UC-12 | Read Resumes / Screen | FR13, FR14, FR15 | TC-JOBS-010 | Weighted scoring + bounded score | Pass |
 | UC-09 | Sync Resumes | FR17, FR18 | TC-DOCS-046 | On-ready candidate creation from resume | Pass |
 
-Table 6.2: Test Case Traceability Matrix
-
 ![Figure 6.1: Login screen under test](src/images/screenshots/login.png){width=100%}
 
 ![Figure 6.2: Hybrid search and RAG question-answering under test](src/images/screenshots/search-and-rag.jpeg){width=100%}
@@ -768,6 +768,8 @@ Table 6.2: Test Case Traceability Matrix
 ## 6.3 Performance Evaluation
 
 Performance was measured on the development stack rather than a production server. The test machine was a single laptop running WSL2 with a 13th-generation Intel Core i5-13450HX (16 logical cores) and about 7.6 GiB of RAM allocated to the WSL2 virtual machine. The sentence-transformer embedder ran on an NVIDIA RTX 5050 laptop GPU, the RAG model was the hosted Claude Haiku 4.5, and the corpus held 18 ready documents indexed as 49 chunks. All timings use a monotonic clock, with the first call on each path discarded as warm-up. Table 6.3 summarises the results, which are discussed below.
+
+Table 6.3: Measured Performance (Development Stack)
 
 | Path | Metric | Result |
 |---|---|---|
@@ -778,8 +780,6 @@ Performance was measured on the development stack rather than a production serve
 | Chunk embedding (GPU, batch 128) | per chunk | 0.57 ms |
 | RAG streaming answer | time-to-first-token | 947 ms avg (749 to 1573 ms) |
 | RAG streaming answer | full completion | 1.5 s avg (1.1 to 1.9 s) |
-
-Table 6.3: Measured Performance (Development Stack)
 
 ### 6.3.1 Retrieval Latency
 

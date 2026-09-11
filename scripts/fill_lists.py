@@ -10,6 +10,10 @@ render the cache directly, and Word can still refresh the field later.
 Page numbers come from a LibreOffice render of the document, which is also
 what produces the PDF, so the numbers match what the reader sees.  Filling the
 lists changes pagination, so render and fill repeat until the numbers settle.
+
+The printed page number is not the PDF page index: the front matter runs in
+roman numerals and the body restarts at 1 on Chapter 1, so each index is
+translated into the label the reader will actually see on the page.
 """
 
 import re
@@ -50,6 +54,35 @@ def squash(text):
     return re.sub(r'\s+', '', text)
 
 
+ROMAN = [(1000, 'm'), (900, 'cm'), (500, 'd'), (400, 'cd'), (100, 'c'),
+         (90, 'xc'), (50, 'l'), (40, 'xl'), (10, 'x'), (9, 'ix'),
+         (5, 'v'), (4, 'iv'), (1, 'i')]
+
+
+def roman(n):
+    out = []
+    for value, numeral in ROMAN:
+        while n >= value:
+            out.append(numeral)
+            n -= value
+    return ''.join(out)
+
+
+def body_start(pages, last_list_page):
+    """0-based index of the first body page, where numbering restarts at 1."""
+    for i in range(last_list_page + 1, len(pages)):
+        if 'CHAPTER1:INTRODUCTION' in squash(pages[i]).upper():
+            return i
+    sys.exit('ERROR: could not find the Chapter 1 page in the render.')
+
+
+def page_label(index, front_matter):
+    """The number printed on the page at this 0-based PDF index."""
+    if index < front_matter:
+        return roman(index + 1)
+    return str(index - front_matter + 1)
+
+
 def collect(doc):
     """(toc, figures, tables) entries as (text, level) in document order."""
     toc, figs, tbls = [], [], []
@@ -74,9 +107,10 @@ def list_pages(pages):
     for name in ('Table of Contents', 'List of Figures', 'List of Tables'):
         key = squash(name)
         for i, text in enumerate(pages):
-            # the footer page number extracts first, so the heading sits just
-            # after it rather than at offset zero
-            if key in squash(text)[:60]:
+            # the footer extracts before the body, so the heading sits after
+            # "Department of Computer Science" and the page number rather than
+            # at offset zero
+            if key in squash(text)[:120]:
                 starts[name] = i
                 break
     if len(starts) < 3:
@@ -87,8 +121,8 @@ def list_pages(pages):
     return set(range(first, last + 1)), last
 
 
-def locate(entries, pages, skip):
-    """Map each entry to the 1-based page it appears on."""
+def locate(entries, pages, skip, front_matter):
+    """Map each entry to the page number printed on the page it appears on."""
     numbers = []
     for text, _level in entries:
         needle = squash(text)
@@ -97,7 +131,7 @@ def locate(entries, pages, skip):
             if i in skip:
                 continue
             if needle in squash(page):
-                found = i + 1
+                found = page_label(i, front_matter)
                 break
         numbers.append(found)
     return numbers
@@ -182,11 +216,12 @@ def main():
         pages = render_pages(DOCX)
         doc = Document(str(DOCX))
         toc, figs, tbls = collect(doc)
-        skip, _ = list_pages(pages)
+        skip, last_list = list_pages(pages)
+        front_matter = body_start(pages, last_list)
         found = {
-            'toc': locate(toc, pages, skip),
-            'figs': locate(figs, pages, skip),
-            'tbls': locate(tbls, pages, skip),
+            'toc': locate(toc, pages, skip, front_matter),
+            'figs': locate(figs, pages, skip, front_matter),
+            'tbls': locate(tbls, pages, skip, front_matter),
         }
         if found == previous:
             print(f"Lists stable after {attempt - 1} pass(es): "
