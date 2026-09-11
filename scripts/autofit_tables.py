@@ -15,8 +15,9 @@ CONTENT_TWIPS = 8640
 # is far more uneven than that, and equal columns break long tokens mid-word.
 # Give those explicit proportions, keyed by their header row.
 COLUMN_WIDTHS = {
-    ('Test Case', 'Input', 'Expected Result', 'Actual Result', 'Status'):
-        (26, 20, 23, 21, 10),
+    ('Use Case', 'Test Case', 'Input', 'Expected Result', 'Actual Result',
+     'Status'):
+        (10, 20, 25, 19, 17, 9),
     ('Use Case ID', 'Use Case Name', 'Functional Requirement ID',
      'Test Case ID(s)', 'Test Scenario', 'Status'):
         (10, 16, 16, 24, 25, 9),
