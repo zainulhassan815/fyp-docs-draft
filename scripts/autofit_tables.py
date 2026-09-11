@@ -24,10 +24,35 @@ COLUMN_WIDTHS = {
         (10, 16, 16, 24, 25, 9),
     ('#', 'Stage', 'Input', 'Processing', 'Output'):
         (5, 14, 17, 38, 26),
-    ('Ref', 'System (Year)', 'Research Problem', 'Methodology & Tools',
+    ('#', 'System', 'Research Problem', 'Methodology & Tools',
      'Key Features', 'Limitations', 'Relevance to Hireflow'):
         (7, 14, 15, 19, 14, 15, 16),
 }
+
+
+# A table carries no trailing space of its own, so whatever follows sits flush
+# against its bottom border. Headings bring their own space-before; body text and
+# captions do not, so they need it added.
+SPACE_AFTER_TABLE = Pt(10)
+NEEDS_SPACE = {"Normal", "Body Text", "First Paragraph",
+               "Table Caption", "Image Caption"}
+
+
+def space_below_tables(doc):
+    """Give the paragraph under each table room to breathe."""
+    from docx.text.paragraph import Paragraph
+
+    children = list(doc.element.body)
+    count = 0
+    for current, following in zip(children, children[1:]):
+        if current.tag != qn('w:tbl') or following.tag != qn('w:p'):
+            continue
+        para = Paragraph(following, doc)
+        if not para.text.strip() or para.style.name not in NEEDS_SPACE:
+            continue
+        para.paragraph_format.space_before = SPACE_AFTER_TABLE
+        count += 1
+    return count
 
 
 def header_key(table):
@@ -122,8 +147,10 @@ def autofit_tables(docx_path, output_path=None):
         if weights and len(weights) == len(table.columns):
             set_column_widths(table, weights)
 
+    spaced = space_below_tables(doc)
     doc.save(output_path)
-    print(f"Processed {table_count} table(s) in {docx_path}")
+    print(f"Processed {table_count} table(s); spaced {spaced} paragraph(s) "
+          f"below tables in {docx_path}")
 
 
 def main():

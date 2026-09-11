@@ -200,6 +200,18 @@ for sid, (before, after) in HEADING_SPACING.items():
         blk_new = blk.replace('</w:style>', '<w:pPr>' + spacing + '</w:pPr></w:style>')
     merged = merged.replace(blk, blk_new, 1)
 
+# Centre the headings over the three generated lists. "Table of Contents",
+# "List of Figures" and "List of Tables" all use the TOC Heading style, so one
+# change covers all three.
+m = re.search(r'<w:style [^>]*w:styleId="TOCHeading".*?</w:style>', merged, re.S)
+if m:
+    blk = m.group(0)
+    if '<w:pPr>' in blk:
+        blk_new = blk.replace('<w:pPr>', '<w:pPr><w:jc w:val="center"/>', 1)
+    else:
+        blk_new = blk.replace('</w:style>', '<w:pPr><w:jc w:val="center"/></w:pPr></w:style>')
+    merged = merged.replace(blk, blk_new, 1)
+
 # The template's Header and Footer styles carry tab stops from a 1in-margin
 # layout: a centre stop at 4680 and a right stop at 9360 twips.  This report has
 # 1.25in margins, so a tab lands on the stale centre stop instead of the right

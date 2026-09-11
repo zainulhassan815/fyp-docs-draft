@@ -44,6 +44,38 @@ def main():
                 z.write(path, os.path.relpath(path, temp_dir))
 
     shutil.rmtree(temp_dir)
+    disable_hyphenation('build/SRS_Document.docx')
+
+
+def disable_hyphenation(path):
+    """Turn automatic hyphenation off in the composed document.
+
+    The SCET template sets it on, which splits words across lines everywhere,
+    including TECHNOLOGY on the title page. The setting lives in cover.docx,
+    but Word rewrites that file's settings whenever the cover is opened and
+    saved, so fixing it there does not stick. Forcing it here means the built
+    report is correct whatever state the template is in.
+    """
+    import re
+
+    with zipfile.ZipFile(path) as z:
+        settings = z.read('word/settings.xml').decode('utf-8')
+
+    if '<w:autoHyphenation' in settings:
+        settings = re.sub(r'<w:autoHyphenation[^>]*/>',
+                          '<w:autoHyphenation w:val="false"/>', settings)
+    else:
+        settings = settings.replace('<w:settings', '<w:settings', 1)
+
+    tmp = path + '.tmp'
+    with zipfile.ZipFile(path) as zin, \
+            zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            if item.filename == 'word/settings.xml':
+                data = settings.encode('utf-8')
+            zout.writestr(item, data)
+    os.replace(tmp, path)
     set_a4('build/SRS_Document.docx')
 
 
