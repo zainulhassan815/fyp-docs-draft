@@ -39,9 +39,9 @@ Recruitment and document management are among the most document-intensive functi
 
 Modern organisations accumulate large volumes of unstructured documents: resumes, reports, contracts, and scanned correspondence, most of it arriving as PDF files, Microsoft Word documents, or scanned images. Extracting value from this material has traditionally depended on manual reading and keyword-based search. Both scale poorly as collections grow. In human resources the pressure is acute. Recruiters commonly review dozens of resumes per open position, and industry practice reports that HR teams spend the majority of their working time on manual resume review, averaging around twenty-three hours of effort to fill a single position. Keyword search only compounds the problem, since it matches literal tokens rather than meaning; a query for "machine learning engineer" fails to surface a strong candidate who wrote "ML researcher" or "deep learning specialist."
 
-Two families of technology have now matured enough to address these limitations. The first is document understanding and optical character recognition (OCR). Managed cloud services such as Google Cloud Document AI [1], Amazon Textract [2], and Azure Form Recognizer [3], along with open-source engines such as Tesseract [9] and libraries such as PyMuPDF [7], make it possible to extract structured text from PDFs, Word files, and scanned images. The second is the pairing of dense vector embeddings with large language models (LLMs). Vector similarity search libraries such as FAISS [8], together with transformer-based document and language models [5][6], enable semantic retrieval, where documents are matched by meaning rather than exact wording.
+Two families of technology have now matured enough to address these limitations. The first is document understanding and optical character recognition (OCR). Managed cloud services such as Google Cloud Document AI [1], Amazon Textract [2], and Azure Form Recognizer [3], along with open-source engines such as Tesseract [4] and libraries such as PyMuPDF [5], make it possible to extract structured text from PDFs, Word files, and scanned images. The second is the pairing of dense vector embeddings with large language models (LLMs). Vector similarity search libraries such as FAISS [6], together with transformer-based document and language models [7][8], enable semantic retrieval, where documents are matched by meaning rather than exact wording.
 
-Retrieval-Augmented Generation (RAG) [4] ties these two strands together. It is a technique for using a language model, not a product or a model in its own right, and the idea is the difference between a closed-book and an open-book exam. Asked a question on its own, a language model answers from memory: it writes fluently, but it has never seen a private document collection, and when it does not know something it tends to produce a plausible-sounding invention. RAG makes the exam open-book. The system first retrieves the passages from the collection that are most relevant to the question, then gives the model those passages along with the question and instructs it to answer from that material only. The answer is still written in ordinary language, but the facts come from the retrieved passages, so every statement can be traced back to the document it came from. Hireflow builds on this foundation, using sentence-transformers [11] for embeddings, ChromaDB as the vector store, and Anthropic Claude [12] as the answer-generating LLM.
+Retrieval-Augmented Generation (RAG) [9] ties these two strands together. It is a technique for using a language model, not a product or a model in its own right, and the idea is the difference between a closed-book and an open-book exam. Asked a question on its own, a language model answers from memory: it writes fluently, but it has never seen a private document collection, and when it does not know something it tends to produce a plausible-sounding invention. RAG makes the exam open-book. The system first retrieves the passages from the collection that are most relevant to the question, then gives the model those passages along with the question and instructs it to answer from that material only. The answer is still written in ordinary language, but the facts come from the retrieved passages, so every statement can be traced back to the document it came from. Hireflow builds on this foundation, using sentence-transformers [10] for embeddings, ChromaDB as the vector store, and Anthropic Claude [11] as the answer-generating LLM.
 
 ## 1.2 Problem Statement
 
@@ -51,11 +51,11 @@ HR personnel who manage large, unstructured document collections face several co
 
 The project pursues the following specific and measurable objectives:
 
-1. **Ingest and process heterogeneous documents:** accept PDF, Microsoft Word, and scanned image files and extract their text using PyMuPDF [7] and Tesseract/pytesseract OCR [9], targeting text-extraction accuracy above 95% on standard printed documents.
+1. **Ingest and process heterogeneous documents:** accept PDF, Microsoft Word, and scanned image files and extract their text using PyMuPDF [5] and Tesseract/pytesseract OCR [4], targeting text-extraction accuracy above 95% on standard printed documents.
 2. **Enable semantic search and retrieval:** index all documents as dense vector embeddings (sentence-transformers) in a vector database (ChromaDB) so that natural-language queries return relevance-ranked results, with typical search responses returned in under two seconds.
-3. **Provide grounded question answering via RAG:** answer plain-language questions over the document collection using Retrieval-Augmented Generation [4] with an LLM (Anthropic Claude), returning cited, source-attributed answers with a target answer-relevance of at least 85% and end-to-end response times under ten seconds.
+3. **Provide grounded question answering via RAG:** answer plain-language questions over the document collection using Retrieval-Augmented Generation [9] with an LLM (Anthropic Claude), returning cited, source-attributed answers with a target answer-relevance of at least 85% and end-to-end response times under ten seconds.
 4. **Automate resume screening and ranking:** match and rank candidate resumes against user-defined job criteria (skills, education, experience), reducing manual screening effort by roughly 70-80% and processing on the order of 100 resumes per hour.
-5. **Automate candidate intake and reporting:** sync resume attachments from Gmail using OAuth 2.0, and support shortlisting, rejection, activity logging, and export of candidate data to Excel for compliance and offline analysis.
+5. **Automate candidate intake and reporting:** sync resume attachments from Gmail using OAuth 2.0 [12], and support shortlisting, rejection, activity logging, and export of candidate data to Excel for compliance and offline analysis.
 
 ## 1.4 Scope of Project
 
@@ -79,11 +79,11 @@ This chapter reviews the technologies and prior systems relevant to AI-powered d
 
 ## 2.1 Overview of Domain
 
-This project draws on three fields: document understanding, information retrieval, and applied natural language processing for recruitment. Document understanding converts unstructured inputs such as PDFs, Word files, and scanned images into machine-readable text and metadata, typically using OCR and layout analysis [1][2][3][7][9]. Information retrieval has evolved from lexical, keyword-based matching toward dense semantic retrieval, in which text is encoded as high-dimensional embedding vectors and compared by similarity, so that conceptually related content surfaces even without shared keywords [6][8]. Retrieval-Augmented Generation combines retrieval with generative language models, grounding an LLM's response in retrieved passages to produce accurate, citable answers rather than unsupported text [4]. Recruitment applies these ideas directly: Applicant Tracking Systems and AI recruitment platforms parse resumes, match candidates to job requirements, and manage hiring pipelines. Hireflow draws on all three fields to serve HR personnel working over unstructured document collections.
+This project draws on three fields: document understanding, information retrieval, and applied natural language processing for recruitment. Document understanding converts unstructured inputs such as PDFs, Word files, and scanned images into machine-readable text and metadata, typically using OCR and layout analysis [1][2][3][5][4]. Information retrieval has evolved from lexical, keyword-based matching toward dense semantic retrieval, in which text is encoded as high-dimensional embedding vectors and compared by similarity, so that conceptually related content surfaces even without shared keywords [8][6]. Retrieval-Augmented Generation combines retrieval with generative language models, grounding an LLM's response in retrieved passages to produce accurate, citable answers rather than unsupported text [9]. Recruitment applies these ideas directly: Applicant Tracking Systems and AI recruitment platforms parse resumes, match candidates to job requirements, and manage hiring pipelines. Hireflow draws on all three fields to serve HR personnel working over unstructured document collections.
 
 ## 2.2 Existing Systems / Related Work
 
-A range of commercial products, cloud services, and open-source tools address parts of the problem that Hireflow tackles. Traditional ATS platforms such as Greenhouse and Workday automate applicant pipelines but lean heavily on keyword filters and structured fields; AI recruitment platforms such as Eightfold AI apply deep learning to candidate matching. Cloud document-understanding services (Google Cloud Document AI [1], Amazon Textract [2], Azure Form Recognizer [3]) extract text and structure at scale, though they are proprietary and usage-priced. RAG frameworks such as LangChain [4] coordinate retrieval-augmented pipelines, while transformer-based document and language models [5][6] support both understanding and generation. Lower down the stack, vector search libraries such as FAISS [8] and OCR engines such as Tesseract [9] supply the retrieval and text-extraction primitives.
+A range of commercial products, cloud services, and open-source tools address parts of the problem that Hireflow tackles. Traditional ATS platforms such as Greenhouse [13] and Workday [14] automate applicant pipelines but lean heavily on keyword filters and structured fields; AI recruitment platforms such as Eightfold AI [15] apply deep learning to candidate matching. Cloud document-understanding services (Google Cloud Document AI [1], Amazon Textract [2], Azure Form Recognizer [3]) extract text and structure at scale, though they are proprietary and usage-priced. RAG frameworks such as LangChain [16] coordinate retrieval-augmented pipelines, while transformer-based document and language models [7][8] support both understanding and generation. Lower down the stack, vector search libraries such as FAISS [6] and OCR engines such as Tesseract [4] supply the retrieval and text-extraction primitives.
 
 The representative systems reviewed for this project are summarised in Table 2.1, each characterised by its research problem, method and tools, key features, limitations, and relevance to Hireflow.
 
@@ -91,13 +91,13 @@ Table 2.1: Review of Existing Systems and Related Work
 
 | Ref | System (Year) | Research Problem | Methodology & Tools | Key Features | Limitations | Relevance to Hireflow |
 | --- | --- | --- | --- | --- | --- | --- |
-| R1 | Smith / Tesseract community (2006-2018) [9] | Reading text from scanned images and PDFs | LSTM-based OCR over rasterised document images; Tesseract and pytesseract | Free, offline, multi-format OCR | Accuracy drops on poor scans and handwriting; no semantic understanding | Provides the OCR stage of Hireflow's ingestion pipeline |
+| R1 | Smith / Tesseract community (2006-2018) [4] | Reading text from scanned images and PDFs | LSTM-based OCR over rasterised document images; Tesseract and pytesseract | Free, offline, multi-format OCR | Accuracy drops on poor scans and handwriting; no semantic understanding | Provides the OCR stage of Hireflow's ingestion pipeline |
 | R2 | Greenhouse Software (2012) | Managing and filtering high volumes of job applicants | Structured fields with keyword/boolean rules over parsed resumes; commercial ATS and resume parser | Pipeline management, keyword filters, structured candidate records | Keyword matching misses semantics; rigid rules; limited free-form question answering | Establishes the ATS baseline that Hireflow improves on with semantic ranking |
 | R3 | Eightfold AI (2016) | Bias and inefficiency in candidate-job matching | Learned embeddings of candidates and roles for similarity matching; proprietary deep-learning models | AI candidate matching, skills inference, ranking | Proprietary, closed, and costly, with limited transparency and provenance | Validates ML-based ranking and motivates open, explainable ranking with citations |
-| R4 | Johnson, Douze & Jegou / FAISS (2017) [8] | Fast similarity search over very large collections of vectors | Approximate nearest-neighbour indexing of dense embeddings; the FAISS library | Efficient, scalable approximate-nearest-neighbour search | A library only, no ingestion, OCR, or application layer | Supports semantic retrieval; Hireflow uses ChromaDB in the same role |
+| R4 | Johnson, Douze & Jegou / FAISS (2017) [6] | Fast similarity search over very large collections of vectors | Approximate nearest-neighbour indexing of dense embeddings; the FAISS library | Efficient, scalable approximate-nearest-neighbour search | A library only, no ingestion, OCR, or application layer | Supports semantic retrieval; Hireflow uses ChromaDB in the same role |
 | R5 | Google Cloud Document AI, Amazon Textract, Azure Form Recognizer (2018-2020) [1][2][3] | Extracting structured data from unstructured documents | Deep OCR with layout analysis and form/entity extraction, delivered as managed cloud APIs | High-accuracy OCR, entity and table extraction, scalability | Proprietary, per-use cost, cloud lock-in, data leaving the premises | Motivates an on-premise, open OCR pipeline (PyMuPDF + Tesseract) |
-| R6 | Hugging Face / Transformer community (2019-2021) [5][6] | Understanding document text and semantics | Pretrained transformer encoders for embeddings and LLMs for generation; Transformers and sentence-transformers | Semantic embeddings, classification, generation | Compute-heavy, and general models need domain adaptation | The basis for Hireflow's embeddings and LLM answer generation |
-| R7 | Lewis et al. / LangChain (2020-2022) [4] | LLMs hallucinate and lack access to private or current data | Retrieve relevant chunks from a vector store, then condition an LLM on them; LangChain, vector databases, LLMs | Grounded, citable answers over private corpora | Answer quality depends heavily on retrieval and chunking, and needs tuning | The core paradigm adopted by Hireflow for document question answering |
+| R6 | Hugging Face / Transformer community (2019-2021) [7][8] | Understanding document text and semantics | Pretrained transformer encoders for embeddings and LLMs for generation; Transformers and sentence-transformers | Semantic embeddings, classification, generation | Compute-heavy, and general models need domain adaptation | The basis for Hireflow's embeddings and LLM answer generation |
+| R7 | Lewis et al. / LangChain (2020-2022) [9] | LLMs hallucinate and lack access to private or current data | Retrieve relevant chunks from a vector store, then condition an LLM on them; LangChain, vector databases, LLMs | Grounded, citable answers over private corpora | Answer quality depends heavily on retrieval and chunking, and needs tuning | The core paradigm adopted by Hireflow for document question answering |
 
 ## 2.3 Comparison of Existing Systems
 
@@ -110,7 +110,7 @@ Table 2.2: Comparison of Representative Systems
 | Traditional ATS (Greenhouse, Workday) | No (keyword) | No | Rule-based only | Limited | Mostly cloud/commercial |
 | AI recruitment (Eightfold AI) | Yes | Limited | Yes (ML) | Weak | No (proprietary) |
 | Cloud Document AI [1][2][3] | Partial | No | No | N/A | No (cloud) |
-| RAG frameworks (LangChain) [4] | Yes | Yes | No (not HR-specific) | Yes (if built) | Yes (self-host) |
+| RAG frameworks (LangChain) [9] | Yes | Yes | No (not HR-specific) | Yes (if built) | Yes (self-host) |
 | Hireflow (proposed) | Yes | Yes | Yes (LLM-based) | Yes | Yes |
 
 ## 2.4 Research Gap
@@ -129,9 +129,9 @@ Table 2.3: Research Gap Summary
 
 ## 2.5 Proposed Solution
 
-Hireflow is proposed as an integrated, web-based platform that closes these gaps by combining best-of-breed open components into a single HR-focused system. Documents in PDF, Word, and scanned-image form are ingested through an OCR and text-extraction stage built on PyMuPDF [7] and Tesseract/pytesseract [9]. This avoids the cost and cloud lock-in of managed document-AI services [1][2][3] while retaining acceptable accuracy on standard printed material. Extracted text is chunked, embedded with sentence-transformer models [5][6][11], and stored in ChromaDB, which plays the same approximate-nearest-neighbour retrieval role popularized by FAISS [8]. This gives semantic search that goes beyond keyword matching. On top of retrieval, Hireflow implements Retrieval-Augmented Generation [4] with Anthropic Claude as the generation model: for each natural-language question, relevant passages are retrieved and supplied as grounded context, and the model returns a concise answer with citations back to the source documents. This directly addresses the provenance weakness of naive LLM use and of opaque AI recruitment platforms.
+Hireflow is proposed as an integrated, web-based platform that closes these gaps by combining best-of-breed open components into a single HR-focused system. Documents in PDF, Word, and scanned-image form are ingested through an OCR and text-extraction stage built on PyMuPDF [5] and Tesseract/pytesseract [4]. This avoids the cost and cloud lock-in of managed document-AI services [1][2][3] while retaining acceptable accuracy on standard printed material. Extracted text is chunked, embedded with sentence-transformer models [7][8][10], and stored in ChromaDB, which plays the same approximate-nearest-neighbour retrieval role popularized by FAISS [6]. This gives semantic search that goes beyond keyword matching. On top of retrieval, Hireflow implements Retrieval-Augmented Generation [9] with Anthropic Claude as the generation model: for each natural-language question, relevant passages are retrieved and supplied as grounded context, and the model returns a concise answer with citations back to the source documents. This directly addresses the provenance weakness of naive LLM use and of opaque AI recruitment platforms.
 
-For recruitment, HR personnel define job postings with explicit skills, education, and experience criteria. The system then ranks candidate resumes against those criteria using LLM-based scoring rather than rigid rules, producing consistent and explainable shortlists. Resume intake is automated through Gmail integration over OAuth 2.0, which syncs attachments in the background via Celery and Redis and removes the manual collection step. The platform is realised as a FastAPI (Python 3.12) backend with PostgreSQL 15 for relational data and MinIO for object storage, paired with a React 19 and TypeScript frontend driven by an OpenAPI-generated client; role-based access control, activity logging, and audit trails support compliance in line with recommended requirements-engineering practice [10]. These choices deliver the semantic retrieval, grounded Q&A, explainable ranking, automated intake, and source attribution that no single reviewed system provides.
+For recruitment, HR personnel define job postings with explicit skills, education, and experience criteria. The system then ranks candidate resumes against those criteria using LLM-based scoring rather than rigid rules, producing consistent and explainable shortlists. Resume intake is automated through Gmail integration over OAuth 2.0, which syncs attachments in the background via Celery and Redis and removes the manual collection step. The platform is realised as a FastAPI (Python 3.12) backend with PostgreSQL 15 for relational data and MinIO for object storage, paired with a React 19 and TypeScript frontend driven by an OpenAPI-generated client; role-based access control, activity logging, and audit trails support compliance in line with recommended requirements-engineering practice [17]. These choices deliver the semantic retrieval, grounded Q&A, explainable ranking, automated intake, and source attribution that no single reviewed system provides.
 
 \pagebreak
 
@@ -202,7 +202,7 @@ Document ingestion, covering extraction, classification, chunking, embedding, an
 
 ### 3.3.2 Security and Privacy
 
-Authentication uses JWT access and refresh tokens with Argon2id password hashing, timing-safe verification, refresh-token rotation, and a Redis denylist for revoked tokens. Password-reset tokens are single-use, hashed, and short-lived. Role-based access control across HR and admin roles restricts functionality, and every data-access path is scoped by owner. In production the data stores sit on a private Docker network with only the nginx port exposed, and client-server traffic runs over HTTPS. The SRS also mandates encryption at rest and in transit, audit trails, and compliance with data-protection regulations such as GDPR and CCPA, depending on where the system is deployed.
+Authentication uses JWT [18] access and refresh tokens with Argon2id [19] password hashing, timing-safe verification, refresh-token rotation, and a Redis denylist for revoked tokens. Password-reset tokens are single-use, hashed, and short-lived. Role-based access control across HR and admin roles restricts functionality, and every data-access path is scoped by owner. In production the data stores sit on a private Docker network with only the nginx port exposed, and client-server traffic runs over HTTPS. The SRS also mandates encryption at rest and in transit, audit trails, and compliance with data-protection regulations such as GDPR and CCPA, depending on where the system is deployed.
 
 ### 3.3.3 Scalability
 
@@ -228,26 +228,26 @@ Table 3.2: Tools and Technologies
 
 | Category | Tool / Technology | Purpose |
 | -------- | ---------- | ------- |
-| Backend Framework | FastAPI (Python 3.12, `uv`) | Asynchronous REST API with automatic OpenAPI generation |
+| Backend Framework | FastAPI (Python 3.12, `uv`) [20] | Asynchronous REST API with automatic OpenAPI generation |
 | Data Validation | Pydantic v2 | Request/response schemas and typed settings management |
 | ORM & Migrations | SQLAlchemy 2, Alembic | Relational data access and async schema migrations |
-| Relational Database | PostgreSQL 15 | Users, documents, jobs, candidates, applications, activity logs, full-text search |
-| Vector Database | ChromaDB | Storage and cosine similarity search over chunk embeddings |
-| Task Queue / Broker | Celery + Redis 7 | Background document processing and token denylist/reset stores |
-| Object Storage | MinIO (S3-compatible) | Storage of original uploaded files |
-| Embeddings | sentence-transformers (`bge-small-en-v1.5`, swappable) | Semantic vector representations of document chunks |
+| Relational Database | PostgreSQL 15 [21] | Users, documents, jobs, candidates, applications, activity logs, full-text search |
+| Vector Database | ChromaDB [22] | Storage and cosine similarity search over chunk embeddings |
+| Task Queue / Broker | Celery [23] + Redis 7 [24] | Background document processing and token denylist/reset stores |
+| Object Storage | MinIO (S3-compatible) [25] | Storage of original uploaded files |
+| Embeddings | sentence-transformers (`bge-small-en-v1.5` [26], swappable) | Semantic vector representations of document chunks |
 | Large Language Model | Anthropic Claude (Ollama fallback) | RAG question answering and LLM-based classification fallback |
 | Document Parsing | PyMuPDF, `unstructured` | Text and structured element extraction from PDF/Word |
 | OCR | Tesseract / pytesseract (Claude/Ollama vision optional) | Text extraction from scanned images |
 | Authentication | JWT, Argon2 (argon2id) | Token-based auth and secure password hashing |
-| Frontend Framework | React 19 + TypeScript | Single-page web application |
+| Frontend Framework | React 19 [27] + TypeScript | Single-page web application |
 | Build Tooling | Vite | Frontend build and dev server |
 | Styling / UI | Tailwind CSS v4, shadcn/ui | Component styling and design system |
 | Data Fetching | TanStack Query | Server-state management with generated query/mutation hooks |
 | Routing & Charts | react-router, recharts | Client-side routing and dashboard visualisations |
 | API Client | OpenAPI to hey-api/openapi-ts | Type-safe generated SDK from the backend spec |
 | Reverse Proxy | nginx | Serves frontend static assets and proxies `/api/` in production |
-| Containerisation | Docker, Docker Compose | Reproducible dev and production deployment |
+| Containerisation | Docker, Docker Compose [28] | Reproducible dev and production deployment |
 | Local Orchestration | Make, Tilt | One-command bring-up of the API, worker, frontend, and backing services |
 | Version Control | Git, GitHub | Source control and issue tracking for the feature-per-iteration workflow |
 | Testing | pytest, pytest-asyncio | Unit, integration, and API test suites |
@@ -576,7 +576,7 @@ Two design decisions make the pipeline maintainable in production. First, every 
 
 ### 5.2.4 Search and RAG
 
-Search merges four retrieval signals via Reciprocal Rank Fusion (k = 60): vector similarity from ChromaDB, weighted lexical full-text search (`ts_rank_cd` over `search_tsv`, filename-A / skills-B / body-C), a SQL metadata path engaged only when structured filters are present, and a `pg_trgm` fuzzy fallback for typo tolerance. All paths respect per-user `owner_id` scoping (admin bypass) and `status = READY`. Fusion is tuned rather than uniform: the lexical signal is weighted up so the filename and skills weighting carries through to the merged ranking. Reciprocal Rank Fusion is good at recall but leaves the order inside the top results unreliable, so a cross-encoder reranker (`BAAI/bge-reranker-base`) reorders the leading candidates before they are returned. Retrieval widens to twenty candidates when the reranker is on, giving it room to reshuffle, and the model is kept off the main path by scoring only that shortlist rather than the whole corpus. The reranker can be switched off through configuration for comparison runs. The RAG service reuses this same retrieval path through a `ChunkRetriever` protocol, applies distance gates, runs an embedding-based intent classifier, composes a three-layer system prompt via `rag_prompts.py`, and streams a grounded answer from Anthropic Claude with typed citations, confidence, and intent on the wire.
+Search merges four retrieval signals via Reciprocal Rank Fusion [29] (k = 60): vector similarity from ChromaDB, weighted lexical full-text search (`ts_rank_cd` over `search_tsv`, filename-A / skills-B / body-C), a SQL metadata path engaged only when structured filters are present, and a `pg_trgm` fuzzy fallback for typo tolerance. All paths respect per-user `owner_id` scoping (admin bypass) and `status = READY`. Fusion is tuned rather than uniform: the lexical signal is weighted up so the filename and skills weighting carries through to the merged ranking. Reciprocal Rank Fusion is good at recall but leaves the order inside the top results unreliable, so a cross-encoder reranker [30] (`BAAI/bge-reranker-base`) reorders the leading candidates before they are returned. Retrieval widens to twenty candidates when the reranker is on, giving it room to reshuffle, and the model is kept off the main path by scoring only that shortlist rather than the whole corpus. The reranker can be switched off through configuration for comparison runs. The RAG service reuses this same retrieval path through a `ChunkRetriever` protocol, applies distance gates, runs an embedding-based intent classifier, composes a three-layer system prompt via `rag_prompts.py`, and streams a grounded answer from Anthropic Claude with typed citations, confidence, and intent on the wire.
 
 ### 5.2.5 Conversations and Follow-up Questions
 
@@ -823,20 +823,38 @@ With additional time, the following enhancements would strengthen the system:
 
 # REFERENCES
 
-References are listed in APA 7th Edition style. In-text citations use bracketed numeric markers (e.g. [1]) keyed to the numbered entries below.
+References are numbered in the order in which they are first cited in the text, and are referred to by a bracketed number such as [1]. Entries follow IEEE reference style.
 
-1. Google Cloud. (n.d.). *Document AI overview*. Google. https://cloud.google.com/document-ai
-2. Amazon Web Services. (n.d.). *Amazon Textract: Extract text and data from documents*. Amazon. https://aws.amazon.com/textract
-3. Microsoft. (n.d.). *Azure AI Document Intelligence (Form Recognizer) documentation*. Microsoft Azure. https://azure.microsoft.com/en-us/products/ai-services/ai-document-intelligence
-4. Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., … Kiela, D. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. *Advances in Neural Information Processing Systems, 33*, 9459-9474.
-5. Hugging Face. (n.d.). *Document AI: Understanding documents with transformers*. https://huggingface.co/blog/document-ai
-6. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention is all you need. *Advances in Neural Information Processing Systems, 30*.
-7. Artifex Software. (n.d.). *PyMuPDF documentation*. https://pymupdf.readthedocs.io
-8. Johnson, J., Douze, M., & Jégou, H. (2019). Billion-scale similarity search with GPUs. *IEEE Transactions on Big Data, 7*(3), 535-547.
-9. Smith, R. (2007). An overview of the Tesseract OCR engine. *Proceedings of the Ninth International Conference on Document Analysis and Recognition (ICDAR), 2*, 629-633.
-10. IEEE. (1998). *IEEE recommended practice for software requirements specifications* (IEEE Std 830-1998). IEEE.
-11. Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence embeddings using Siamese BERT-networks. *Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing (EMNLP)*, 3982-3992.
-12. Anthropic. (n.d.). *Claude documentation*. https://docs.anthropic.com
+1. Google Cloud. "Document AI overview." Google Cloud. https://cloud.google.com/document-ai (accessed Sep. 11, 2026).
+2. Amazon Web Services. "Amazon Textract: Extract text and data from documents." AWS. https://aws.amazon.com/textract (accessed Sep. 11, 2026).
+3. Microsoft. "Azure AI Document Intelligence documentation." Microsoft Azure. https://azure.microsoft.com/en-us/products/ai-services/ai-document-intelligence (accessed Sep. 11, 2026).
+4. R. Smith, "An overview of the Tesseract OCR engine," in *Proc. 9th Int. Conf. Document Analysis and Recognition (ICDAR)*, vol. 2, 2007, pp. 629-633.
+5. Artifex Software. "PyMuPDF documentation." Artifex. https://pymupdf.readthedocs.io (accessed Sep. 11, 2026).
+6. J. Johnson, M. Douze, and H. Jegou, "Billion-scale similarity search with GPUs," *IEEE Trans. Big Data*, vol. 7, no. 3, pp. 535-547, 2021.
+7. Hugging Face. "Document AI: Understanding documents with transformers." Hugging Face. https://huggingface.co/blog/document-ai (accessed Sep. 11, 2026).
+8. A. Vaswani et al., "Attention is all you need," in *Advances in Neural Information Processing Systems*, vol. 30, 2017, pp. 5998-6008.
+9. P. Lewis et al., "Retrieval-augmented generation for knowledge-intensive NLP tasks," in *Advances in Neural Information Processing Systems*, vol. 33, 2020, pp. 9459-9474.
+10. N. Reimers and I. Gurevych, "Sentence-BERT: Sentence embeddings using Siamese BERT-networks," in *Proc. Conf. Empirical Methods in Natural Language Processing (EMNLP-IJCNLP)*, 2019, pp. 3982-3992.
+11. Anthropic. "Claude documentation." Anthropic. https://docs.anthropic.com (accessed Sep. 11, 2026).
+12. D. Hardt, "The OAuth 2.0 authorization framework," IETF RFC 6749, Oct. 2012.
+13. Greenhouse Software. "Greenhouse applicant tracking system." Greenhouse. https://www.greenhouse.io (accessed Sep. 11, 2026).
+14. Workday. "Workday Recruiting." Workday. https://www.workday.com (accessed Sep. 11, 2026).
+15. Eightfold AI. "Eightfold AI talent intelligence platform." Eightfold AI. https://eightfold.ai (accessed Sep. 11, 2026).
+16. LangChain. "LangChain documentation." LangChain. https://python.langchain.com (accessed Sep. 11, 2026).
+17. *IEEE Recommended Practice for Software Requirements Specifications*, IEEE Std 830-1998, 1998.
+18. M. Jones, J. Bradley, and N. Sakimura, "JSON Web Token (JWT)," IETF RFC 7519, May 2015.
+19. A. Biryukov, D. Dinu, D. Khovratovich, and S. Josefsson, "Argon2 memory-hard function for password hashing and proof-of-work applications," IETF RFC 9106, Sep. 2021.
+20. S. Ramirez. "FastAPI documentation." FastAPI. https://fastapi.tiangolo.com (accessed Sep. 11, 2026).
+21. PostgreSQL Global Development Group. "PostgreSQL 15 documentation." PostgreSQL. https://www.postgresql.org/docs/15/ (accessed Sep. 11, 2026).
+22. Chroma. "Chroma documentation." Chroma. https://docs.trychroma.com (accessed Sep. 11, 2026).
+23. Celery Project. "Celery documentation." Celery. https://docs.celeryq.dev (accessed Sep. 11, 2026).
+24. Redis. "Redis documentation." Redis. https://redis.io/docs/latest/ (accessed Sep. 11, 2026).
+25. MinIO. "MinIO object storage documentation." MinIO. https://min.io/docs/minio/linux/index.html (accessed Sep. 11, 2026).
+26. S. Xiao, Z. Liu, P. Zhang, and N. Muennighoff, "C-Pack: Packed resources for general Chinese embeddings," arXiv:2309.07597, 2023.
+27. Meta. "React documentation." React. https://react.dev (accessed Sep. 11, 2026).
+28. Docker. "Docker documentation." Docker. https://docs.docker.com (accessed Sep. 11, 2026).
+29. G. V. Cormack, C. L. A. Clarke, and S. Buettcher, "Reciprocal rank fusion outperforms Condorcet and individual rank learning methods," in *Proc. 32nd Int. ACM SIGIR Conf. Research and Development in Information Retrieval*, 2009, pp. 758-759.
+30. R. Nogueira and K. Cho, "Passage re-ranking with BERT," arXiv:1901.04085, 2019.
 
 \pagebreak
 

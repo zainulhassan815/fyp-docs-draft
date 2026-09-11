@@ -9,7 +9,7 @@
           <mxGeometry x="60" y="20" width="330" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="n2" value="Literature Review &amp; Requirement Analysis&#10;(existing systems, research gap, SRS:&#10;20 functional requirements, 12 use cases)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=15;">
+        <mxCell id="n2" value="Literature Review &amp; Requirement Analysis&#10;(existing systems, research gap, SRS:&#10;22 functional requirements, 12 use cases)" parent="1" vertex="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=15;">
           <mxGeometry x="60" y="96" width="330" height="70" as="geometry" />
         </mxCell>
 
