@@ -258,7 +258,7 @@ Table 3.2: Tools and Technologies
 
 Twelve use cases model the system's behaviour, spanning authentication, document upload and handling, search, job management, screening, email integration, and auditing. HR Personnel are the primary actor in most of them. The Email Service acts as an external actor for resume intake and synchronisation. Figure 3.1 presents the overall use case diagram.
 
-![Figure 3.1: Use Case Diagram](src/images/use_case_diagram.png){width=100%}
+![Figure 3.1: Use Case Diagram](src/images/use_case_diagram.png){width=95%}
 
 The main use cases identified in the SRS are summarised below.
 
@@ -336,7 +336,7 @@ The supporting infrastructure comprises PostgreSQL 15 (relational data, plus a g
 
 Two pipelines dominate the system's behaviour. The ingestion pipeline runs asynchronously in a Celery worker. An upload returns HTTP `201` immediately with `status=PENDING`; the worker then fetches the blob from MinIO, extracts layout-aware typed elements (via the `unstructured` library, PyMuPDF, and Tesseract OCR for scanned images), classifies the document, and chunks it with heading- and table-aware rules. Each chunk is contextualised, embedded, and upserted into ChromaDB, while PostgreSQL's search vector auto-populates. On completion the document reaches `status=READY`, at which point an on-ready hook can auto-create a candidate from a resume. The RAG pipeline runs inline per request. It retrieves the most relevant chunks (owner-scoped, READY-only), classifies the question's intent, composes a layered system prompt, and streams the answer from Claude with typed citations. Both pipelines and their interactions are depicted in Figure 4.1.
 
-![Figure 4.1: System Architecture](src/images/architecture_diagram.png){width=100%}
+![Figure 4.1: System Architecture](src/images/architecture_diagram.png){width=95%}
 
 ## 4.2 Data Flow Diagrams
 
@@ -344,7 +344,7 @@ Data Flow Diagrams (DFDs) model the system as a network of processes that transf
 
 The Level 0 (context) diagram situates Hireflow as one process bounded by its external actors. The primary external entity is the HR user (and the privileged Administrator), who uploads documents, issues search and natural-language queries, manages jobs and candidates, and receives ranked results and cited answers. Two further external entities appear: the Gmail service, from which candidate emails and attachments are synced, and the LLM provider (Anthropic Claude), which receives composed prompts and returns generated answers. This level establishes what crosses the system boundary without revealing internal structure, as shown in Figure 4.2.
 
-![Figure 4.2: DFD Level 0 (Context Diagram)](src/images/dfd_level_0.png){width=100%}
+![Figure 4.2: DFD Level 0 (Context Diagram)](src/images/dfd_level_0.png){width=95%}
 
 The Level 1 diagram decomposes the single context process into the system's principal subsystems and the data stores between them: authentication and session management; document ingestion and storage; the hybrid search and RAG engine; job and candidate management with resume-to-job matching; Gmail synchronisation; and activity logging. It shows how an uploaded file flows from the API into object storage and the asynchronous processing pipeline, how extracted text and metadata land in the relational and vector stores, and how a query fans out across those stores before results are fused and returned. The major data stores are made explicit here: Users, Documents, Candidates, Jobs, Applications, the vector collection, and the activity log (Figure 4.3).
 
@@ -352,7 +352,7 @@ The Level 1 diagram decomposes the single context process into the system's prin
 
 The Level 2 diagram drills into the document-processing and retrieval subsystem, the most data-intensive part of the platform. It expands both the ingestion pipeline and the query pipeline into their constituent processes, exposing how chunks, embeddings, and ranked hits move between the worker, PostgreSQL, ChromaDB, and the LLM provider. The individual ingestion stages are documented in Table 5.2 (Figure 4.4).
 
-![Figure 4.4: DFD Level 2](src/images/dfd_level_2.png){width=100%}
+![Figure 4.4: DFD Level 2](src/images/dfd_level_2.png){width=95%}
 
 ## 4.3 UML Diagrams
 
@@ -360,7 +360,7 @@ The Unified Modeling Language (UML) captures the system's static structure and d
 
 ### 4.3.1 Class Diagram
 
-![Figure 4.5: Class Diagram](src/images/class.png){width=100%}
+![Figure 4.5: Class Diagram](src/images/class.png){width=95%}
 
 ### 4.3.2 Activity Diagram
 
@@ -372,17 +372,17 @@ The Unified Modeling Language (UML) captures the system's static structure and d
 
 ### 4.3.4 Sequence Diagram
 
-![Figure 4.8: Sequence Diagram (Streaming RAG Query)](src/images/sequence_diagram.png){width=100%}
+![Figure 4.8: Sequence Diagram (Streaming RAG Query)](src/images/sequence_diagram.png){width=95%}
 
 ### 4.3.5 State Machine Diagram
 
-![Figure 4.9: Document Status State Machine](src/images/state_machine.png){width=100%}
+![Figure 4.9: Document Status State Machine](src/images/state_machine.png){width=95%}
 
 ## 4.4 Database Design (ERD, Schema, Data Dictionary)
 
 The persistent state of Hireflow lives in a PostgreSQL 15 relational schema, complemented by a ChromaDB vector store for embeddings. This section describes the entity relationships, provides a schema overview, and documents the core tables as data dictionaries. The relational design derives directly from the implemented SQLAlchemy models.
 
-![Figure 4.10: Entity-Relationship Diagram](src/images/erd.png){width=100%}
+![Figure 4.10: Entity-Relationship Diagram](src/images/erd.png){width=95%}
 
 **Schema overview.** Every table has a UUID primary key named after the table (for example `user_id`, `document_id`) and `created_at` / `updated_at` timestamp columns from shared mixins. PostgreSQL-native features are used throughout: enumerated types (`user_role`, `document_status`, `document_type`, `job_status`, `application_status`, `attachment_role`, and others), array columns (`required_skills`, `skills`, `education`, `scopes`), a `JSONB` `metadata` column on `documents`, and a database-generated, weighted `tsvector` column (`search_tsv`) that indexes filename (weight A), skills (weight B), and body text (weight C) for lexical retrieval via a GIN index. Sensitive fields such as `full_name`, `phone`, and Gmail `refresh_token` are stored using an encrypted column type. The four core tables are documented below.
 
@@ -462,17 +462,25 @@ The user interface is a React 19 single-page application written in TypeScript a
 
 Navigation is organised around the primary HR workflows, each a dedicated page wired to the real API: a Dashboard overview, Documents management (upload, list, in-app preview, metadata, and delete), Search (combining hybrid keyword/semantic search with a streaming RAG chat), Jobs (create, edit, and match candidates), Candidates (a screening list with match scores), Logs (the activity audit trail), and Settings (profile and password). Authentication is handled transparently. An `AuthProvider` hydrates the current user on mount, and a client interceptor attaches the bearer token and silently refreshes it on expiry via a single-flight retry, so the user is never spuriously logged out mid-task.
 
-Two screens embody the system's differentiating design work. The Documents page provides drag-and-drop upload with real-time status badges that follow the document status lifecycle shown in Figure 4.9, giving users immediate feedback while indexing happens out-of-band. The Search page implements a conversational layout: the input is pinned to the bottom of the card, messages scroll within a fixed viewport, and assistant answers render as GitHub-flavoured Markdown (tables, lists, and emphasis) with a typing indicator and blinking cursor during streaming. Most importantly, inline citation chips are parsed from the answer text and matched against source documents. Hovering a chip reveals the filename, section heading, and snippet; clicking it scrolls the corresponding source card into view with a highlight flash, making every generated claim traceable to its evidence. Representative screens are shown in Figures 4.11 through 4.15.
+Two screens embody the system's differentiating design work. The Documents page provides drag-and-drop upload with real-time status badges that follow the document status lifecycle shown in Figure 4.9, giving users immediate feedback while indexing happens out-of-band. The Search page implements a conversational layout: the input is pinned to the bottom of the card, messages scroll within a fixed viewport, and assistant answers render as GitHub-flavoured Markdown (tables, lists, and emphasis) with a typing indicator and blinking cursor during streaming. Most importantly, inline citation chips are parsed from the answer text and matched against source documents. Hovering a chip reveals the filename, section heading, and snippet; clicking it scrolls the corresponding source card into view with a highlight flash, making every generated claim traceable to its evidence. Representative screens are shown in Figures 4.11 through 4.19.
 
-![Figure 4.11: Dashboard overview](src/images/screenshots/home.png){width=100%}
+![Figure 4.11: Dashboard overview](src/images/screenshots/home.png){width=95%}
 
-![Figure 4.12: Documents management with upload and processing status](src/images/screenshots/documents.png){width=100%}
+![Figure 4.12: Documents management with upload and processing status](src/images/screenshots/documents.png){width=95%}
 
-![Figure 4.13: Semantic search across the document library with match scores and skill filters](src/images/screenshots/search.png){width=100%}
+![Figure 4.13: Semantic search across the document library with match scores and skill filters](src/images/screenshots/search.png){width=95%}
 
-![Figure 4.14: Ask Hireflow, conversational question answering grounded in the library with source citations](src/images/screenshots/ask.png){width=100%}
+![Figure 4.14: Ask Hireflow, conversational question answering grounded in the library with source citations](src/images/screenshots/ask.png){width=95%}
 
-![Figure 4.15: Candidate screening list with match scores](src/images/screenshots/candidates.png){width=100%}
+![Figure 4.15: Candidate screening list with match scores](src/images/screenshots/candidates.png){width=95%}
+
+![Figure 4.16: Job creation with required skills, preferred skills, and an experience range](src/images/screenshots/create-job.png){width=95%}
+
+![Figure 4.17: Document detail view with the in-app viewer and the extracted metadata](src/images/screenshots/document-details.png){width=95%}
+
+![Figure 4.18: Activity log showing the audit trail of actions](src/images/screenshots/logs.png){width=95%}
+
+![Figure 4.19: Settings, with the theme, password change, and the Gmail connection](src/images/screenshots/settings.png){width=95%}
 
 \pagebreak
 
@@ -549,11 +557,45 @@ Table 5.2: Domain Error to HTTP Status Mapping
 | File too large | 413 | Upload exceeds the configured size limit |
 | Unsupported file type | 415 | Media type is outside the upload allowlist |
 | LLM rate limited | 429 | The language model provider refused for rate reasons; the response carries a retry delay |
-| Gmail authorisation error | 400 | The Gmail OAuth exchange failed |
+| Gmail authorisation error | 400 | The Gmail OAuth exchange failed. The only caller is the browser-facing callback, which catches it and redirects to the settings page with a reason, so a client never receives the 400 |
 | Service unavailable | 503 | A dependency, or the language model provider, could not be reached |
 | LLM timeout | 504 | The provider accepted the request but did not answer in time |
 | Validation error | 422 | The request body or parameters failed schema validation |
 
+
+Every row of Table 5.2 was exercised against the running system rather than read off the source. Figures 5.1 to 5.16 show the request and the response for each one, captured with `curl` against the development stack. Two of them could not be produced by ordinary use: the rate-limit and timeout cases were created by pointing the language-model adapter at a stub that returns those conditions, and are marked as such below.
+
+![Figure 5.1: Invalid credentials (HTTP 401)](src/images/domain-errors/01-invalid-credentials.png){width=95%}
+
+![Figure 5.2: Invalid token (HTTP 401)](src/images/domain-errors/02-invalid-token.png){width=95%}
+
+![Figure 5.3: Account disabled (HTTP 403)](src/images/domain-errors/03-account-disabled.png){width=95%}
+
+![Figure 5.4: Forbidden (HTTP 403)](src/images/domain-errors/04-forbidden.png){width=95%}
+
+![Figure 5.5: Not found (HTTP 404)](src/images/domain-errors/05-not-found.png){width=95%}
+
+![Figure 5.6: Document not indexed (HTTP 404)](src/images/domain-errors/06-document-not-indexed.png){width=95%}
+
+![Figure 5.7: Email already registered (HTTP 409)](src/images/domain-errors/07-email-already-registered.png){width=95%}
+
+![Figure 5.8: Invalid status transition (HTTP 409)](src/images/domain-errors/08-invalid-status-transition.png){width=95%}
+
+![Figure 5.9: Resume already attached (HTTP 409)](src/images/domain-errors/09-resume-already-attached.png){width=95%}
+
+![Figure 5.10: File too large (HTTP 413)](src/images/domain-errors/10-file-too-large.png){width=95%}
+
+![Figure 5.11: Unsupported file type (HTTP 415)](src/images/domain-errors/11-unsupported-file-type.png){width=95%}
+
+![Figure 5.12: LLM rate limited (HTTP 429)](src/images/domain-errors/12-llm-rate-limited.png){width=95%}
+
+![Figure 5.13: Gmail authorisation error, served as a redirect to the settings page](src/images/domain-errors/13-gmail-auth-error.png){width=95%}
+
+![Figure 5.14: Service unavailable (HTTP 503)](src/images/domain-errors/14-service-unavailable.png){width=95%}
+
+![Figure 5.15: LLM timeout (HTTP 504)](src/images/domain-errors/15-llm-timeout.png){width=95%}
+
+![Figure 5.16: Validation error (HTTP 422)](src/images/domain-errors/16-validation-error.png){width=95%}
 ### 5.2.3 Ingestion Pipeline
 
 Ingestion is the path a file travels from the moment it is uploaded to the moment it becomes searchable and answerable. It runs asynchronously in the Celery worker so that the interface never blocks: the upload endpoint stores the raw file in MinIO, creates a document row with `status = PENDING`, returns HTTP 201 at once, and enqueues a Celery task that performs the remaining work in the background. The pipeline has seven stages, each consuming the output of the one before it, as summarised in Table 5.3 and depicted in Figure 4.4.
@@ -743,10 +785,6 @@ Table 6.2: Test Case Traceability Matrix
 | UC-12 | Read Resumes / Screen | FR13, FR14, FR15 | TC-JOBS-010 | Weighted scoring + bounded score | Pass |
 | UC-09 | Sync Resumes | FR17, FR18 | TC-DOCS-046 | On-ready candidate creation from resume | Pass |
 
-![Figure 6.1: Login screen under test](src/images/screenshots/login.png){width=100%}
-
-![Figure 6.2: Hybrid search and RAG question-answering under test](src/images/screenshots/search-and-rag.jpeg){width=100%}
-
 ## 6.3 Performance Evaluation
 
 Performance was measured on the development stack rather than a production server. The test machine was a single laptop running WSL2 with a 13th-generation Intel Core i5-13450HX (16 logical cores) and about 7.6 GiB of RAM allocated to the WSL2 virtual machine. The sentence-transformer embedder ran on an NVIDIA RTX 5050 laptop GPU, the RAG model was the hosted Claude Haiku 4.5, and the corpus held 18 ready documents indexed as 49 chunks. All timings use a monotonic clock, with the first call on each path discarded as warm-up. Table 6.3 summarises the results, which are discussed below.
@@ -862,7 +900,7 @@ References are numbered in the order in which they are first cited in the text, 
 
 ## Appendix A: User Manual
 
-A complete step-by-step user manual is provided as a separate document accompanying this report. It covers sign-up and login, uploading documents, searching and asking questions, creating jobs, screening candidates, connecting Gmail, and exporting shortlists. The main user interfaces are also illustrated in Chapter 4 (Figures 4.11-4.15) and Chapter 6.
+A complete step-by-step user manual is provided as a separate document accompanying this report. It covers sign-up and login, uploading documents, searching and asking questions, creating jobs, screening candidates, connecting Gmail, and exporting shortlists. The main user interfaces are also illustrated in Chapter 4 (Figures 4.11-4.19) and Chapter 6.
 
 ## Appendix B: Sample Code
 

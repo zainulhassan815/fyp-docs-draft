@@ -26,6 +26,7 @@ from pathlib import Path
 from docx import Document
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls, qn
+from docx.shared import Emu
 from pypdf import PdfReader
 
 DOCX = Path('build/SRS_Document.docx')
@@ -33,9 +34,18 @@ SOFFICE = '/Applications/LibreOffice.app/Contents/MacOS/soffice'
 MAX_PASSES = 5
 W = nsdecls('w')
 
-# right-aligned, dot-leader tab at the right margin
-TAB_POS = 8640
+# Indents for the three heading levels, in twips. The dot-leader tab sits at
+# the right margin, measured from the document rather than hard-coded: a page
+# size change used to leave it at the old column width and push the page
+# numbers past the margin.
 INDENT = {1: 0, 2: 220, 3: 440}
+
+
+def tab_position(doc):
+    """Right margin of the text column, in twips."""
+    section = doc.sections[0]
+    width = section.page_width - section.left_margin - section.right_margin
+    return Emu(width).twips
 
 
 def render_pages(docx):
@@ -137,11 +147,11 @@ def locate(entries, pages, skip, front_matter):
     return numbers
 
 
-def entry_paragraph(text, level, page, style):
+def entry_paragraph(text, level, page, style, tab_pos):
     body = (
         f'<w:pPr><w:pStyle w:val="{style}"/>'
         f'<w:ind w:left="{INDENT.get(level, 0)}"/>'
-        f'<w:tabs><w:tab w:val="right" w:leader="dot" w:pos="{TAB_POS}"/></w:tabs>'
+        f'<w:tabs><w:tab w:val="right" w:leader="dot" w:pos="{tab_pos}"/></w:tabs>'
         f'</w:pPr>'
         f'<w:r><w:t xml:space="preserve">{escape(text)}</w:t></w:r>'
         f'<w:r><w:tab/><w:t>{page}</w:t></w:r>'
@@ -172,14 +182,14 @@ def field_region(body, instr_prefix):
     return None
 
 
-def fill(doc, instr, entries, numbers, style):
+def fill(doc, instr, entries, numbers, style, tab_pos):
     """Replace one field's cached result with the real entries."""
     region = field_region(doc.element.body, instr)
     if region is None:
         sys.exit(f'ERROR: field not found: {instr}')
 
     new = [
-        entry_paragraph(text, level, page or '?', style)
+        entry_paragraph(text, level, page or '?', style, tab_pos)
         for (text, level), page in zip(entries, numbers)
     ]
     if not new:
@@ -231,8 +241,9 @@ def main():
                 print(f"  WARNING: unresolved page numbers in {missing}")
             return
         entries = {'toc': toc, 'figs': figs, 'tbls': tbls}
+        tab_pos = tab_position(doc)
         for instr, key, style in FIELDS:
-            fill(doc, instr, entries[key], found[key], style)
+            fill(doc, instr, entries[key], found[key], style, tab_pos)
         doc.save(str(DOCX))
         previous = found
         print(f"  pass {attempt}: {len(toc)}/{len(figs)}/{len(tbls)} entries placed")

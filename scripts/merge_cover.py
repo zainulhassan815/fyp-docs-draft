@@ -44,6 +44,32 @@ def main():
                 z.write(path, os.path.relpath(path, temp_dir))
 
     shutil.rmtree(temp_dir)
+    set_a4('build/SRS_Document.docx')
+
+
+def set_a4(path):
+    """Switch the page size to A4, leaving the margins as the template has them.
+
+    The composed document inherits its geometry from cover.docx, which came from
+    the SCET template as US Letter. The bound report is printed on A4, so laying
+    it out on Letter would reflow on the way to the printer. Margins are not
+    touched. A4 is 11906 x 16838 twips.
+    """
+    import re
+
+    with zipfile.ZipFile(path) as z:
+        doc = z.read('word/document.xml').decode('utf-8')
+    doc = re.sub(r'<w:pgSz[^>]*/>', '<w:pgSz w:w="11906" w:h="16838"/>', doc)
+
+    tmp = path + '.tmp'
+    with zipfile.ZipFile(path) as zin, \
+            zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            if item.filename == 'word/document.xml':
+                data = doc.encode('utf-8')
+            zout.writestr(item, data)
+    os.replace(tmp, path)
 
 if __name__ == '__main__':
     main()

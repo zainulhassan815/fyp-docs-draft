@@ -237,6 +237,29 @@ shutil.move(tmp, out)
 print("  merged styles:", ', '.join(added))
 PY
 
+# 4b. A4 page size. pandoc sizes percentage-width images against this file's
+# page geometry, so a Letter reference doc makes every width=100% figure 6.0in
+# wide and it overflows the 5.77in text column of the A4 output. Margins are
+# left as the template has them.
+python3 - "$OUT" <<'PY'
+import sys, re, zipfile, shutil, tempfile
+
+out = sys.argv[1]
+with zipfile.ZipFile(out) as z:
+    doc = z.read('word/document.xml').decode('utf-8')
+doc = re.sub(r'<w:pgSz[^>]*/>', '<w:pgSz w:w="11906" w:h="16838"/>', doc)
+
+tmp = tempfile.mktemp(suffix='.docx')
+with zipfile.ZipFile(out) as zin, zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:
+    for it in zin.infolist():
+        data = zin.read(it.filename)
+        if it.filename == 'word/document.xml':
+            data = doc.encode('utf-8')
+        zout.writestr(it, data)
+shutil.move(tmp, out)
+print("  reference page size: A4")
+PY
+
 # 5. Report result.
 python3 - "$OUT" <<'PY'
 import sys, re, zipfile

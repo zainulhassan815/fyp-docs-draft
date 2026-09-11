@@ -7,8 +7,9 @@ from docx.oxml import OxmlElement
 from docx.shared import Pt
 import sys
 
-# Width of the text column, in twips (Letter page less the SCET template margins).
-CONTENT_TWIPS = 8640
+# Width of the text column, in twips: A4 (11906) less the template's 1.25in
+# side margins.
+CONTENT_TWIPS = 8306
 
 # Most tables are fine with the equal columns that autofit gives them, because
 # the lua filter strips pandoc's width hints.  A few carry cells whose content
